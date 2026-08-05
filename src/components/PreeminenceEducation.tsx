@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Sun, Shield, Scale, FileText, Check, ChevronDown, Layers, HelpCircle, AlertCircle, Sparkles } from 'lucide-react';
+import Image from 'next/image';
+import { Sun, Shield, Scale, Layers, Check, AlertCircle, Sparkles } from 'lucide-react';
 
 export const PreeminenceEducation: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'bifacial' | 'structural' | 'solarpflicht' | 'tax'>('bifacial');
@@ -12,12 +13,12 @@ export const PreeminenceEducation: React.FC = () => {
         
         {/* Section Header */}
         <div className="text-center space-y-4 max-w-3xl mx-auto">
-          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-electric-500/10 border border-electric-500/30 text-electric-400 text-xs font-semibold uppercase tracking-wider">
+          <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-electric-500/10 border border-electric-500/30 text-electric-400 text-xs font-semibold uppercase tracking-wider">
             <Sparkles className="w-3.5 h-3.5" />
             <span>The Jay Abraham Strategy of Preeminence</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight font-['Outfit']">
-            Why Standard Solar Panels Are <span className="text-solar-400">Obsolete for Carports</span>
+            Why Standard Rooftop Solar Is <span className="text-solar-400">Inferior for Carports</span>
           </h2>
           <p className="text-slate-400 text-sm sm:text-base leading-relaxed">
             We don't just sell metal posts; we educate business owners and homeowners on the exact engineering, optical physics, and legislative rules governing high-efficiency solar carports.
@@ -25,7 +26,7 @@ export const PreeminenceEducation: React.FC = () => {
         </div>
 
         {/* Navigation Tabs */}
-        <div className="flex flex-wrap justify-center gap-2 max-w-4xl mx-auto">
+        <div className="flex flex-wrap justify-center gap-2 max-w-4xl mx-auto font-mono">
           <button
             onClick={() => setActiveTab('bifacial')}
             className={`px-5 py-3 rounded-xl font-bold text-xs sm:text-sm transition-all flex items-center space-x-2 ${
@@ -83,7 +84,7 @@ export const PreeminenceEducation: React.FC = () => {
                 <div className="inline-block px-2.5 py-1 rounded bg-solar-500/10 text-solar-400 text-xs font-mono font-bold">
                   OPTICAL PHYSICS & HARVESTING
                 </div>
-                <h3 className="text-2xl font-bold text-white">Bifacial Dual-Glass Photovoltaic Mechanics</h3>
+                <h3 className="text-2xl font-bold text-white font-['Outfit']">Bifacial Dual-Glass Photovoltaic Mechanics</h3>
                 <p className="text-slate-300 text-sm leading-relaxed">
                   Unlike traditional opaque roof modules, solar carports sit elevated 2.8m to 3.5m above ground. This creates a powerful ground albedo reflection.
                 </p>
@@ -102,10 +103,18 @@ export const PreeminenceEducation: React.FC = () => {
                   </li>
                 </ul>
               </div>
-              <div className="bg-slate-900/90 p-6 rounded-2xl border border-slate-800 space-y-4 text-center">
-                <div className="text-xs text-slate-400 uppercase tracking-widest font-mono">Bifacial Yield Advantage</div>
-                <div className="text-5xl font-black text-solar-400 font-mono">+25.4%</div>
-                <p className="text-xs text-slate-400">Additional kWh produced compared to conventional monofacial rooftop installations over 25 years.</p>
+              <div className="relative h-64 rounded-2xl overflow-hidden border border-slate-800">
+                <Image
+                  src="/images/patio_solar_canopy.jpg"
+                  alt="Bifacial Glass Glass Canopy"
+                  fill
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent" />
+                <div className="absolute bottom-4 left-4 right-4 bg-slate-950/90 p-3 rounded-xl border border-slate-800 text-center font-mono">
+                  <div className="text-xs text-slate-400">Bifacial Yield Advantage</div>
+                  <div className="text-3xl font-black text-solar-400">+25.4% kWh/yr</div>
+                </div>
               </div>
             </div>
           )}
@@ -116,7 +125,7 @@ export const PreeminenceEducation: React.FC = () => {
                 <div className="inline-block px-2.5 py-1 rounded bg-electric-500/10 text-electric-400 text-xs font-mono font-bold">
                   GERMAN STRUCTURAL DYNAMICS
                 </div>
-                <h3 className="text-2xl font-bold text-white">Anodized Heavy Aluminum Extrusions</h3>
+                <h3 className="text-2xl font-bold text-white font-['Outfit']">Anodized Heavy Aluminum Extrusions</h3>
                 <p className="text-slate-300 text-sm leading-relaxed">
                   Cheap steel carports rust at weld points within 5 years. RIAL Energy systems utilize T6 structural aluminum profiles with integrated rubber EPDM seals and concealed internal rain channels.
                 </p>
@@ -135,10 +144,18 @@ export const PreeminenceEducation: React.FC = () => {
                   </li>
                 </ul>
               </div>
-              <div className="bg-slate-900/90 p-6 rounded-2xl border border-slate-800 space-y-4 text-center">
-                <div className="text-xs text-slate-400 uppercase tracking-widest font-mono">Structural Snow Safety Index</div>
-                <div className="text-5xl font-black text-electric-400 font-mono">2.5 kN/m²</div>
-                <p className="text-xs text-slate-400">German DIN EN 1991-1-3 structural load compliance certification across all federal regions.</p>
+              <div className="relative h-64 rounded-2xl overflow-hidden border border-slate-800">
+                <Image
+                  src="/images/hero_solar_carport.jpg"
+                  alt="Extruded Aluminum Structural Carport"
+                  fill
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent" />
+                <div className="absolute bottom-4 left-4 right-4 bg-slate-950/90 p-3 rounded-xl border border-slate-800 text-center font-mono">
+                  <div className="text-xs text-slate-400">Snow Load Safety Index</div>
+                  <div className="text-3xl font-black text-electric-400">2.5 kN/m²</div>
+                </div>
               </div>
             </div>
           )}
@@ -149,7 +166,7 @@ export const PreeminenceEducation: React.FC = () => {
                 <div className="inline-block px-2.5 py-1 rounded bg-amber-500/10 text-amber-400 text-xs font-mono font-bold">
                   COMMERCIAL COMPLIANCE
                 </div>
-                <h3 className="text-2xl font-bold text-white">State Solarpflicht Mandates for Parking Lots</h3>
+                <h3 className="text-2xl font-bold text-white font-['Outfit']">State Solarpflicht Mandates for Parking Lots</h3>
                 <p className="text-slate-300 text-sm leading-relaxed">
                   German federal states (Baden-Württemberg, NRW, Niedersachsen, Rheinland-Pfalz, Schleswig-Holstein) legally mandate solar canopy coverage for open commercial parking spaces over 35 or 50 vehicle spots.
                 </p>
@@ -164,23 +181,20 @@ export const PreeminenceEducation: React.FC = () => {
                   </li>
                 </ul>
               </div>
-              <div className="bg-slate-900/90 p-6 rounded-2xl border border-slate-800 space-y-3 text-left font-mono text-xs">
-                <div className="text-slate-400 font-bold uppercase">Solarpflicht Status by State:</div>
-                <div className="flex justify-between py-1 border-b border-slate-800">
-                  <span className="text-slate-300">Baden-Württemberg (&gt;35 spots)</span>
-                  <span className="text-emerald-400 font-bold">Mandatory</span>
-                </div>
-                <div className="flex justify-between py-1 border-b border-slate-800">
-                  <span className="text-slate-300">Nordrhein-Westfalen (&gt;35 spots)</span>
-                  <span className="text-emerald-400 font-bold">Mandatory</span>
-                </div>
-                <div className="flex justify-between py-1 border-b border-slate-800">
-                  <span className="text-slate-300">Niedersachsen (&gt;50 spots)</span>
-                  <span className="text-emerald-400 font-bold">Mandatory</span>
-                </div>
-                <div className="flex justify-between py-1">
-                  <span className="text-slate-300">Hessen & Bayern (&gt;50 spots)</span>
-                  <span className="text-solar-400 font-bold">Pending 2026</span>
+              <div className="relative h-64 rounded-2xl overflow-hidden border border-slate-800">
+                <Image
+                  src="/images/commercial_fleet_solar.jpg"
+                  alt="Commercial Parking Fleet Solar Carport"
+                  fill
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-transparent" />
+                <div className="absolute bottom-3 left-3 right-3 bg-slate-950/90 p-3 rounded-xl border border-slate-800 text-xs font-mono">
+                  <div className="text-solar-400 font-bold mb-1">MANDATORY REGULATORY COVERAGE:</div>
+                  <div className="flex justify-between text-[11px] text-slate-300">
+                    <span>Baden-Württemberg (&gt;35 spots)</span>
+                    <span className="text-emerald-400 font-bold">Mandatory</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -192,7 +206,7 @@ export const PreeminenceEducation: React.FC = () => {
                 <div className="inline-block px-2.5 py-1 rounded bg-emerald-500/10 text-emerald-400 text-xs font-mono font-bold">
                   TAX & FINANCIAL RETURN
                 </div>
-                <h3 className="text-2xl font-bold text-white">0% VAT (§12 Abs. 3 UStG) & Amortization</h3>
+                <h3 className="text-2xl font-bold text-white font-['Outfit']">0% VAT (§12 Abs. 3 UStG) & Amortization</h3>
                 <p className="text-slate-300 text-sm leading-relaxed">
                   Residential and qualifying commercial solar carports under 30 kWp per taxpayer qualify for <strong>0% Value-Added Tax (MwSt)</strong> in Germany.
                 </p>
@@ -203,14 +217,16 @@ export const PreeminenceEducation: React.FC = () => {
                   </li>
                   <li className="flex items-start space-x-2">
                     <Check className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
-                    <span><strong>Fast Amortization:</strong> Typical payback achieved within 5.5 to 7.2 years with direct EV charging self-consumption.</span>
+                    <span><strong>Fast Amortization:</strong> Typical payback achieved within 5.2 to 6.8 years with direct EV charging self-consumption.</span>
                   </li>
                 </ul>
               </div>
-              <div className="bg-slate-900/90 p-6 rounded-2xl border border-slate-800 space-y-4 text-center">
-                <div className="text-xs text-slate-400 uppercase tracking-widest font-mono">German MwSt Tax Rate</div>
-                <div className="text-5xl font-black text-emerald-400 font-mono">0% VAT</div>
-                <p className="text-xs text-slate-400">Direct savings of 19% on complete material bill of materials (§12 Abs. 3 UStG).</p>
+              <div className="relative h-64 rounded-2xl overflow-hidden border border-slate-800 flex items-center justify-center p-6 bg-slate-900 text-center font-mono">
+                <div className="space-y-3">
+                  <div className="text-xs text-slate-400 uppercase tracking-widest">German MwSt Tax Rate</div>
+                  <div className="text-6xl font-black text-emerald-400">0% VAT</div>
+                  <p className="text-xs text-slate-400">Direct savings of 19% on complete material bill of materials (§12 Abs. 3 UStG).</p>
+                </div>
               </div>
             </div>
           )}

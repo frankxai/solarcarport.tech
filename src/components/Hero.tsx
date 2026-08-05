@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Sun, Zap, Shield, ArrowRight, Award, CheckCircle2, TrendingUp, Cpu, Download } from 'lucide-react';
+import Image from 'next/image';
+import { Sun, Zap, Shield, ArrowRight, Award, CheckCircle2, TrendingUp, Cpu } from 'lucide-react';
 
 interface HeroProps {
   onStartConfigurator: () => void;
@@ -18,40 +19,49 @@ export const Hero: React.FC<HeroProps> = ({ onStartConfigurator }) => {
   const co2SavingsTons = Math.round(kwhPerYear * 0.42 / 100) / 10; // 0.42 kg/kWh
 
   return (
-    <section className="relative min-h-[90vh] pt-12 pb-20 px-4 lg:px-8 overflow-hidden flex items-center justify-center">
-      {/* Ambient background glow & grid pattern */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(245,158,11,0.15),rgba(255,255,255,0))] pointer-events-none" />
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#1e293b15_1px,transparent_1px),linear-gradient(to_bottom,#1e293b15_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] pointer-events-none" />
+    <section className="relative min-h-[92vh] pt-12 pb-20 px-4 lg:px-8 overflow-hidden flex items-center justify-center">
+      {/* Hero Background Image with Gradient Overlay */}
+      <div className="absolute inset-0 z-0">
+        <Image
+          src="/images/hero_solar_carport.jpg"
+          alt="Solar Carport Infrastructure RIAL Energy"
+          fill
+          priority
+          className="object-cover object-center opacity-25 mix-blend-luminosity scale-105"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/90 via-background/80 to-background" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(245,158,11,0.2),rgba(0,0,0,0))]" />
+      </div>
 
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
         
         {/* Left Column: Preeminent Copy & Positioning */}
         <div className="lg:col-span-7 space-y-8 text-left">
           
-          <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-solar-500/10 border border-solar-500/30 text-solar-400 text-xs font-semibold tracking-wide uppercase">
+          <div className="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-solar-500/10 border border-solar-500/30 text-solar-400 text-xs font-semibold tracking-wide uppercase shadow-solar-glow">
             <Award className="w-4 h-4 text-solar-500" />
-            <span>RIAL Energy GmbH • Jay Abraham Diagnostic Architecture</span>
+            <span>RIAL Energy GmbH • Official SolarCarport.tech Platform</span>
           </div>
 
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-[1.1] font-['Outfit']">
-            Turn Parking Spaces & Patios Into <span className="text-transparent bg-clip-text bg-solar-gradient">High-Yield Power Plants</span>
+            Turn Parking Spaces & Patios Into <span className="text-transparent bg-clip-text bg-solar-gradient">High-Yield Solar Infrastructure</span>
           </h1>
 
           <p className="text-lg text-slate-300 max-w-2xl font-normal leading-relaxed">
-            Stop letting valuable outdoor real estate sit idle. Our engineered modular aluminum solar carports and bifacial glass-glass canopies deliver up to <strong className="text-white font-semibold">25% higher annual energy yield</strong> while shielding vehicles and meeting German commercial solar mandates.
+            Stop letting outdoor real estate sit idle. Our engineered modular aluminum solar carports and bifacial glass-glass canopies deliver up to <strong className="text-white font-semibold">25% higher annual energy yield</strong> while shielding vehicles, providing shade, and meeting German commercial solar mandates.
           </p>
 
           {/* Quick Badges */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-2">
-            <div className="flex items-center space-x-2.5 text-xs text-slate-300 font-medium">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-2 font-mono text-xs">
+            <div className="flex items-center space-x-2.5 text-slate-300">
               <CheckCircle2 className="w-4 h-4 text-solar-500 flex-shrink-0" />
               <span>Snow Load to 2.5 kN/m²</span>
             </div>
-            <div className="flex items-center space-x-2.5 text-xs text-slate-300 font-medium">
+            <div className="flex items-center space-x-2.5 text-slate-300">
               <CheckCircle2 className="w-4 h-4 text-solar-500 flex-shrink-0" />
               <span>0% VAT (§12 Abs. 3 UStG)</span>
             </div>
-            <div className="flex items-center space-x-2.5 text-xs text-slate-300 font-medium">
+            <div className="flex items-center space-x-2.5 text-slate-300">
               <CheckCircle2 className="w-4 h-4 text-solar-500 flex-shrink-0" />
               <span>German ERP BOM Parts</span>
             </div>
@@ -117,7 +127,7 @@ export const Hero: React.FC<HeroProps> = ({ onStartConfigurator }) => {
 
             {/* Output Matrix */}
             <div className="grid grid-cols-2 gap-3 mb-6">
-              <div className="bg-slate-900/80 p-3.5 rounded-2xl border border-slate-800">
+              <div className="bg-slate-900/90 p-3.5 rounded-2xl border border-slate-800">
                 <div className="text-[11px] text-slate-400 uppercase tracking-wider mb-1 flex items-center justify-between">
                   <span>PV Capacity</span>
                   <Zap className="w-3.5 h-3.5 text-solar-400" />
@@ -125,7 +135,7 @@ export const Hero: React.FC<HeroProps> = ({ onStartConfigurator }) => {
                 <div className="text-xl font-black text-white font-mono">{totalKWp} <span className="text-xs text-slate-400 font-normal">kWp</span></div>
               </div>
 
-              <div className="bg-slate-900/80 p-3.5 rounded-2xl border border-slate-800">
+              <div className="bg-slate-900/90 p-3.5 rounded-2xl border border-slate-800">
                 <div className="text-[11px] text-slate-400 uppercase tracking-wider mb-1 flex items-center justify-between">
                   <span>Annual Yield</span>
                   <Sun className="w-3.5 h-3.5 text-solar-400" />
@@ -133,7 +143,7 @@ export const Hero: React.FC<HeroProps> = ({ onStartConfigurator }) => {
                 <div className="text-xl font-black text-solar-400 font-mono">{kwhPerYear.toLocaleString()} <span className="text-xs text-slate-400 font-normal">kWh/yr</span></div>
               </div>
 
-              <div className="bg-slate-900/80 p-3.5 rounded-2xl border border-slate-800">
+              <div className="bg-slate-900/90 p-3.5 rounded-2xl border border-slate-800">
                 <div className="text-[11px] text-slate-400 uppercase tracking-wider mb-1 flex items-center justify-between">
                   <span>Est. Annual Savings</span>
                   <TrendingUp className="w-3.5 h-3.5 text-electric-400" />
@@ -141,7 +151,7 @@ export const Hero: React.FC<HeroProps> = ({ onStartConfigurator }) => {
                 <div className="text-xl font-black text-electric-400 font-mono">€{annualSavingsEur.toLocaleString()} <span className="text-xs text-slate-400 font-normal">/yr</span></div>
               </div>
 
-              <div className="bg-slate-900/80 p-3.5 rounded-2xl border border-slate-800">
+              <div className="bg-slate-900/90 p-3.5 rounded-2xl border border-slate-800">
                 <div className="text-[11px] text-slate-400 uppercase tracking-wider mb-1 flex items-center justify-between">
                   <span>CO2 Avoided</span>
                   <Shield className="w-3.5 h-3.5 text-emerald-400" />
@@ -157,7 +167,7 @@ export const Hero: React.FC<HeroProps> = ({ onStartConfigurator }) => {
               <span>Customize Full Structural Bill of Materials</span>
               <ArrowRight className="w-4 h-4" />
             </button>
-            <p className="text-[11px] text-slate-400 text-center mt-2.5">
+            <p className="text-[11px] text-slate-400 text-center mt-2.5 font-mono">
               Includes pre-calculated extruded aluminum profile BOM & live pricing.
             </p>
           </div>

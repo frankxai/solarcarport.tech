@@ -1,7 +1,8 @@
 'use client';
 
 import React from 'react';
-import { Car, Building2, Home, Shield, ArrowRight, Zap, Cpu, CheckCircle } from 'lucide-react';
+import Image from 'next/image';
+import { Car, Building2, Home, Shield, ArrowRight, CheckCircle, Cpu } from 'lucide-react';
 
 interface ProductShowcaseProps {
   onSelectCategory: (category: 'single' | 'double' | 'commercial' | 'terrace' | 'fence') => void;
@@ -17,6 +18,7 @@ export const ProductShowcase: React.FC<ProductShowcaseProps> = ({ onSelectCatego
       spots: '1 Vehicle Spot',
       profiles: 'Extruded Aluminum RAL-ALU-POST-2800',
       modules: '8x 470W Bifacial Glass-Glass',
+      image: '/images/hero_solar_carport.jpg',
       icon: Car,
       color: 'border-solar-500/30 hover:border-solar-500',
       badgeBg: 'bg-solar-500/10 text-solar-400',
@@ -29,6 +31,7 @@ export const ProductShowcase: React.FC<ProductShowcaseProps> = ({ onSelectCatego
       spots: '2 Vehicle Spots',
       profiles: 'Heavy Dual-Post RAL-ALU-POST-3400',
       modules: '16x 470W Bifacial Glass-Glass',
+      image: '/images/hero_solar_carport.jpg',
       icon: Car,
       color: 'border-solar-500/60 shadow-solar-glow',
       badgeBg: 'bg-solar-500 text-slate-950 font-bold',
@@ -42,6 +45,7 @@ export const ProductShowcase: React.FC<ProductShowcaseProps> = ({ onSelectCatego
       spots: '5 to 100+ Vehicle Spots',
       profiles: 'Galvanized Steel Subframe & Modular Aluminum Purlins',
       modules: 'Bifacial Industrial 500W TOPCon',
+      image: '/images/commercial_fleet_solar.jpg',
       icon: Building2,
       color: 'border-electric-500/40 hover:border-electric-400',
       badgeBg: 'bg-electric-500/10 text-electric-400',
@@ -54,6 +58,7 @@ export const ProductShowcase: React.FC<ProductShowcaseProps> = ({ onSelectCatego
       spots: 'Patio & Outdoor Living',
       profiles: 'Slim-Line Anodized Architectural Profile',
       modules: '20% Light-Permeable Glass-Glass PV',
+      image: '/images/patio_solar_canopy.jpg',
       icon: Home,
       color: 'border-emerald-500/30 hover:border-emerald-400',
       badgeBg: 'bg-emerald-500/10 text-emerald-400',
@@ -66,6 +71,7 @@ export const ProductShowcase: React.FC<ProductShowcaseProps> = ({ onSelectCatego
       spots: 'Vertical Ground Boundary',
       profiles: 'Heavy Post Ground Anchor Set',
       modules: 'Dual-Sided Vertical Solar Panels',
+      image: '/images/bifacial_solar_fence.jpg',
       icon: Shield,
       color: 'border-purple-500/30 hover:border-purple-400',
       badgeBg: 'bg-purple-500/10 text-purple-400',
@@ -78,7 +84,7 @@ export const ProductShowcase: React.FC<ProductShowcaseProps> = ({ onSelectCatego
         
         {/* Section Header */}
         <div className="text-center space-y-4 max-w-3xl mx-auto">
-          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-solar-500/10 border border-solar-500/30 text-solar-400 text-xs font-semibold uppercase tracking-wider">
+          <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-solar-500/10 border border-solar-500/30 text-solar-400 text-xs font-semibold uppercase tracking-wider">
             <Cpu className="w-3.5 h-3.5" />
             <span>Modular Modular German Systems</span>
           </div>
@@ -97,57 +103,69 @@ export const ProductShowcase: React.FC<ProductShowcaseProps> = ({ onSelectCatego
             return (
               <div 
                 key={prod.id}
-                className={`glass-panel rounded-3xl p-6 sm:p-8 border ${prod.color} transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between relative group`}
+                className={`glass-panel rounded-3xl overflow-hidden border ${prod.color} transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between relative group`}
               >
                 {prod.popular && (
-                  <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-solar-gradient text-slate-950 font-extrabold text-[11px] uppercase tracking-widest shadow-md">
-                    ★ Most Requested Package
+                  <div className="absolute top-3 right-3 z-20 px-3 py-1 rounded-full bg-solar-gradient text-slate-950 font-extrabold text-[10px] uppercase tracking-widest shadow-md">
+                    ★ Most Requested
                   </div>
                 )}
 
-                <div className="space-y-6">
-                  {/* Top Header */}
-                  <div className="flex items-start justify-between">
-                    <div className="w-12 h-12 rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-center text-solar-400 group-hover:scale-110 transition-transform">
-                      <IconComponent className="w-6 h-6" />
-                    </div>
-                    <span className={`px-3 py-1 rounded-full text-xs font-mono font-semibold ${prod.badgeBg}`}>
+                {/* Card Image Banner */}
+                <div className="relative h-48 w-full overflow-hidden bg-slate-900">
+                  <Image
+                    src={prod.image}
+                    alt={prod.name}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent" />
+                  
+                  <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between z-10">
+                    <span className={`px-2.5 py-0.5 rounded-full text-[11px] font-mono font-semibold ${prod.badgeBg}`}>
                       {prod.tag}
                     </span>
-                  </div>
-
-                  {/* Title & Capacity */}
-                  <div>
-                    <h3 className="text-xl font-bold text-white font-['Outfit']">{prod.name}</h3>
-                    <div className="text-2xl font-black text-solar-400 font-mono mt-1">{prod.capacity}</div>
-                  </div>
-
-                  {/* Feature Checklist */}
-                  <div className="space-y-2.5 pt-2 border-t border-slate-800 text-xs text-slate-300 font-mono">
-                    <div className="flex items-center space-x-2">
-                      <CheckCircle className="w-4 h-4 text-solar-500 flex-shrink-0" />
-                      <span>{prod.spots}</span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <CheckCircle className="w-4 h-4 text-solar-500 flex-shrink-0" />
-                      <span className="truncate">{prod.profiles}</span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <CheckCircle className="w-4 h-4 text-solar-500 flex-shrink-0" />
-                      <span className="truncate">{prod.modules}</span>
+                    <div className="w-8 h-8 rounded-xl bg-slate-950/80 border border-slate-700 flex items-center justify-center text-solar-400">
+                      <IconComponent className="w-4 h-4" />
                     </div>
                   </div>
                 </div>
 
-                {/* CTA */}
-                <div className="pt-6 mt-6 border-t border-slate-800">
-                  <button
-                    onClick={() => onSelectCategory(prod.id as any)}
-                    className="w-full py-3.5 rounded-xl bg-slate-900 hover:bg-solar-500 hover:text-slate-950 border border-slate-700 hover:border-solar-500 text-white font-bold text-xs transition-all flex items-center justify-center space-x-2 active:scale-95"
-                  >
-                    <span>Configure {prod.name}</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </button>
+                <div className="p-6 sm:p-8 space-y-6 flex-1 flex flex-col justify-between">
+                  <div className="space-y-4">
+                    {/* Title & Capacity */}
+                    <div>
+                      <h3 className="text-xl font-bold text-white font-['Outfit']">{prod.name}</h3>
+                      <div className="text-2xl font-black text-solar-400 font-mono mt-1">{prod.capacity}</div>
+                    </div>
+
+                    {/* Feature Checklist */}
+                    <div className="space-y-2.5 pt-2 border-t border-slate-800 text-xs text-slate-300 font-mono">
+                      <div className="flex items-center space-x-2">
+                        <CheckCircle className="w-4 h-4 text-solar-500 flex-shrink-0" />
+                        <span>{prod.spots}</span>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <CheckCircle className="w-4 h-4 text-solar-500 flex-shrink-0" />
+                        <span className="truncate">{prod.profiles}</span>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <CheckCircle className="w-4 h-4 text-solar-500 flex-shrink-0" />
+                        <span className="truncate">{prod.modules}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* CTA */}
+                  <div className="pt-4 border-t border-slate-800">
+                    <button
+                      onClick={() => onSelectCategory(prod.id as any)}
+                      className="w-full py-3.5 rounded-xl bg-slate-900 hover:bg-solar-500 hover:text-slate-950 border border-slate-700 hover:border-solar-500 text-white font-bold text-xs transition-all flex items-center justify-center space-x-2 active:scale-95"
+                    >
+                      <span>Configure {prod.name}</span>
+                      <ArrowRight className="w-4 h-4" />
+                    </button>
+                  </div>
                 </div>
 
               </div>
