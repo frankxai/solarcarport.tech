@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { 
   Car, Building2, Home, Shield, ChevronRight, ChevronLeft, Zap, Sun, 
-  CheckCircle2, Cpu, Battery, Wrench, FileSpreadsheet, ArrowRight, Download, Check, Sparkles
+  Cpu, Battery, Wrench, FileSpreadsheet, ArrowRight, Download, Sparkles
 } from 'lucide-react';
 import { Interactive2DRenderer, ConfiguratorState } from './Interactive2DRenderer';
 
@@ -85,12 +85,12 @@ export const SolarConfigurator: React.FC<SolarConfiguratorProps> = ({ onOpenERP,
   };
 
   return (
-    <section id="configurator" className="py-20 px-4 lg:px-8 relative bg-slate-950">
+    <section id="configurator" className="py-20 px-4 sm:px-6 lg:px-8 relative bg-slate-950">
       <div className="max-w-7xl mx-auto space-y-10">
         
         {/* Header */}
         <div className="text-center space-y-4 max-w-3xl mx-auto">
-          <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-solar-500/10 border border-solar-500/30 text-solar-400 text-xs font-semibold uppercase tracking-wider">
+          <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-solar-500/10 border border-solar-500/30 text-solar-400 text-xs font-semibold uppercase tracking-wider font-mono">
             <Sparkles className="w-4 h-4" />
             <span>Interactive 6-Step Guided Configurator</span>
           </div>
@@ -116,9 +116,9 @@ export const SolarConfigurator: React.FC<SolarConfiguratorProps> = ({ onOpenERP,
               <button
                 key={idx}
                 onClick={() => setStep(idx + 1)}
-                className={`py-2 px-1 rounded-xl transition-all border ${
+                className={`py-2.5 px-1 rounded-xl transition-all border cursor-pointer ${
                   step === idx + 1
-                    ? 'bg-solar-500 text-slate-950 font-bold border-solar-400 shadow-solar-glow'
+                    ? 'bg-solar-500 text-slate-950 font-black border-solar-400 shadow-solar-glow'
                     : step > idx + 1
                     ? 'bg-slate-900 text-solar-400 border-slate-700'
                     : 'bg-slate-900/50 text-slate-500 border-slate-800'
@@ -162,7 +162,7 @@ export const SolarConfigurator: React.FC<SolarConfiguratorProps> = ({ onOpenERP,
 
               <button
                 onClick={onOpenERP}
-                className="w-full py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-electric-400 text-xs font-mono border border-slate-800 hover:border-electric-500/40 flex items-center justify-center space-x-2 transition-all"
+                className="w-full py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-electric-400 text-xs font-mono border border-slate-800 hover:border-electric-500/40 flex items-center justify-center space-x-2 transition-all cursor-pointer"
               >
                 <FileSpreadsheet className="w-4 h-4" />
                 <span>Inspect Live ERP BOM Parts ({moduleCount} Modules)</span>
@@ -171,7 +171,7 @@ export const SolarConfigurator: React.FC<SolarConfiguratorProps> = ({ onOpenERP,
           </div>
 
           {/* Right Column: Dynamic Step Form Workspace */}
-          <div className="lg:col-span-7 glass-panel p-6 sm:p-8 rounded-3xl border border-slate-800 min-h-[500px] flex flex-col justify-between">
+          <div className="lg:col-span-7 glass-panel p-6 sm:p-8 rounded-3xl border border-slate-800 min-h-[520px] flex flex-col justify-between">
             
             {/* STEP 1: SCOPE */}
             {step === 1 && (
@@ -192,7 +192,7 @@ export const SolarConfigurator: React.FC<SolarConfiguratorProps> = ({ onOpenERP,
                     <button
                       key={item.id}
                       onClick={() => updateConfig('category', item.id)}
-                      className={`p-5 rounded-2xl border text-left transition-all ${
+                      className={`p-5 rounded-2xl border text-left transition-all cursor-pointer ${
                         config.category === item.id
                           ? 'bg-solar-500/10 border-solar-500 shadow-solar-glow'
                           : 'bg-slate-900/60 border-slate-800 hover:border-slate-700'
@@ -238,7 +238,7 @@ export const SolarConfigurator: React.FC<SolarConfiguratorProps> = ({ onOpenERP,
                   <div className="grid grid-cols-2 gap-4">
                     <button
                       onClick={() => updateConfig('material', 'aluminum')}
-                      className={`p-4 rounded-xl border text-left ${
+                      className={`p-4 rounded-xl border text-left cursor-pointer ${
                         config.material === 'aluminum' ? 'bg-solar-500/10 border-solar-500 text-white' : 'bg-slate-900 border-slate-800 text-slate-400'
                       }`}
                     >
@@ -247,7 +247,7 @@ export const SolarConfigurator: React.FC<SolarConfiguratorProps> = ({ onOpenERP,
                     </button>
                     <button
                       onClick={() => updateConfig('material', 'steel')}
-                      className={`p-4 rounded-xl border text-left ${
+                      className={`p-4 rounded-xl border text-left cursor-pointer ${
                         config.material === 'steel' ? 'bg-solar-500/10 border-solar-500 text-white' : 'bg-slate-900 border-slate-800 text-slate-400'
                       }`}
                     >
@@ -268,7 +268,7 @@ export const SolarConfigurator: React.FC<SolarConfiguratorProps> = ({ onOpenERP,
                       <button
                         key={col.id}
                         onClick={() => updateConfig('postColor', col.id)}
-                        className={`p-3 rounded-xl border text-xs font-semibold ${
+                        className={`p-3 rounded-xl border text-xs font-semibold cursor-pointer ${
                           config.postColor === col.id ? 'bg-electric-500/10 border-electric-400 text-electric-400' : 'bg-slate-900 border-slate-800 text-slate-400'
                         }`}
                       >
@@ -291,7 +291,7 @@ export const SolarConfigurator: React.FC<SolarConfiguratorProps> = ({ onOpenERP,
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <button
                     onClick={() => updateConfig('moduleType', 'dark')}
-                    className={`p-5 rounded-2xl border text-left ${
+                    className={`p-5 rounded-2xl border text-left cursor-pointer ${
                       config.moduleType === 'dark' ? 'bg-solar-500/10 border-solar-500' : 'bg-slate-900 border-slate-800'
                     }`}
                   >
@@ -302,7 +302,7 @@ export const SolarConfigurator: React.FC<SolarConfiguratorProps> = ({ onOpenERP,
 
                   <button
                     onClick={() => updateConfig('moduleType', 'translucent')}
-                    className={`p-5 rounded-2xl border text-left ${
+                    className={`p-5 rounded-2xl border text-left cursor-pointer ${
                       config.moduleType === 'translucent' ? 'bg-electric-500/10 border-electric-400' : 'bg-slate-900 border-slate-800'
                     }`}
                   >
@@ -347,7 +347,7 @@ export const SolarConfigurator: React.FC<SolarConfiguratorProps> = ({ onOpenERP,
 
                 <div className="p-4 rounded-xl bg-solar-500/10 border border-solar-500/30 text-xs text-slate-300 flex items-center justify-between">
                   <span>Want to view detailed stock counts in Seesen?</span>
-                  <button onClick={onOpenERP} className="text-solar-400 font-bold underline">Open ERP Drawer</button>
+                  <button onClick={onOpenERP} className="text-solar-400 font-bold underline cursor-pointer">Open ERP Drawer</button>
                 </div>
               </div>
             )}
@@ -383,13 +383,13 @@ export const SolarConfigurator: React.FC<SolarConfiguratorProps> = ({ onOpenERP,
                       <div className="grid grid-cols-2 gap-2 pt-2 text-xs font-mono">
                         <button
                           onClick={() => updateConfig('wallboxType', 'standard')}
-                          className={`p-2.5 rounded-lg border ${config.wallboxType === 'standard' ? 'bg-electric-500/20 border-electric-400 text-white' : 'bg-slate-950 border-slate-800 text-slate-400'}`}
+                          className={`p-2.5 rounded-lg border cursor-pointer ${config.wallboxType === 'standard' ? 'bg-electric-500/20 border-electric-400 text-white' : 'bg-slate-950 border-slate-800 text-slate-400'}`}
                         >
                           11kW Standard Charging (+€790)
                         </button>
                         <button
                           onClick={() => updateConfig('wallboxType', 'v2x')}
-                          className={`p-2.5 rounded-lg border ${config.wallboxType === 'v2x' ? 'bg-electric-500/20 border-electric-400 text-white' : 'bg-slate-950 border-slate-800 text-slate-400'}`}
+                          className={`p-2.5 rounded-lg border cursor-pointer ${config.wallboxType === 'v2x' ? 'bg-electric-500/20 border-electric-400 text-white' : 'bg-slate-950 border-slate-800 text-slate-400'}`}
                         >
                           22kW V2X Bidirectional (+€1,490)
                         </button>
@@ -421,7 +421,7 @@ export const SolarConfigurator: React.FC<SolarConfiguratorProps> = ({ onOpenERP,
                           <button
                             key={sz}
                             onClick={() => updateConfig('batterySize', sz as any)}
-                            className={`p-2 rounded-lg border ${config.batterySize === sz ? 'bg-emerald-500/20 border-emerald-400 text-white' : 'bg-slate-950 border-slate-800 text-slate-400'}`}
+                            className={`p-2 rounded-lg border cursor-pointer ${config.batterySize === sz ? 'bg-emerald-500/20 border-emerald-400 text-white' : 'bg-slate-950 border-slate-800 text-slate-400'}`}
                           >
                             {sz} kWh Battery
                           </button>
@@ -474,7 +474,7 @@ export const SolarConfigurator: React.FC<SolarConfiguratorProps> = ({ onOpenERP,
 
                 <button
                   onClick={() => onOpenLeadModal(config, pricing)}
-                  className="w-full py-4 rounded-xl bg-solar-gradient text-slate-950 font-extrabold text-base shadow-solar-glow hover:opacity-95 transition-all flex items-center justify-center space-x-3 active:scale-95"
+                  className="w-full py-4 rounded-xl bg-solar-gradient text-slate-950 font-extrabold text-base shadow-solar-glow hover:opacity-95 transition-all flex items-center justify-center space-x-3 active:scale-95 cursor-pointer"
                 >
                   <Download className="w-5 h-5" />
                   <span>Get Free Specification Dossier & Quote</span>
@@ -487,7 +487,7 @@ export const SolarConfigurator: React.FC<SolarConfiguratorProps> = ({ onOpenERP,
               <button
                 disabled={step === 1}
                 onClick={() => setStep(prev => prev - 1)}
-                className="px-4 py-2.5 rounded-xl bg-slate-900 text-slate-300 text-xs font-bold disabled:opacity-30 hover:bg-slate-800 transition-all flex items-center space-x-1"
+                className="px-4 py-2.5 rounded-xl bg-slate-900 text-slate-300 text-xs font-bold disabled:opacity-30 hover:bg-slate-800 transition-all flex items-center space-x-1 cursor-pointer"
               >
                 <ChevronLeft className="w-4 h-4" />
                 <span>Back</span>
@@ -496,7 +496,7 @@ export const SolarConfigurator: React.FC<SolarConfiguratorProps> = ({ onOpenERP,
               {step < 6 ? (
                 <button
                   onClick={() => setStep(prev => prev + 1)}
-                  className="px-6 py-2.5 rounded-xl bg-solar-gradient text-slate-950 text-xs font-extrabold shadow-solar-glow hover:opacity-95 transition-all flex items-center space-x-2"
+                  className="px-6 py-2.5 rounded-xl bg-solar-gradient text-slate-950 text-xs font-extrabold shadow-solar-glow hover:opacity-95 transition-all flex items-center space-x-2 cursor-pointer"
                 >
                   <span>Continue to Step {step + 1}</span>
                   <ChevronRight className="w-4 h-4" />
@@ -504,7 +504,7 @@ export const SolarConfigurator: React.FC<SolarConfiguratorProps> = ({ onOpenERP,
               ) : (
                 <button
                   onClick={() => onOpenLeadModal(config, pricing)}
-                  className="px-6 py-2.5 rounded-xl bg-electric-gradient text-slate-950 text-xs font-extrabold shadow-electric-glow hover:opacity-95 transition-all flex items-center space-x-2"
+                  className="px-6 py-2.5 rounded-xl bg-electric-gradient text-slate-950 text-xs font-extrabold shadow-electric-glow hover:opacity-95 transition-all flex items-center space-x-2 cursor-pointer"
                 >
                   <span>Request Engineering Review</span>
                   <ArrowRight className="w-4 h-4" />
@@ -516,6 +516,21 @@ export const SolarConfigurator: React.FC<SolarConfiguratorProps> = ({ onOpenERP,
 
         </div>
 
+      </div>
+
+      {/* Floating Mobile Summary Bar for viewports < lg */}
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-slate-950/95 border-t border-solar-500/30 p-4 backdrop-blur-xl flex items-center justify-between">
+        <div className="font-mono">
+          <div className="text-[10px] text-slate-400 uppercase">System Estimate</div>
+          <div className="text-xl font-black text-solar-400">€{totalEur.toLocaleString()}</div>
+        </div>
+
+        <button
+          onClick={() => onOpenLeadModal(config, pricing)}
+          className="px-5 py-2.5 rounded-xl bg-solar-gradient text-slate-950 font-black text-xs shadow-solar-glow active:scale-95"
+        >
+          Get Free Dossier
+        </button>
       </div>
     </section>
   );
