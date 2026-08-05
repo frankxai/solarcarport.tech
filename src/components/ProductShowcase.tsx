@@ -2,177 +2,62 @@
 
 import React from 'react';
 import Image from 'next/image';
-import { Car, Building2, Home, Shield, ArrowRight, CheckCircle, Cpu } from 'lucide-react';
+import { ArrowRight, Building2, Car, Home, MoveRight } from 'lucide-react';
+import type { ConfiguratorState } from './configurator/Interactive2DRenderer';
 
 interface ProductShowcaseProps {
-  onSelectCategory: (category: 'single' | 'double' | 'commercial' | 'terrace' | 'fence') => void;
+  onSelectCategory: (category: ConfiguratorState['category']) => void;
 }
 
-export const ProductShowcase: React.FC<ProductShowcaseProps> = ({ onSelectCategory }) => {
-  const products = [
-    {
-      id: 'single',
-      name: 'Single Solar Carport',
-      tag: 'Residential / Compact',
-      capacity: '3.8 kWp',
-      spots: '1 Vehicle Spot',
-      profiles: 'Extruded Aluminum RAL-ALU-POST-2800',
-      modules: '8x 470W Bifacial Glass-Glass',
-      image: '/images/hero_solar_carport.jpg',
-      icon: Car,
-      color: 'border-solar-500/30 hover:border-solar-500',
-      badgeBg: 'bg-solar-500/10 text-solar-400',
-    },
-    {
-      id: 'double',
-      name: 'Double Solar Carport',
-      tag: 'Best Seller • 2 Cars',
-      capacity: '7.6 kWp',
-      spots: '2 Vehicle Spots',
-      profiles: 'Heavy Dual-Post RAL-ALU-POST-3400',
-      modules: '16x 470W Bifacial Glass-Glass',
-      image: '/images/hero_solar_carport.jpg',
-      icon: Car,
-      color: 'border-solar-500/60 shadow-solar-glow',
-      badgeBg: 'bg-solar-500 text-slate-950 font-bold',
-      popular: true,
-    },
-    {
-      id: 'commercial',
-      name: 'Commercial Parking Fleet',
-      tag: 'Solarpflicht Certified',
-      capacity: '25 kWp - 500+ kWp',
-      spots: '5 to 100+ Vehicle Spots',
-      profiles: 'Galvanized Steel Subframe & Modular Aluminum Purlins',
-      modules: 'Bifacial Industrial 500W TOPCon',
-      image: '/images/commercial_fleet_solar.jpg',
-      icon: Building2,
-      color: 'border-electric-500/40 hover:border-electric-400',
-      badgeBg: 'bg-electric-500/10 text-electric-400',
-    },
-    {
-      id: 'terrace',
-      name: 'Solar Patio & Terrace Canopy',
-      tag: 'Translucent Shading',
-      capacity: '4.5 kWp - 12.0 kWp',
-      spots: 'Patio & Outdoor Living',
-      profiles: 'Slim-Line Anodized Architectural Profile',
-      modules: '20% Light-Permeable Glass-Glass PV',
-      image: '/images/patio_solar_canopy.jpg',
-      icon: Home,
-      color: 'border-emerald-500/30 hover:border-emerald-400',
-      badgeBg: 'bg-emerald-500/10 text-emerald-400',
-    },
-    {
-      id: 'fence',
-      name: 'Bifacial Solar Fence System',
-      tag: 'Boundary Power',
-      capacity: '3.0 kWp - 15.0 kWp',
-      spots: 'Vertical Ground Boundary',
-      profiles: 'Heavy Post Ground Anchor Set',
-      modules: 'Dual-Sided Vertical Solar Panels',
-      image: '/images/bifacial_solar_fence.jpg',
-      icon: Shield,
-      color: 'border-purple-500/30 hover:border-purple-400',
-      badgeBg: 'bg-purple-500/10 text-purple-400',
-    },
-  ];
+const products: Array<{
+  id: ConfiguratorState['category'];
+  name: string;
+  audience: string;
+  description: string;
+  image: string;
+  icon: typeof Car;
+}> = [
+  { id: 'single', name: 'Einzelcarport', audience: '1 Stellplatz', description: 'Kompakte Lösung für Einfahrt, E-Fahrzeug und Eigenverbrauch.', image: '/images/hero_solar_carport.jpg', icon: Car },
+  { id: 'double', name: 'Doppelcarport', audience: '2 Stellplätze', description: 'Mehr Fläche für Haushalt, Fahrzeuge und optionale Ladetechnik.', image: '/images/hero_solar_carport.jpg', icon: Car },
+  { id: 'terrace', name: 'PV-Terrasse', audience: 'Wohnen & Außenraum', description: 'Schatten, Wetterschutz und Energie in einer leichten Überdachung.', image: '/images/patio_solar_canopy.jpg', icon: Home },
+  { id: 'commercial', name: 'Gewerbe & Fuhrpark', audience: 'Mehrere Stellplätze', description: 'Modulare Planung für Mitarbeitende, Kundschaft und Ladebedarf.', image: '/images/commercial_fleet_solar.jpg', icon: Building2 },
+];
 
+export const ProductShowcase: React.FC<ProductShowcaseProps> = ({ onSelectCategory }) => {
   return (
-    <section id="products" className="py-20 px-4 lg:px-8 relative">
-      <div className="max-w-7xl mx-auto space-y-12">
-        
-        {/* Section Header */}
-        <div className="text-center space-y-4 max-w-3xl mx-auto">
-          <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-solar-500/10 border border-solar-500/30 text-solar-400 text-xs font-semibold uppercase tracking-wider">
-            <Cpu className="w-3.5 h-3.5" />
-            <span>Modular Modular German Systems</span>
+    <section id="systems" className="py-16 sm:py-24">
+      <div className="section-shell">
+        <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+          <div className="max-w-3xl">
+            <div className="eyebrow"><MoveRight className="h-4 w-4" /> Systeme</div>
+            <h2 className="mt-4 text-3xl font-black tracking-[-0.035em] text-white sm:text-5xl">Vom privaten Stellplatz bis zum Fuhrpark.</h2>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight font-['Outfit']">
-            Engineered Product Lines for <span className="text-transparent bg-clip-text bg-solar-gradient">Every Requirement</span>
-          </h2>
-          <p className="text-slate-400 text-sm sm:text-base leading-relaxed">
-            All systems are supplied as complete modular bill-of-materials packages—including extruded aluminum profiles, bifacial glass-glass modules, hybrid inverter, and stainless steel assembly hardware.
-          </p>
+          <p className="max-w-md text-sm leading-7 text-slate-400">Die Karten zeigen Systemrichtungen, keine fertigen Angebote. Abmessungen, Leistung und Preis entstehen erst aus der Standortprüfung.</p>
         </div>
 
-        {/* Product Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {products.map((prod) => {
-            const IconComponent = prod.icon;
+        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {products.map((product) => {
+            const Icon = product.icon;
             return (
-              <div 
-                key={prod.id}
-                className={`glass-panel rounded-3xl overflow-hidden border ${prod.color} transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between relative group`}
-              >
-                {prod.popular && (
-                  <div className="absolute top-3 right-3 z-20 px-3 py-1 rounded-full bg-solar-gradient text-slate-950 font-extrabold text-[10px] uppercase tracking-widest shadow-md">
-                    ★ Most Requested
-                  </div>
-                )}
-
-                {/* Card Image Banner */}
-                <div className="relative h-48 w-full overflow-hidden bg-slate-900">
-                  <Image
-                    src={prod.image}
-                    alt={prod.name}
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent" />
-                  
-                  <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between z-10">
-                    <span className={`px-2.5 py-0.5 rounded-full text-[11px] font-mono font-semibold ${prod.badgeBg}`}>
-                      {prod.tag}
-                    </span>
-                    <div className="w-8 h-8 rounded-xl bg-slate-950/80 border border-slate-700 flex items-center justify-center text-solar-400">
-                      <IconComponent className="w-4 h-4" />
-                    </div>
-                  </div>
+              <article key={product.id} className="group overflow-hidden rounded-2xl border border-white/10 bg-[#0d1824] transition hover:border-amber-300/40">
+                <div className="relative aspect-[4/3] overflow-hidden">
+                  <Image src={product.image} alt={`Visualisierung: ${product.name}`} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw" className="object-cover transition duration-500 group-hover:scale-[1.03]" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0d1824] via-transparent to-transparent" />
+                  <span className="absolute right-3 top-3 rounded-full bg-black/60 px-2.5 py-1 text-[9px] font-semibold uppercase tracking-widest text-slate-200">Visualisierung</span>
                 </div>
-
-                <div className="p-6 sm:p-8 space-y-6 flex-1 flex flex-col justify-between">
-                  <div className="space-y-4">
-                    {/* Title & Capacity */}
-                    <div>
-                      <h3 className="text-xl font-bold text-white font-['Outfit']">{prod.name}</h3>
-                      <div className="text-2xl font-black text-solar-400 font-mono mt-1">{prod.capacity}</div>
-                    </div>
-
-                    {/* Feature Checklist */}
-                    <div className="space-y-2.5 pt-2 border-t border-slate-800 text-xs text-slate-300 font-mono">
-                      <div className="flex items-center space-x-2">
-                        <CheckCircle className="w-4 h-4 text-solar-500 flex-shrink-0" />
-                        <span>{prod.spots}</span>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <CheckCircle className="w-4 h-4 text-solar-500 flex-shrink-0" />
-                        <span className="truncate">{prod.profiles}</span>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <CheckCircle className="w-4 h-4 text-solar-500 flex-shrink-0" />
-                        <span className="truncate">{prod.modules}</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* CTA */}
-                  <div className="pt-4 border-t border-slate-800">
-                    <button
-                      onClick={() => onSelectCategory(prod.id as any)}
-                      className="w-full py-3.5 rounded-xl bg-slate-900 hover:bg-solar-500 hover:text-slate-950 border border-slate-700 hover:border-solar-500 text-white font-bold text-xs transition-all flex items-center justify-center space-x-2 active:scale-95"
-                    >
-                      <span>Configure {prod.name}</span>
-                      <ArrowRight className="w-4 h-4" />
-                    </button>
-                  </div>
+                <div className="p-5">
+                  <span className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.14em] text-amber-300"><Icon className="h-4 w-4" />{product.audience}</span>
+                  <h3 className="mt-3 text-xl font-extrabold text-white">{product.name}</h3>
+                  <p className="mt-2 min-h-16 text-sm leading-6 text-slate-400">{product.description}</p>
+                  <button onClick={() => onSelectCategory(product.id)} className="touch-target mt-5 flex w-full items-center justify-between border-t border-white/10 pt-4 text-left text-sm font-bold text-white">
+                    Projekt starten
+                    <ArrowRight className="h-4 w-4 text-amber-300 transition group-hover:translate-x-1" />
+                  </button>
                 </div>
-
-              </div>
+              </article>
             );
           })}
         </div>
-
       </div>
     </section>
   );

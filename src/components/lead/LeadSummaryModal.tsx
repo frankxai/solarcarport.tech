@@ -1,9 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
-import { X, CheckCircle, Download, Send, Phone, Mail, MapPin, User, ShieldCheck, FileText, ArrowRight } from 'lucide-react';
-import { ConfiguratorState } from '../configurator/Interactive2DRenderer';
-import { PricingBreakdown } from '../configurator/SolarConfigurator';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { ArrowRight, CheckCircle, Mail, MapPin, Phone, User, X } from 'lucide-react';
+import type { ConfiguratorState } from '../configurator/Interactive2DRenderer';
+import type { PricingBreakdown } from '../configurator/SolarConfigurator';
 
 interface LeadSummaryModalProps {
   isOpen: boolean;
@@ -13,210 +13,121 @@ interface LeadSummaryModalProps {
 }
 
 export const LeadSummaryModal: React.FC<LeadSummaryModalProps> = ({ isOpen, onClose, config, pricing }) => {
-  const [submitted, setSubmitted] = useState<boolean>(false);
+  const [prepared, setPrepared] = useState(false);
+  const [formData, setFormData] = useState({ fullName: '', email: '', phone: '', zipCity: '', timeline: '3-6 Monate', notes: '' });
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const preparedHeadingRef = useRef<HTMLHeadingElement>(null);
+  const openerRef = useRef<HTMLElement | null>(null);
 
-  const [formData, setFormData] = useState({
-    fullName: '',
-    email: '',
-    phone: '',
-    zipCity: '',
-    timeline: '1-3 months',
-    notes: '',
-  });
+  useEffect(() => {
+    if (isOpen) {
+      openerRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+      window.requestAnimationFrame(() => closeButtonRef.current?.focus());
+    } else {
+      openerRef.current?.focus();
+      openerRef.current = null;
+    }
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (isOpen && prepared) {
+      window.requestAnimationFrame(() => preparedHeadingRef.current?.focus());
+    }
+  }, [isOpen, prepared]);
+
+  const mailto = useMemo(() => {
+    const body = [
+      'Guten Tag,',
+      '',
+      'ich möchte mein Solarcarport-Projekt persönlich prüfen lassen.',
+      `Name: ${formData.fullName}`,
+      `E-Mail: ${formData.email}`,
+      `Telefon: ${formData.phone}`,
+      `PLZ / Ort: ${formData.zipCity}`,
+      `Zeitraum: ${formData.timeline}`,
+      `Systemrichtung: ${config.category}`,
+      `Hinweise: ${formData.notes || '-'}`,
+      '',
+      'Hinweis: Die Website-Indikation ist unverbindlich. Bitte senden Sie mir nach Prüfung die nächsten Schritte.',
+    ].join('\n');
+    return `mailto:info@rialenergy.de?subject=${encodeURIComponent('Projektanfrage SolarCarport.tech')}&body=${encodeURIComponent(body)}`;
+  }, [config.category, formData]);
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setSubmitted(true);
-    // In production, posts JSON payload to webhook / API endpoint for Frank's brother (Sales Lead)
-    console.log('QUALIFIED LEAD DISPATCH TO SALES LEAD:', {
-      customer: formData,
-      config,
-      pricing,
-      timestamp: new Date().toISOString(),
-    });
+  const close = () => {
+    setPrepared(false);
+    onClose();
+  };
+
+  const handleDialogKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      close();
+      return;
+    }
+    if (event.key !== 'Tab') return;
+
+    const focusable = Array.from(dialogRef.current?.querySelectorAll<HTMLElement>('a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])') ?? []);
+    if (!focusable.length) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md overflow-y-auto">
-      <div className="w-full max-w-2xl bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl relative space-y-6">
-        
-        {/* Close Button */}
-        <button 
-          onClick={onClose}
-          className="absolute top-6 right-6 p-2 rounded-lg bg-slate-800 text-slate-400 hover:text-white transition-colors"
-        >
-          <X className="w-5 h-5" />
-        </button>
+    <div ref={dialogRef} onKeyDown={handleDialogKeyDown} className="fixed inset-0 z-[70] overflow-y-auto bg-[#071019]/92 p-3 backdrop-blur-xl sm:p-6" role="dialog" aria-modal="true" aria-labelledby="request-title">
+      <div className="mx-auto my-3 w-full max-w-2xl rounded-3xl border border-white/10 bg-[#0d1824] p-5 shadow-2xl sm:my-8 sm:p-8">
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <span className="eyebrow">Persönliche Prüfung</span>
+            <h2 id="request-title" className="mt-3 text-2xl font-black text-white sm:text-3xl">Projektanfrage vorbereiten</h2>
+            <p className="mt-2 text-sm leading-6 text-slate-400">Ihre Eingaben bleiben zunächst in diesem Browser. Es wird nichts automatisch an ERP, CRM, KI oder Vertrieb übertragen.</p>
+          </div>
+          <button ref={closeButtonRef} onClick={close} aria-label="Dialog schließen" className="touch-target flex shrink-0 items-center justify-center rounded-full border border-white/10 text-slate-300 hover:text-white"><X className="h-5 w-5" /></button>
+        </div>
 
-        {!submitted ? (
-          <>
-            {/* Header */}
-            <div className="space-y-2 text-left">
-              <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-solar-500/10 text-solar-400 text-xs font-mono font-bold uppercase">
-                <FileText className="w-3.5 h-3.5" />
-                <span>RIAL Energy Sales Engineering Dispatch</span>
-              </div>
-              <h3 className="text-2xl font-bold text-white font-['Outfit']">
-                Your Free Configuration Dossier is Ready
-              </h3>
-              <p className="text-xs text-slate-400">
-                Enter your details to receive your official technical specification PDF dossier & direct quotation from RIAL Energy GmbH.
-              </p>
+        {!prepared ? (
+          <form onSubmit={(event) => { event.preventDefault(); setPrepared(true); }} className="mt-7 space-y-4">
+            <p className="rounded-2xl border border-sky-300/20 bg-sky-300/[0.06] p-4 text-xs leading-5 text-sky-100">Ihre Kontaktdaten werden zunächst nur in diesem Browser vorbereitet. Empfänger einer von Ihnen ausdrücklich im E-Mail-Programm versendeten Anfrage ist die RIAL Energy GmbH. Es wird nichts automatisch gesendet; Daten verlassen Ihren Browser erst, wenn Sie den Versand selbst auslösen. Details: <a href="https://www.rialenergy.de/datenschutzerklarung" target="_blank" rel="noreferrer" className="font-bold underline">Datenschutzerklärung</a> und <a href="https://www.rialenergy.de/impressum" target="_blank" rel="noreferrer" className="font-bold underline">Impressum</a>.</p>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <Field icon={User} label="Name" required value={formData.fullName} onChange={(value) => setFormData((current) => ({ ...current, fullName: value }))} autoComplete="name" />
+              <Field icon={Mail} label="E-Mail" type="email" required value={formData.email} onChange={(value) => setFormData((current) => ({ ...current, email: value }))} autoComplete="email" />
+              <Field icon={Phone} label="Telefon" type="tel" value={formData.phone} onChange={(value) => setFormData((current) => ({ ...current, phone: value }))} autoComplete="tel" />
+              <Field icon={MapPin} label="PLZ / Ort" required value={formData.zipCity} onChange={(value) => setFormData((current) => ({ ...current, zipCity: value }))} autoComplete="postal-code" />
             </div>
-
-            {/* Config Summary Strip */}
-            <div className="bg-slate-950 p-4 rounded-2xl border border-slate-800 grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs font-mono">
-              <div>
-                <span className="text-slate-400 block text-[10px]">PACKAGE</span>
-                <strong className="text-white font-bold uppercase">{config.category}</strong>
-              </div>
-              <div>
-                <span className="text-slate-400 block text-[10px]">CAPACITY</span>
-                <strong className="text-solar-400 font-bold">{pricing.kwp} kWp</strong>
-              </div>
-              <div>
-                <span className="text-slate-400 block text-[10px]">ANNUAL SAVINGS</span>
-                <strong className="text-electric-400 font-bold">€{pricing.annualSavingsEur.toLocaleString()}</strong>
-              </div>
-              <div>
-                <span className="text-slate-400 block text-[10px]">ESTIMATED PRICE</span>
-                <strong className="text-emerald-400 font-bold">€{pricing.totalEur.toLocaleString()}</strong>
-              </div>
-            </div>
-
-            {/* Form */}
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-1">
-                  <label className="text-xs text-slate-300 font-mono flex items-center gap-1">
-                    <User className="w-3.5 h-3.5 text-solar-400" />
-                    <span>Full Name *</span>
-                  </label>
-                  <input
-                    required
-                    type="text"
-                    placeholder="e.g. Michael Schmidt"
-                    value={formData.fullName}
-                    onChange={(e) => setFormData(prev => ({ ...prev, fullName: e.target.value }))}
-                    className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white text-sm focus:border-solar-500 focus:outline-none"
-                  />
-                </div>
-
-                <div className="space-y-1">
-                  <label className="text-xs text-slate-300 font-mono flex items-center gap-1">
-                    <Mail className="w-3.5 h-3.5 text-solar-400" />
-                    <span>Email Address *</span>
-                  </label>
-                  <input
-                    required
-                    type="email"
-                    placeholder="name@company.de"
-                    value={formData.email}
-                    onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
-                    className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white text-sm focus:border-solar-500 focus:outline-none"
-                  />
-                </div>
-
-                <div className="space-y-1">
-                  <label className="text-xs text-slate-300 font-mono flex items-center gap-1">
-                    <Phone className="w-3.5 h-3.5 text-solar-400" />
-                    <span>Phone Number *</span>
-                  </label>
-                  <input
-                    required
-                    type="tel"
-                    placeholder="+49 170 1234567"
-                    value={formData.phone}
-                    onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
-                    className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white text-sm focus:border-solar-500 focus:outline-none"
-                  />
-                </div>
-
-                <div className="space-y-1">
-                  <label className="text-xs text-slate-300 font-mono flex items-center gap-1">
-                    <MapPin className="w-3.5 h-3.5 text-solar-400" />
-                    <span>ZIP & City (Germany/DACH) *</span>
-                  </label>
-                  <input
-                    required
-                    type="text"
-                    placeholder="e.g. 38723 Seesen"
-                    value={formData.zipCity}
-                    onChange={(e) => setFormData(prev => ({ ...prev, zipCity: e.target.value }))}
-                    className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white text-sm focus:border-solar-500 focus:outline-none"
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-1">
-                <label className="text-xs text-slate-300 font-mono">Planned Installation Horizon:</label>
-                <select
-                  value={formData.timeline}
-                  onChange={(e) => setFormData(prev => ({ ...prev, timeline: e.target.value }))}
-                  className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white text-sm focus:border-solar-500 focus:outline-none font-mono"
-                >
-                  <option value="Immediate (< 1 month)">Immediate (&lt; 1 month)</option>
-                  <option value="1-3 months">1 to 3 months</option>
-                  <option value="3-6 months">3 to 6 months</option>
-                  <option value="Commercial Planning">Commercial Planning / Tender</option>
-                </select>
-              </div>
-
-              <div className="pt-2">
-                <button
-                  type="submit"
-                  className="w-full py-4 rounded-xl bg-solar-gradient text-slate-950 font-extrabold text-base shadow-solar-glow hover:opacity-95 transition-all flex items-center justify-center space-x-2 active:scale-95"
-                >
-                  <Send className="w-5 h-5" />
-                  <span>Send Configuration & Request Lead Dossier</span>
-                </button>
-              </div>
-            </form>
-          </>
+            <label className="block text-sm font-bold text-white">Projektzeitraum<select value={formData.timeline} onChange={(event) => setFormData((current) => ({ ...current, timeline: event.target.value }))} className="touch-target mt-2 w-full rounded-xl border border-white/10 bg-[#071019] px-4 text-white"><option>so bald wie möglich</option><option>1-3 Monate</option><option>3-6 Monate</option><option>6-12 Monate</option><option>frühe Planung</option></select></label>
+            <label className="block text-sm font-bold text-white">Hinweise<textarea rows={4} value={formData.notes} onChange={(event) => setFormData((current) => ({ ...current, notes: event.target.value }))} placeholder="Standort, Maße, Besonderheiten oder Fragen" className="mt-2 w-full rounded-xl border border-white/10 bg-[#071019] p-4 text-white placeholder:text-slate-600" /></label>
+            <button type="submit" className="touch-target flex w-full items-center justify-center gap-3 rounded-xl bg-amber-300 px-6 font-extrabold text-slate-950">Anfrage prüfen <ArrowRight className="h-5 w-5" /></button>
+          </form>
         ) : (
-          /* Submission Confirmation & Download Screen */
-          <div className="py-8 text-center space-y-6">
-            <div className="w-16 h-16 rounded-full bg-emerald-500/20 border border-emerald-500 text-emerald-400 flex items-center justify-center mx-auto shadow-lg">
-              <CheckCircle className="w-10 h-10" />
+          <div className="mt-8 text-center">
+            <CheckCircle className="mx-auto h-12 w-12 text-amber-300" />
+            <h3 ref={preparedHeadingRef} tabIndex={-1} className="mt-4 text-2xl font-black text-white">Anfrage vorbereitet — noch nicht versendet.</h3>
+            <p className="mx-auto mt-3 max-w-lg text-sm leading-6 text-slate-400">Öffnen Sie die Anfrage in Ihrem E-Mail-Programm, prüfen Sie die Angaben und senden Sie sie selbst an RIAL Energy. Erst dann verlassen Daten Ihren Browser.</p>
+            <div className="mt-6 rounded-2xl border border-white/10 bg-[#071019] p-4 text-left text-sm text-slate-300">
+              <p><strong className="text-white">System:</strong> {config.category}</p>
+              <p className="mt-1"><strong className="text-white">Website-Indikation:</strong> ca. {pricing.kwp} kWp</p>
+              <p className="mt-1 text-xs text-slate-500">Keine technische Freigabe, keine Verfügbarkeits- oder Preisgarantie.</p>
             </div>
-
-            <div className="space-y-2">
-              <h3 className="text-2xl font-extrabold text-white font-['Outfit']">Configuration Successfully Dispatched!</h3>
-              <p className="text-xs text-slate-300 max-w-md mx-auto">
-                Thank you, <strong>{formData.fullName}</strong>. Your customized solar carport dossier has been routed directly to our sales engineering director for review.
-              </p>
-            </div>
-
-            <div className="bg-slate-950 p-6 rounded-2xl border border-slate-800 space-y-4 max-w-lg mx-auto font-mono text-xs text-left">
-              <div className="text-solar-400 font-bold border-b border-slate-900 pb-2">QUALIFIED LEAD SUMMARY RECORD:</div>
-              <div><span className="text-slate-400">Customer:</span> {formData.fullName} ({formData.email})</div>
-              <div><span className="text-slate-400">Location:</span> {formData.zipCity}</div>
-              <div><span className="text-slate-400">System Spec:</span> {pricing.kwp} kWp {config.category.toUpperCase()} ({config.material})</div>
-              <div><span className="text-slate-400">Estimated Investment:</span> €{pricing.totalEur.toLocaleString()} (0% VAT)</div>
-              <div><span className="text-slate-400">Sales Lead Assignment:</span> RIAL Energy Sales Director (Direct Referral)</div>
-            </div>
-
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
-              <button
-                onClick={() => alert(`Dossier PDF Downloaded for ${formData.fullName}!`)}
-                className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-electric-gradient text-slate-950 font-bold text-xs shadow-electric-glow hover:opacity-95 transition-all flex items-center justify-center space-x-2"
-              >
-                <Download className="w-4 h-4" />
-                <span>Download PDF Dossier</span>
-              </button>
-              <button
-                onClick={onClose}
-                className="w-full sm:w-auto px-6 py-3.5 rounded-xl glass-panel text-white font-bold text-xs hover:border-slate-600 transition-all"
-              >
-                Close & Return to Site
-              </button>
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-center">
+              <a href={mailto} className="touch-target inline-flex items-center justify-center gap-2 rounded-xl bg-amber-300 px-6 font-extrabold text-slate-950"><Mail className="h-5 w-5" /> Im E-Mail-Programm öffnen</a>
+              <button onClick={() => setPrepared(false)} className="touch-target rounded-xl border border-white/10 px-6 font-bold text-white">Angaben ändern</button>
             </div>
           </div>
         )}
-
       </div>
     </div>
   );
 };
+
+function Field({ icon: Icon, label, type = 'text', required = false, value, onChange, autoComplete }: { icon: typeof User; label: string; type?: string; required?: boolean; value: string; onChange: (value: string) => void; autoComplete?: string }) {
+  return <label className="block text-sm font-bold text-white"><span className="flex items-center gap-2"><Icon className="h-4 w-4 text-amber-300" />{label}{required ? ' *' : ''}</span><input required={required} type={type} value={value} autoComplete={autoComplete} onChange={(event) => onChange(event.target.value)} className="touch-target mt-2 w-full rounded-xl border border-white/10 bg-[#071019] px-4 text-white focus:border-amber-300" /></label>;
+}
