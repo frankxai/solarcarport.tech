@@ -7,7 +7,12 @@ import type { ConfiguratorState } from './Interactive2DRenderer';
 
 interface SolarConfiguratorProps {
   selectedCategory: ConfiguratorState['category'];
-  onOpenLeadModal: (config: ConfiguratorState, pricing: PricingBreakdown) => void;
+  onOpenLeadModal: (config: ConfiguratorState, pricing: PricingBreakdown, project: ProjectContext) => void;
+}
+
+export interface ProjectContext {
+  postcode: string;
+  timeline: string;
 }
 
 export interface PricingBreakdown {
@@ -196,7 +201,7 @@ export const SolarConfigurator: React.FC<SolarConfiguratorProps> = ({ selectedCa
                     </div>
                   </div>
                   <ul className="mt-6 space-y-3 text-sm text-slate-300"><li className="flex gap-3"><Check className="h-5 w-5 shrink-0 text-amber-300" />Annahmen bleiben sichtbar und überprüfbar.</li><li className="flex gap-3"><Check className="h-5 w-5 shrink-0 text-amber-300" />Keine automatische ERP-, CRM- oder KI-Übertragung.</li><li className="flex gap-3"><Check className="h-5 w-5 shrink-0 text-amber-300" />Verbindlichkeit erst nach persönlicher Prüfung.</li></ul>
-                  <button onClick={() => onOpenLeadModal(config, pricing)} className="touch-target mt-7 flex w-full items-center justify-center gap-3 rounded-xl bg-amber-300 px-6 font-extrabold text-slate-950 hover:bg-amber-200">Anfrage vorbereiten <ArrowRight className="h-5 w-5" /></button>
+                  <button onClick={() => onOpenLeadModal(config, pricing, { postcode, timeline })} className="touch-target mt-7 flex w-full items-center justify-center gap-3 rounded-xl bg-amber-300 px-6 font-extrabold text-slate-950 hover:bg-amber-200">Anfrage vorbereiten <ArrowRight className="h-5 w-5" /></button>
                 </div>
               )}
             </div>

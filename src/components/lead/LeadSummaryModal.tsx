@@ -3,16 +3,17 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { ArrowRight, CheckCircle, Mail, MapPin, Phone, User, X } from 'lucide-react';
 import type { ConfiguratorState } from '../configurator/Interactive2DRenderer';
-import type { PricingBreakdown } from '../configurator/SolarConfigurator';
+import type { PricingBreakdown, ProjectContext } from '../configurator/SolarConfigurator';
 
 interface LeadSummaryModalProps {
   isOpen: boolean;
   onClose: () => void;
   config: ConfiguratorState;
   pricing: PricingBreakdown;
+  project: ProjectContext;
 }
 
-export const LeadSummaryModal: React.FC<LeadSummaryModalProps> = ({ isOpen, onClose, config, pricing }) => {
+export const LeadSummaryModal: React.FC<LeadSummaryModalProps> = ({ isOpen, onClose, config, pricing, project }) => {
   const [prepared, setPrepared] = useState(false);
   const [formData, setFormData] = useState({ fullName: '', email: '', phone: '', zipCity: '', timeline: '3-6 Monate', notes: '' });
   const dialogRef = useRef<HTMLDivElement>(null);
@@ -22,12 +23,22 @@ export const LeadSummaryModal: React.FC<LeadSummaryModalProps> = ({ isOpen, onCl
 
   useEffect(() => {
     if (isOpen) {
+      setFormData((current) => ({ ...current, zipCity: project.postcode, timeline: project.timeline }));
       openerRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
       window.requestAnimationFrame(() => closeButtonRef.current?.focus());
     } else {
       openerRef.current?.focus();
       openerRef.current = null;
     }
+  }, [isOpen, project.postcode, project.timeline]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
   }, [isOpen]);
 
   useEffect(() => {
@@ -101,7 +112,7 @@ export const LeadSummaryModal: React.FC<LeadSummaryModalProps> = ({ isOpen, onCl
               <Field icon={User} label="Name" required value={formData.fullName} onChange={(value) => setFormData((current) => ({ ...current, fullName: value }))} autoComplete="name" />
               <Field icon={Mail} label="E-Mail" type="email" required value={formData.email} onChange={(value) => setFormData((current) => ({ ...current, email: value }))} autoComplete="email" />
               <Field icon={Phone} label="Telefon" type="tel" value={formData.phone} onChange={(value) => setFormData((current) => ({ ...current, phone: value }))} autoComplete="tel" />
-              <Field icon={MapPin} label="PLZ / Ort" required value={formData.zipCity} onChange={(value) => setFormData((current) => ({ ...current, zipCity: value }))} autoComplete="postal-code" />
+              <Field icon={MapPin} label="PLZ / Ort" required value={formData.zipCity} onChange={(value) => setFormData((current) => ({ ...current, zipCity: value }))} autoComplete="postal-code" hint="Aus Ihrer Standortprüfung übernommen — ergänzen Sie bei Bedarf den Ort." />
             </div>
             <label className="block text-sm font-bold text-white">Projektzeitraum<select value={formData.timeline} onChange={(event) => setFormData((current) => ({ ...current, timeline: event.target.value }))} className="touch-target mt-2 w-full rounded-xl border border-white/10 bg-[#071019] px-4 text-white"><option>so bald wie möglich</option><option>1-3 Monate</option><option>3-6 Monate</option><option>6-12 Monate</option><option>frühe Planung</option></select></label>
             <label className="block text-sm font-bold text-white">Hinweise<textarea rows={4} value={formData.notes} onChange={(event) => setFormData((current) => ({ ...current, notes: event.target.value }))} placeholder="Standort, Maße, Besonderheiten oder Fragen" className="mt-2 w-full rounded-xl border border-white/10 bg-[#071019] p-4 text-white placeholder:text-slate-600" /></label>
@@ -128,6 +139,7 @@ export const LeadSummaryModal: React.FC<LeadSummaryModalProps> = ({ isOpen, onCl
   );
 };
 
-function Field({ icon: Icon, label, type = 'text', required = false, value, onChange, autoComplete }: { icon: typeof User; label: string; type?: string; required?: boolean; value: string; onChange: (value: string) => void; autoComplete?: string }) {
-  return <label className="block text-sm font-bold text-white"><span className="flex items-center gap-2"><Icon className="h-4 w-4 text-amber-300" />{label}{required ? ' *' : ''}</span><input required={required} type={type} value={value} autoComplete={autoComplete} onChange={(event) => onChange(event.target.value)} className="touch-target mt-2 w-full rounded-xl border border-white/10 bg-[#071019] px-4 text-white focus:border-amber-300" /></label>;
+function Field({ icon: Icon, label, type = 'text', required = false, value, onChange, autoComplete, hint }: { icon: typeof User; label: string; type?: string; required?: boolean; value: string; onChange: (value: string) => void; autoComplete?: string; hint?: string }) {
+  const hintId = hint ? `field-hint-${label.toLowerCase().replace(/[^a-z0-9]+/g, '-')}` : undefined;
+  return <label className="block text-sm font-bold text-white"><span className="flex items-center gap-2"><Icon className="h-4 w-4 text-amber-300" />{label}{required ? ' *' : ''}</span><input required={required} aria-describedby={hintId} type={type} value={value} autoComplete={autoComplete} onChange={(event) => onChange(event.target.value)} className="touch-target mt-2 w-full rounded-xl border border-white/10 bg-[#071019] px-4 text-white focus:border-amber-300" />{hint && <span id={hintId} className="mt-2 block text-xs font-normal leading-5 text-slate-500">{hint}</span>}</label>;
 }

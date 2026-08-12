@@ -14,14 +14,14 @@ export const Hero: React.FC<HeroProps> = ({ onStartConfigurator }) => {
     <>
       <section id="top" className="relative isolate min-h-[calc(100svh-72px)] overflow-hidden border-b border-white/10">
         <Image
-          src="/images/hero_solar_carport.jpg"
-          alt="Visualisierung eines architektonisch integrierten Solarcarports"
+          src="/media/5x3-carport-rostak-19.webp"
+          alt="Realisiertes Solarcarport mit bifazialen PV-Modulen und Aluminiumtragwerk"
           fill
           priority
           sizes="100vw"
-          className="-z-20 object-cover object-[58%_center]"
+          className="-z-20 object-cover object-[54%_42%] sm:object-[64%_38%]"
         />
-        <div className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(7,16,25,0.97)_0%,rgba(7,16,25,0.88)_46%,rgba(7,16,25,0.28)_100%)]" />
+        <div className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(7,16,25,0.98)_0%,rgba(7,16,25,0.9)_46%,rgba(7,16,25,0.25)_100%)]" />
         <div className="absolute inset-0 -z-10 bg-[linear-gradient(0deg,#071019_0%,transparent_42%)]" />
 
         <div className="section-shell flex min-h-[calc(100svh-72px)] items-end pb-10 pt-16 sm:items-center sm:py-20">
@@ -65,7 +65,7 @@ export const Hero: React.FC<HeroProps> = ({ onStartConfigurator }) => {
         </div>
 
         <span className="absolute bottom-3 right-4 rounded-full bg-black/55 px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-slate-300 backdrop-blur-md">
-          Visualisierung
+          Realisiertes System
         </span>
       </section>
 

@@ -7,7 +7,8 @@ import { Hero } from '@/components/Hero';
 import { LeadSummaryModal } from '@/components/lead/LeadSummaryModal';
 import { PreeminenceEducation } from '@/components/PreeminenceEducation';
 import { ProductShowcase } from '@/components/ProductShowcase';
-import { PricingBreakdown, SolarConfigurator } from '@/components/configurator/SolarConfigurator';
+import { ProjectProof } from '@/components/ProjectProof';
+import { PricingBreakdown, ProjectContext, SolarConfigurator } from '@/components/configurator/SolarConfigurator';
 import type { ConfiguratorState } from '@/components/configurator/Interactive2DRenderer';
 
 const initialConfig: ConfiguratorState = {
@@ -46,6 +47,7 @@ export default function Home() {
   const [leadOpen, setLeadOpen] = useState(false);
   const [activeConfig, setActiveConfig] = useState<ConfiguratorState>(initialConfig);
   const [activePricing, setActivePricing] = useState<PricingBreakdown>(initialPricing);
+  const [activeProject, setActiveProject] = useState<ProjectContext>({ postcode: '', timeline: '3-6 Monate' });
 
   const startConfigurator = (category: ConfiguratorState['category'] = selectedCategory) => {
     setSelectedCategory(category);
@@ -55,9 +57,10 @@ export default function Home() {
     });
   };
 
-  const openRequest = (config: ConfiguratorState, pricing: PricingBreakdown) => {
+  const openRequest = (config: ConfiguratorState, pricing: PricingBreakdown, project: ProjectContext) => {
     setActiveConfig(config);
     setActivePricing(pricing);
+    setActiveProject(project);
     setLeadOpen(true);
   };
 
@@ -65,11 +68,12 @@ export default function Home() {
     <main className="min-h-screen bg-[#071019] text-slate-100">
       <Header onOpenConfigurator={() => startConfigurator()} />
       <Hero onStartConfigurator={startConfigurator} />
+      <ProjectProof />
       <ProductShowcase onSelectCategory={startConfigurator} />
       <PreeminenceEducation />
       <SolarConfigurator key={configuratorKey} selectedCategory={selectedCategory} onOpenLeadModal={openRequest} />
       <Footer />
-      <LeadSummaryModal isOpen={leadOpen} onClose={() => setLeadOpen(false)} config={activeConfig} pricing={activePricing} />
+      <LeadSummaryModal isOpen={leadOpen} onClose={() => setLeadOpen(false)} config={activeConfig} pricing={activePricing} project={activeProject} />
     </main>
   );
 }

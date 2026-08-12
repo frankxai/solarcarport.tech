@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import Image from 'next/image';
 import { Check, FileCheck2, Layers3, Scale, ShieldCheck } from 'lucide-react';
 
@@ -35,8 +35,17 @@ type TopicKey = keyof typeof topics;
 
 export const PreeminenceEducation: React.FC = () => {
   const [active, setActive] = useState<TopicKey>('structure');
+  const tabRefs = useRef<Record<TopicKey, HTMLButtonElement | null>>({ structure: null, modules: null, rules: null });
   const topic = topics[active];
   const TopicIcon = topic.icon;
+  const topicKeys = Object.keys(topics) as TopicKey[];
+
+  const selectRelativeTab = (current: TopicKey, direction: -1 | 1) => {
+    const currentIndex = topicKeys.indexOf(current);
+    const nextKey = topicKeys[(currentIndex + direction + topicKeys.length) % topicKeys.length];
+    setActive(nextKey);
+    tabRefs.current[nextKey]?.focus();
+  };
 
   return (
     <section id="planning" className="border-y border-white/10 bg-slate-950/55 py-16 sm:py-24">
@@ -48,15 +57,25 @@ export const PreeminenceEducation: React.FC = () => {
         </div>
 
         <div className="mt-9 flex gap-2 overflow-x-auto pb-2" role="tablist" aria-label="Planungsthemen">
-          {(Object.keys(topics) as TopicKey[]).map((key) => {
+          {topicKeys.map((key) => {
             const item = topics[key];
             const Icon = item.icon;
             return (
               <button
                 key={key}
+                id={`planning-tab-${key}`}
+                ref={(element) => { tabRefs.current[key] = element; }}
                 role="tab"
                 aria-selected={active === key}
+                aria-controls={`planning-panel-${key}`}
+                tabIndex={active === key ? 0 : -1}
                 onClick={() => setActive(key)}
+                onKeyDown={(event) => {
+                  if (event.key === 'ArrowRight') { event.preventDefault(); selectRelativeTab(key, 1); }
+                  if (event.key === 'ArrowLeft') { event.preventDefault(); selectRelativeTab(key, -1); }
+                  if (event.key === 'Home') { event.preventDefault(); setActive(topicKeys[0]); tabRefs.current[topicKeys[0]]?.focus(); }
+                  if (event.key === 'End') { event.preventDefault(); setActive(topicKeys[topicKeys.length - 1]); tabRefs.current[topicKeys[topicKeys.length - 1]]?.focus(); }
+                }}
                 className={`touch-target shrink-0 rounded-full border px-5 text-sm font-bold transition ${active === key ? 'border-amber-300 bg-amber-300 text-slate-950' : 'border-white/15 bg-white/[0.035] text-slate-300 hover:border-white/30'}`}
               >
                 <span className="flex items-center gap-2"><Icon className="h-4 w-4" />{item.label}</span>
@@ -65,7 +84,7 @@ export const PreeminenceEducation: React.FC = () => {
           })}
         </div>
 
-        <div className="mt-5 grid overflow-hidden rounded-3xl border border-white/10 bg-[#0d1824] lg:grid-cols-2">
+        <div id={`planning-panel-${active}`} role="tabpanel" aria-labelledby={`planning-tab-${active}`} className="mt-5 grid overflow-hidden rounded-3xl border border-white/10 bg-[#0d1824] lg:grid-cols-2">
           <div className="flex flex-col justify-center p-6 sm:p-10 lg:p-12">
             <TopicIcon className="h-8 w-8 text-amber-300" aria-hidden="true" />
             <h3 className="mt-6 text-2xl font-black tracking-tight text-white sm:text-3xl">{topic.title}</h3>
