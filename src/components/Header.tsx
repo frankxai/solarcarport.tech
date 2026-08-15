@@ -1,71 +1,95 @@
 'use client';
 
-import React from 'react';
-import { Sun, ShieldCheck, Database, FileText, ChevronRight, Phone } from 'lucide-react';
+import React, { useState } from 'react';
+import { ArrowRight, Menu, Sun, X } from 'lucide-react';
 
 interface HeaderProps {
   onOpenConfigurator: () => void;
-  onOpenERP: () => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({ onOpenConfigurator, onOpenERP }) => {
-  return (
-    <header className="sticky top-0 z-50 glass-panel border-b border-white/10 px-4 lg:px-8 py-3.5 transition-all">
-      <div className="max-w-7xl mx-auto flex items-center justify-between">
-        
-        {/* Brand & Logo */}
-        <div className="flex items-center space-x-3 cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-          <div className="w-10 h-10 rounded-xl bg-solar-gradient flex items-center justify-center shadow-solar-glow">
-            <Sun className="w-6 h-6 text-slate-950 font-bold" />
-          </div>
-          <div>
-            <div className="flex items-center space-x-1.5">
-              <span className="font-extrabold text-xl tracking-tight text-white font-['Outfit']">solarcarport<span className="text-solar-500">.tech</span></span>
-            </div>
-            <div className="flex items-center space-x-2 text-[10px] text-slate-400 font-medium tracking-wide uppercase">
-              <span>RIAL Energy GmbH</span>
-              <span>•</span>
-              <span className="text-electric-400 flex items-center gap-0.5">
-                <ShieldCheck className="w-3 h-3" /> German Engineering
-              </span>
-            </div>
-          </div>
-        </div>
+const links = [
+  { href: '#systems', label: 'Systeme' },
+  { href: '#planning', label: 'Planung' },
+  { href: '#configurator', label: 'Standortprüfung' },
+];
 
-        {/* Navigation Links */}
-        <nav className="hidden md:flex items-center space-x-8 text-sm font-medium text-slate-300">
-          <a href="#technology" className="hover:text-solar-400 transition-colors">Bifacial Technology</a>
-          <a href="#preeminence" className="hover:text-solar-400 transition-colors">Education & Standards</a>
-          <a href="#products" className="hover:text-solar-400 transition-colors">System Types</a>
-          <a href="#configurator" className="hover:text-solar-400 transition-colors">Configurator</a>
-          <button 
-            onClick={onOpenERP}
-            className="flex items-center space-x-1.5 px-2.5 py-1 rounded-lg bg-slate-800/80 border border-slate-700 text-electric-400 hover:bg-slate-800 transition-all text-xs font-mono"
-          >
-            <Database className="w-3.5 h-3.5" />
-            <span>Sample ERP Engine</span>
-          </button>
+export const Header: React.FC<HeaderProps> = ({ onOpenConfigurator }) => {
+  const [open, setOpen] = useState(false);
+
+  const close = () => setOpen(false);
+
+  return (
+    <header className="sticky top-0 z-50 border-b border-white/10 bg-[#071019]/94 backdrop-blur-xl">
+      <div className="section-shell flex h-[72px] items-center justify-between gap-3">
+        <a href="#top" onClick={close} className="flex min-w-0 items-center gap-3" aria-label="SolarCarport.tech Startseite">
+          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-amber-300/30 bg-amber-400/10 text-amber-300">
+            <Sun className="h-5 w-5" aria-hidden="true" />
+          </span>
+          <span className="min-w-0">
+            <span className="block truncate text-[17px] font-extrabold tracking-[-0.03em] text-white">
+              solarcarport<span className="text-amber-300">.tech</span>
+            </span>
+            <span className="block truncate text-[9px] font-semibold uppercase tracking-[0.18em] text-slate-400">
+              Eine Marke der RIAL Energy GmbH
+            </span>
+          </span>
+        </a>
+
+        <nav className="hidden items-center gap-7 text-sm font-semibold text-slate-300 md:flex" aria-label="Hauptnavigation">
+          {links.map((link) => (
+            <a key={link.href} href={link.href} className="transition-colors hover:text-white">
+              {link.label}
+            </a>
+          ))}
         </nav>
 
-        {/* CTA Buttons */}
-        <div className="flex items-center space-x-3">
-          <a 
-            href="tel:+495381987650"
-            className="hidden sm:flex items-center space-x-2 px-3 py-2 rounded-xl text-xs font-semibold text-slate-300 hover:text-white bg-slate-900/60 border border-slate-800 hover:border-slate-700 transition-all"
-          >
-            <Phone className="w-3.5 h-3.5 text-solar-500" />
-            <span>Sales Line</span>
-          </a>
+        <div className="flex items-center gap-2">
           <button
             onClick={onOpenConfigurator}
-            className="flex items-center space-x-2 px-4 py-2.5 rounded-xl bg-solar-gradient hover:opacity-95 text-slate-950 font-bold text-xs sm:text-sm shadow-solar-glow transition-all active:scale-95"
+            className="touch-target hidden items-center gap-2 rounded-full bg-amber-400 px-5 text-sm font-extrabold text-slate-950 transition hover:bg-amber-300 sm:flex"
           >
-            <span>Configurator</span>
-            <ChevronRight className="w-4 h-4" />
+            Standort prüfen
+            <ArrowRight className="h-4 w-4" aria-hidden="true" />
+          </button>
+          <button
+            type="button"
+            className="touch-target flex items-center justify-center rounded-full border border-white/15 text-white md:hidden"
+            aria-expanded={open}
+            aria-controls="mobile-menu"
+            aria-label={open ? 'Menü schließen' : 'Menü öffnen'}
+            onClick={() => setOpen((value) => !value)}
+          >
+            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
         </div>
-
       </div>
+
+      {open && (
+        <nav id="mobile-menu" className="border-t border-white/10 bg-[#071019] px-4 py-4 md:hidden" aria-label="Mobile Navigation">
+          <div className="mx-auto flex max-w-7xl flex-col gap-1">
+            {links.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={close}
+                className="touch-target flex items-center rounded-xl px-3 text-base font-semibold text-slate-200 hover:bg-white/5"
+              >
+                {link.label}
+              </a>
+            ))}
+            <button
+              onClick={() => {
+                close();
+                onOpenConfigurator();
+              }}
+              className="touch-target mt-2 flex items-center justify-center gap-2 rounded-xl bg-amber-400 px-4 font-extrabold text-slate-950"
+            >
+              Standort prüfen
+              <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </button>
+          </div>
+        </nav>
+      )}
     </header>
   );
 };

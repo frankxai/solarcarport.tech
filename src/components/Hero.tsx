@@ -1,179 +1,108 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import Image from 'next/image';
-import { Sun, Zap, Shield, ArrowRight, Award, CheckCircle2, TrendingUp, Cpu } from 'lucide-react';
+import { ArrowDown, ArrowRight, Building2, Car, MapPin, Ruler, ShieldCheck } from 'lucide-react';
+import type { ConfiguratorState } from './configurator/Interactive2DRenderer';
 
 interface HeroProps {
-  onStartConfigurator: () => void;
+  onStartConfigurator: (category?: ConfiguratorState['category']) => void;
 }
 
 export const Hero: React.FC<HeroProps> = ({ onStartConfigurator }) => {
-  const [parkingSpaces, setParkingSpaces] = useState<number>(2);
-
-  // Quick calculations for Jay Abraham instant proof
-  const kWpPerSpace = 3.8;
-  const totalKWp = Math.round(parkingSpaces * kWpPerSpace * 10) / 10;
-  const kwhPerYear = Math.round(totalKWp * 980); // 980 kWh/kWp average yield in Germany
-  const annualSavingsEur = Math.round(kwhPerYear * 0.32); // @ 32 cents/kWh
-  const co2SavingsTons = Math.round(kwhPerYear * 0.42 / 100) / 10; // 0.42 kg/kWh
-
   return (
-    <section className="relative min-h-[92vh] pt-12 pb-20 px-4 lg:px-8 overflow-hidden flex items-center justify-center">
-      {/* Hero Background Image with Gradient Overlay */}
-      <div className="absolute inset-0 z-0">
+    <>
+      <section id="top" className="relative isolate min-h-[calc(100svh-72px)] overflow-hidden border-b border-white/10">
         <Image
-          src="/images/hero_solar_carport.jpg"
-          alt="Solar Carport Infrastructure RIAL Energy"
+          src="/media/5x3-carport-rostak-19.webp"
+          alt="Realisiertes Solarcarport mit bifazialen PV-Modulen und Aluminiumtragwerk"
           fill
           priority
-          className="object-cover object-center opacity-25 mix-blend-luminosity scale-105"
+          sizes="100vw"
+          className="-z-20 object-cover object-[54%_42%] sm:object-[64%_38%]"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/90 via-background/80 to-background" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(245,158,11,0.2),rgba(0,0,0,0))]" />
-      </div>
+        <div className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(7,16,25,0.98)_0%,rgba(7,16,25,0.9)_46%,rgba(7,16,25,0.25)_100%)]" />
+        <div className="absolute inset-0 -z-10 bg-[linear-gradient(0deg,#071019_0%,transparent_42%)]" />
 
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
-        
-        {/* Left Column: Preeminent Copy & Positioning */}
-        <div className="lg:col-span-7 space-y-8 text-left">
-          
-          <div className="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-solar-500/10 border border-solar-500/30 text-solar-400 text-xs font-semibold tracking-wide uppercase shadow-solar-glow">
-            <Award className="w-4 h-4 text-solar-500" />
-            <span>RIAL Energy GmbH • Official SolarCarport.tech Platform</span>
-          </div>
-
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-[1.1] font-['Outfit']">
-            Turn Parking Spaces & Patios Into <span className="text-transparent bg-clip-text bg-solar-gradient">High-Yield Solar Infrastructure</span>
-          </h1>
-
-          <p className="text-lg text-slate-300 max-w-2xl font-normal leading-relaxed">
-            Stop letting outdoor real estate sit idle. Our engineered modular aluminum solar carports and bifacial glass-glass canopies deliver up to <strong className="text-white font-semibold">25% higher annual energy yield</strong> while shielding vehicles, providing shade, and meeting German commercial solar mandates.
-          </p>
-
-          {/* Quick Badges */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-2 font-mono text-xs">
-            <div className="flex items-center space-x-2.5 text-slate-300">
-              <CheckCircle2 className="w-4 h-4 text-solar-500 flex-shrink-0" />
-              <span>Snow Load to 2.5 kN/m²</span>
-            </div>
-            <div className="flex items-center space-x-2.5 text-slate-300">
-              <CheckCircle2 className="w-4 h-4 text-solar-500 flex-shrink-0" />
-              <span>0% VAT (§12 Abs. 3 UStG)</span>
-            </div>
-            <div className="flex items-center space-x-2.5 text-slate-300">
-              <CheckCircle2 className="w-4 h-4 text-solar-500 flex-shrink-0" />
-              <span>German ERP BOM Parts</span>
-            </div>
-          </div>
-
-          {/* Call to Actions */}
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-4 sm:space-y-0 sm:space-x-4 pt-4">
-            <button
-              onClick={onStartConfigurator}
-              className="flex items-center justify-center space-x-3 px-8 py-4 rounded-xl bg-solar-gradient text-slate-950 font-extrabold text-base shadow-solar-glow hover:opacity-95 transition-all transform hover:-translate-y-0.5 active:scale-95"
-            >
-              <span>Build Free Configuration</span>
-              <ArrowRight className="w-5 h-5" />
-            </button>
-            <a
-              href="#preeminence"
-              className="flex items-center justify-center space-x-2 px-6 py-4 rounded-xl glass-panel text-slate-200 font-semibold text-sm hover:border-slate-500 transition-all"
-            >
-              <span>Read Solarpflicht & Technology Guide</span>
-            </a>
-          </div>
-
-        </div>
-
-        {/* Right Column: Interactive Quick Energy Yield Calculator */}
-        <div className="lg:col-span-5">
-          <div className="glass-panel p-6 sm:p-8 rounded-3xl border border-solar-500/30 shadow-2xl relative">
-            <div className="absolute -top-3 right-6 bg-solar-gradient text-slate-950 text-[10px] font-extrabold uppercase tracking-widest px-3 py-1 rounded-full shadow-md">
-              Live Quick Estimator
+        <div className="section-shell flex min-h-[calc(100svh-72px)] items-end pb-10 pt-16 sm:items-center sm:py-20">
+          <div className="max-w-3xl">
+            <div className="eyebrow mb-5">
+              <MapPin className="h-4 w-4" aria-hidden="true" />
+              Planung & Materialkompetenz aus Seesen
             </div>
 
-            <div className="flex items-center space-x-3 mb-6">
-              <div className="w-10 h-10 rounded-xl bg-electric-500/10 border border-electric-500/30 flex items-center justify-center text-electric-400">
-                <Cpu className="w-5 h-5" />
-              </div>
-              <div>
-                <h3 className="text-lg font-bold text-white">Solar Carport Yield Simulator</h3>
-                <p className="text-xs text-slate-400">Instant ROI & Capacity Indication</p>
-              </div>
-            </div>
+            <h1 className="max-w-[12ch] text-[clamp(2.75rem,11vw,5.9rem)] font-black leading-[0.94] tracking-[-0.065em] text-white">
+              Aus Parkfläche wird Energiefläche.
+            </h1>
 
-            {/* Slider */}
-            <div className="space-y-4 mb-6">
-              <div className="flex justify-between items-center text-sm font-semibold">
-                <span className="text-slate-300">Parking Capacity:</span>
-                <span className="text-solar-400 font-bold font-mono text-base">{parkingSpaces} {parkingSpaces === 1 ? 'Vehicle Spot' : 'Vehicle Spots'}</span>
-              </div>
-              <input
-                type="range"
-                min={1}
-                max={50}
-                step={1}
-                value={parkingSpaces}
-                onChange={(e) => setParkingSpaces(parseInt(e.target.value))}
-                className="w-full h-2.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-solar-500"
-              />
-              <div className="flex justify-between text-[11px] text-slate-500 font-mono">
-                <span>1 Spot (Single Carport)</span>
-                <span>10 Spots</span>
-                <span>50 Spots (Commercial Fleet)</span>
-              </div>
-            </div>
-
-            {/* Output Matrix */}
-            <div className="grid grid-cols-2 gap-3 mb-6">
-              <div className="bg-slate-900/90 p-3.5 rounded-2xl border border-slate-800">
-                <div className="text-[11px] text-slate-400 uppercase tracking-wider mb-1 flex items-center justify-between">
-                  <span>PV Capacity</span>
-                  <Zap className="w-3.5 h-3.5 text-solar-400" />
-                </div>
-                <div className="text-xl font-black text-white font-mono">{totalKWp} <span className="text-xs text-slate-400 font-normal">kWp</span></div>
-              </div>
-
-              <div className="bg-slate-900/90 p-3.5 rounded-2xl border border-slate-800">
-                <div className="text-[11px] text-slate-400 uppercase tracking-wider mb-1 flex items-center justify-between">
-                  <span>Annual Yield</span>
-                  <Sun className="w-3.5 h-3.5 text-solar-400" />
-                </div>
-                <div className="text-xl font-black text-solar-400 font-mono">{kwhPerYear.toLocaleString()} <span className="text-xs text-slate-400 font-normal">kWh/yr</span></div>
-              </div>
-
-              <div className="bg-slate-900/90 p-3.5 rounded-2xl border border-slate-800">
-                <div className="text-[11px] text-slate-400 uppercase tracking-wider mb-1 flex items-center justify-between">
-                  <span>Est. Annual Savings</span>
-                  <TrendingUp className="w-3.5 h-3.5 text-electric-400" />
-                </div>
-                <div className="text-xl font-black text-electric-400 font-mono">€{annualSavingsEur.toLocaleString()} <span className="text-xs text-slate-400 font-normal">/yr</span></div>
-              </div>
-
-              <div className="bg-slate-900/90 p-3.5 rounded-2xl border border-slate-800">
-                <div className="text-[11px] text-slate-400 uppercase tracking-wider mb-1 flex items-center justify-between">
-                  <span>CO2 Avoided</span>
-                  <Shield className="w-3.5 h-3.5 text-emerald-400" />
-                </div>
-                <div className="text-xl font-black text-emerald-400 font-mono">{co2SavingsTons} <span className="text-xs text-slate-400 font-normal">tons/yr</span></div>
-              </div>
-            </div>
-
-            <button
-              onClick={onStartConfigurator}
-              className="w-full py-3.5 rounded-xl bg-electric-gradient text-slate-950 font-bold text-sm shadow-electric-glow hover:opacity-95 transition-all flex items-center justify-center space-x-2"
-            >
-              <span>Customize Full Structural Bill of Materials</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
-            <p className="text-[11px] text-slate-400 text-center mt-2.5 font-mono">
-              Includes pre-calculated extruded aluminum profile BOM & live pricing.
+            <p className="mt-6 max-w-xl text-base leading-7 text-slate-200 sm:text-lg sm:leading-8">
+              Solarcarports und PV-Überdachungen für private Grundstücke, Gewerbe und Fuhrparks — strukturiert geplant, nachvollziehbar angefragt und persönlich geprüft.
             </p>
+
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+              <button
+                onClick={() => onStartConfigurator('double')}
+                className="touch-target inline-flex items-center justify-center gap-3 rounded-full bg-amber-400 px-7 text-base font-extrabold text-slate-950 shadow-[0_18px_45px_rgba(244,170,34,0.22)] transition hover:bg-amber-300"
+              >
+                Standort prüfen
+                <ArrowRight className="h-5 w-5" aria-hidden="true" />
+              </button>
+              <a
+                href="#systems"
+                className="touch-target inline-flex items-center justify-center gap-2 rounded-full border border-white/20 bg-black/20 px-6 text-sm font-bold text-white backdrop-blur-sm transition hover:bg-white/10"
+              >
+                Systeme ansehen
+                <ArrowDown className="h-4 w-4" aria-hidden="true" />
+              </a>
+            </div>
+
+            <div className="mt-8 grid max-w-2xl grid-cols-1 gap-3 border-t border-white/15 pt-5 text-sm text-slate-300 sm:grid-cols-3">
+              <div className="flex items-center gap-2.5"><Ruler className="h-4 w-4 text-amber-300" /> Standortbezogene Vorprüfung</div>
+              <div className="flex items-center gap-2.5"><ShieldCheck className="h-4 w-4 text-amber-300" /> Nachweise im Angebot</div>
+              <div className="flex items-center gap-2.5"><MapPin className="h-4 w-4 text-amber-300" /> Persönliche Rückmeldung</div>
+            </div>
           </div>
         </div>
 
-      </div>
-    </section>
+        <span className="absolute bottom-3 right-4 rounded-full bg-black/55 px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-slate-300 backdrop-blur-md">
+          Realisiertes System
+        </span>
+      </section>
+
+      <section className="border-b border-white/10 bg-[#0b1621] py-8 sm:py-10" aria-labelledby="path-title">
+        <div className="section-shell">
+          <div className="grid gap-4 lg:grid-cols-[0.8fr_1fr_1fr] lg:items-stretch">
+            <div className="flex flex-col justify-center py-2">
+              <div className="eyebrow">Ihr Projekt</div>
+              <h2 id="path-title" className="mt-2 text-2xl font-black tracking-tight text-white sm:text-3xl">Welcher Standort passt?</h2>
+            </div>
+
+            <button
+              onClick={() => onStartConfigurator('double')}
+              className="group min-h-32 rounded-2xl border border-white/10 bg-white/[0.035] p-5 text-left transition hover:border-amber-300/50 hover:bg-white/[0.06]"
+            >
+              <span className="flex items-center justify-between">
+                <Car className="h-6 w-6 text-amber-300" aria-hidden="true" />
+                <ArrowRight className="h-5 w-5 text-slate-500 transition group-hover:translate-x-1 group-hover:text-amber-300" />
+              </span>
+              <span className="mt-5 block text-lg font-extrabold text-white">Privat & Wohnen</span>
+              <span className="mt-1 block text-sm leading-6 text-slate-400">Einzel- oder Doppelcarport, Terrasse und architektonische Überdachung.</span>
+            </button>
+
+            <button
+              onClick={() => onStartConfigurator('commercial')}
+              className="group min-h-32 rounded-2xl border border-white/10 bg-white/[0.035] p-5 text-left transition hover:border-sky-300/50 hover:bg-white/[0.06]"
+            >
+              <span className="flex items-center justify-between">
+                <Building2 className="h-6 w-6 text-sky-300" aria-hidden="true" />
+                <ArrowRight className="h-5 w-5 text-slate-500 transition group-hover:translate-x-1 group-hover:text-sky-300" />
+              </span>
+              <span className="mt-5 block text-lg font-extrabold text-white">Gewerbe & Fuhrpark</span>
+              <span className="mt-1 block text-sm leading-6 text-slate-400">Mehrere Stellplätze, Ladeinfrastruktur und projektbezogene Machbarkeit.</span>
+            </button>
+          </div>
+        </div>
+      </section>
+    </>
   );
 };
