@@ -45,9 +45,13 @@ export const Header: React.FC<HeaderProps> = ({ onOpenConfigurator, onOpenERP })
               {link.label}
             </a>
           ))}
+          <a href="/digital" className="inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full bg-gradient-to-r from-cyan-500/10 to-cyan-400/20 border border-cyan-400/40 text-cyan-300 hover:border-cyan-300 hover:text-cyan-200 transition-all font-['Poppins'] font-semibold shadow-sm">
+            <Sparkles className="w-3 h-3 text-cyan-400" />
+            <span>Digital Blueprints & AI →</span>
+          </a>
           <a href="/v2" className="inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full bg-gradient-to-r from-amber-500/10 to-amber-400/20 border border-amber-400/40 text-amber-300 hover:border-amber-300 hover:text-amber-200 transition-all font-['Poppins'] font-semibold shadow-sm">
             <Sparkles className="w-3 h-3 text-amber-400" />
-            <span>V2 Luxury Platform →</span>
+            <span>V2 Luxury →</span>
           </a>
         </nav>
 
@@ -92,6 +96,10 @@ export const Header: React.FC<HeaderProps> = ({ onOpenConfigurator, onOpenERP })
                 {link.label}
               </a>
             ))}
+            <a href="/digital" onClick={close} className="py-2.5 text-cyan-400 font-semibold text-sm flex items-center justify-between">
+              <span>Digital Blueprints & AI Skills</span>
+              <Sparkles className="w-4 h-4" />
+            </a>
             <a href="/v2" onClick={close} className="py-2.5 text-amber-400 font-semibold text-sm flex items-center justify-between">
               <span>V2 Luxury Platform</span>
               <Sparkles className="w-4 h-4" />

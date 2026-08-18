@@ -60,8 +60,12 @@ export const HeaderV2: React.FC<HeaderV2Props> = ({ onOpenERP, lang, setLang }) 
             <a href="#v2-education" className="hover:text-white transition-colors">{content.nav2}</a>
             <a href="#projects" className="hover:text-white transition-colors">{content.nav3}</a>
             <a href="#v2-configurator" className="hover:text-white transition-colors">{content.nav4}</a>
+            <a href="/digital" className="inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full bg-cyan-400/10 border border-cyan-400/40 text-cyan-300 hover:text-cyan-200 font-semibold transition-all">
+              <Sparkles className="w-3 h-3 text-cyan-400" />
+              <span>Digital Blueprints & AI</span>
+            </a>
             <a href="/" className="text-xs text-slate-400 hover:text-amber-400 transition-colors border-l border-slate-700/60 pl-4">
-              Standard Version
+              Standard
             </a>
           </nav>
 
@@ -126,7 +130,11 @@ export const HeaderV2: React.FC<HeaderV2Props> = ({ onOpenERP, lang, setLang }) 
             <a href="#v2-hero" onClick={() => setMobileMenuOpen(false)} className="py-2 border-b border-slate-800">{content.nav1}</a>
             <a href="#v2-education" onClick={() => setMobileMenuOpen(false)} className="py-2 border-b border-slate-800">{content.nav2}</a>
             <a href="#projects" onClick={() => setMobileMenuOpen(false)} className="py-2 border-b border-slate-800">{content.nav3}</a>
-            <a href="#v2-configurator" onClick={() => setMobileMenuOpen(false)} className="py-2">{content.nav4}</a>
+            <a href="#v2-configurator" onClick={() => setMobileMenuOpen(false)} className="py-2 border-b border-slate-800">{content.nav4}</a>
+            <a href="/digital" onClick={() => setMobileMenuOpen(false)} className="py-2 text-cyan-400 font-semibold flex items-center justify-between">
+              <span>Digital Blueprints & AI</span>
+              <Sparkles className="w-4 h-4" />
+            </a>
             <a href="/" onClick={() => setMobileMenuOpen(false)} className="py-2 text-amber-400 font-semibold border-t border-slate-800">Standard Version →</a>
           </nav>
 

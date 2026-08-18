@@ -1,0 +1,18 @@
+{
+  "name": "solar-engineering-skills",
+  "version": "1.0.0",
+  "description": "Agentic Solar Carport Engineering & Sales Skill Pack for Antigravity, Claude Code & Codex",
+  "publisher": "RIAL Energy / SolarForge",
+  "skills": [
+    {
+      "name": "solar-architect",
+      "path": "./solar-architect/SKILL.md",
+      "description": "Autonomous German solar carport engineering, structural sizing, bifacial yield calculation, and universal permit planning agent."
+    },
+    {
+      "name": "solar-closer",
+      "path": "./solar-closer/SKILL.md",
+      "description": "Preeminent AI Sales Closer, Diagnostic Lead Qualifier, and Objection Destroyer for Solar Carport Contractors and Installers."
+    }
+  ]
+}
