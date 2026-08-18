@@ -10,10 +10,10 @@ interface LeadSummaryModalProps {
   onClose: () => void;
   config: ConfiguratorState;
   pricing: PricingBreakdown;
-  project: ProjectContext;
+  project?: ProjectContext;
 }
 
-export const LeadSummaryModal: React.FC<LeadSummaryModalProps> = ({ isOpen, onClose, config, pricing, project }) => {
+export const LeadSummaryModal: React.FC<LeadSummaryModalProps> = ({ isOpen, onClose, config, pricing, project = { postcode: '', timeline: '3-6 Monate' } }) => {
   const [prepared, setPrepared] = useState(false);
   const [formData, setFormData] = useState({ fullName: '', email: '', phone: '', zipCity: '', timeline: '3-6 Monate', notes: '' });
   const dialogRef = useRef<HTMLDivElement>(null);
@@ -23,14 +23,14 @@ export const LeadSummaryModal: React.FC<LeadSummaryModalProps> = ({ isOpen, onCl
 
   useEffect(() => {
     if (isOpen) {
-      setFormData((current) => ({ ...current, zipCity: project.postcode, timeline: project.timeline }));
+      setFormData((current) => ({ ...current, zipCity: project?.postcode || current.zipCity, timeline: project?.timeline || current.timeline }));
       openerRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
       window.requestAnimationFrame(() => closeButtonRef.current?.focus());
     } else {
       openerRef.current?.focus();
       openerRef.current = null;
     }
-  }, [isOpen, project.postcode, project.timeline]);
+  }, [isOpen, project?.postcode, project?.timeline]);
 
   useEffect(() => {
     if (!isOpen) return;

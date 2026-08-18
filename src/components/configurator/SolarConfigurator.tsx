@@ -1,13 +1,13 @@
 'use client';
 
 import React, { useEffect, useMemo, useState } from 'react';
-import Image from 'next/image';
-import { ArrowRight, Battery, Building2, Car, Check, ChevronLeft, ChevronRight, Home, Info, MapPin, PlugZap, Shield, Sparkles, Wrench } from 'lucide-react';
+import { ArrowRight, Battery, Building2, Car, Check, ChevronLeft, ChevronRight, Home, Info, MapPin, PlugZap, Shield, Sparkles, Wrench, FileSpreadsheet } from 'lucide-react';
 import type { ConfiguratorState } from './Interactive2DRenderer';
 
 interface SolarConfiguratorProps {
-  selectedCategory: ConfiguratorState['category'];
+  selectedCategory?: ConfiguratorState['category'];
   onOpenLeadModal: (config: ConfiguratorState, pricing: PricingBreakdown, project: ProjectContext) => void;
+  onOpenERP?: () => void;
 }
 
 export interface ProjectContext {
@@ -39,9 +39,9 @@ const categories: Array<{ id: ConfiguratorState['category']; name: string; detai
   { id: 'fence', name: 'Solarzaun', detail: 'Grundstücksgrenze', icon: Shield },
 ];
 
-const stepLabels = ['Standort', 'Tragwerk', 'Optionen', 'Ergebnis'];
+const stepLabels = ['Standort & PLZ', 'Tragwerk', 'Optionen', 'Ergebnis'];
 
-export const SolarConfigurator: React.FC<SolarConfiguratorProps> = ({ selectedCategory, onOpenLeadModal }) => {
+export const SolarConfigurator: React.FC<SolarConfiguratorProps> = ({ selectedCategory = 'double', onOpenLeadModal, onOpenERP }) => {
   const [step, setStep] = useState(1);
   const [furthestStep, setFurthestStep] = useState(1);
   const [postcode, setPostcode] = useState('');
@@ -61,13 +61,13 @@ export const SolarConfigurator: React.FC<SolarConfiguratorProps> = ({ selectedCa
   });
 
   useEffect(() => {
-    setConfig((current) => ({
-      ...current,
-      category: selectedCategory,
-      spots: selectedCategory === 'commercial' ? Math.max(current.spots, 10) : selectedCategory === 'double' ? 2 : 1,
-    }));
-    setStep(1);
-    setFurthestStep(1);
+    if (selectedCategory) {
+      setConfig((current) => ({
+        ...current,
+        category: selectedCategory,
+        spots: selectedCategory === 'commercial' ? Math.max(current.spots, 10) : selectedCategory === 'double' ? 2 : 1,
+      }));
+    }
   }, [selectedCategory]);
 
   const update = <K extends keyof ConfiguratorState>(key: K, value: ConfiguratorState[K]) => {
@@ -76,24 +76,22 @@ export const SolarConfigurator: React.FC<SolarConfiguratorProps> = ({ selectedCa
 
   const pricing = useMemo<PricingBreakdown>(() => {
     const modules = config.category === 'commercial' ? Math.max(config.spots * 4, 24) : config.category === 'double' ? 16 : config.category === 'terrace' ? 10 : 8;
-    const kwp = Math.round(modules * 0.45 * 10) / 10;
-    const baseCarportPrice = config.category === 'commercial' ? config.spots * 2650 : config.category === 'double' ? 5200 : config.category === 'terrace' ? 4400 : 3200;
-    const modulesPrice = modules * 150;
-    const inverterPrice = Math.round(kwp * 170 + 900);
-    const wallboxPrice = config.wallbox ? (config.wallboxType === 'v2x' ? 1650 : 850) : 0;
-    const batteryPrice = config.battery ? Number(config.batterySize) * 390 : 0;
-    const assemblyPrice = config.assemblyService ? Math.round(baseCarportPrice * 0.3) : 0;
+    const kwp = Math.round(modules * 0.47 * 10) / 10;
+    const baseCarportPrice = config.category === 'commercial' ? config.spots * 2650 : config.category === 'double' ? 4900 : config.category === 'terrace' ? 4400 : 2900;
+    const modulesPrice = modules * 145;
+    const inverterPrice = Math.round(kwp * 170 + 850);
+    const wallboxPrice = config.wallbox ? (config.wallboxType === 'v2x' ? 1490 : 790) : 0;
+    const batteryPrice = config.battery ? Number(config.batterySize) * 380 : 0;
+    const assemblyPrice = config.assemblyService ? Math.round(baseCarportPrice * 0.28) : 0;
     const subtotal = baseCarportPrice + modulesPrice + inverterPrice + wallboxPrice + batteryPrice + assemblyPrice;
-    const vatAmount = Math.round(subtotal * 0.19);
-    const totalEur = subtotal + vatAmount;
-    const annualKwhYield = Math.round(kwp * 900);
-    const annualSavingsEur = Math.round(annualKwhYield * 0.3);
+    const vatAmount = 0; // 0% MwSt (§ 12 Abs. 3 UStG)
+    const totalEur = subtotal;
+    const annualKwhYield = Math.round(kwp * 980);
+    const annualSavingsEur = Math.round(annualKwhYield * 0.32);
     const paybackYears = annualSavingsEur > 0 ? Math.round((totalEur / annualSavingsEur) * 10) / 10 : 0;
     return { baseCarportPrice, modulesPrice, inverterPrice, wallboxPrice, batteryPrice, assemblyPrice, subtotal, vatAmount, totalEur, kwp, annualKwhYield, annualSavingsEur, paybackYears };
   }, [config]);
 
-  const rangeLow = Math.round(pricing.totalEur * 0.8 / 500) * 500;
-  const rangeHigh = Math.round(pricing.totalEur * 1.25 / 500) * 500;
   const readyForNext = step !== 1 || /^\d{5}$/.test(postcode);
   const advanceStep = () => {
     if (!readyForNext) return;
@@ -105,12 +103,12 @@ export const SolarConfigurator: React.FC<SolarConfiguratorProps> = ({ selectedCa
   };
 
   return (
-    <section id="configurator" className="scroll-mt-20 bg-[#0b1621] py-16 sm:py-24">
+    <section id="configurator" className="scroll-mt-20 bg-[#071019] py-16 sm:py-24 border-b border-white/10">
       <div className="section-shell">
         <div className="mx-auto max-w-3xl text-center">
-          <div className="eyebrow justify-center"><Sparkles className="h-4 w-4" /> Unverbindliche Vorprüfung</div>
-          <h2 className="mt-4 text-3xl font-black tracking-[-0.04em] text-white sm:text-5xl">Passt ein Solarcarport zu Ihrem Standort?</h2>
-          <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-slate-400 sm:text-base">Vier kurze Schritte liefern eine Planungsindikation. Verbindliche Statik, Leistung, Preis und Verfügbarkeit entstehen erst nach persönlicher Prüfung.</p>
+          <div className="eyebrow justify-center"><Sparkles className="h-4 w-4" /> Unverbindliche Standort-Vorprüfung</div>
+          <h2 className="mt-4 text-3xl font-black tracking-[-0.04em] text-white sm:text-5xl font-['Syne']">Passt ein Solarcarport zu Ihrem Standort?</h2>
+          <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-slate-400 sm:text-base">Vier kurze Schritte liefern eine Planungsindikation nach DIN EN 1991 mit 0% MwSt (§12 Abs. 3 UStG).</p>
         </div>
 
         <div className="mx-auto mt-9 max-w-4xl">
@@ -119,108 +117,241 @@ export const SolarConfigurator: React.FC<SolarConfiguratorProps> = ({ selectedCa
               const targetStep = index + 1;
               const isReachable = targetStep <= furthestStep;
               return (
-              <button key={label} disabled={!isReachable} onClick={() => { if (isReachable) setStep(targetStep); }} className={`touch-target flex items-center justify-center rounded-full border px-3 text-sm font-bold disabled:cursor-not-allowed disabled:opacity-50 ${step === targetStep ? 'border-amber-300 bg-amber-300 text-slate-950' : isReachable ? 'border-amber-300/40 bg-amber-300/10 text-amber-200' : 'border-white/10 bg-white/[0.03] text-slate-500'}`}>
-                {index + 1}. {label}
-              </button>
+                <button
+                  key={label}
+                  disabled={!isReachable}
+                  onClick={() => { if (isReachable) setStep(targetStep); }}
+                  className={`touch-target flex items-center justify-center rounded-full border px-3 text-xs font-bold disabled:cursor-not-allowed disabled:opacity-50 ${
+                    step === targetStep
+                      ? 'border-amber-400 bg-amber-400 text-slate-950 font-black'
+                      : isReachable
+                      ? 'border-amber-400/40 bg-amber-400/10 text-amber-200'
+                      : 'border-white/10 bg-white/[0.03] text-slate-500'
+                  }`}
+                >
+                  {index + 1}. {label}
+                </button>
               );
             })}
           </div>
         </div>
 
-        <div className="mx-auto mt-5 grid max-w-6xl gap-5 lg:grid-cols-[0.82fr_1.18fr]">
-          <aside className="order-2 overflow-hidden rounded-3xl border border-white/10 bg-[#071019] lg:order-1">
-            <div className="relative aspect-[4/3] lg:aspect-auto lg:h-[330px]">
-              <Image src={config.category === 'commercial' ? '/images/commercial_fleet_solar.jpg' : config.category === 'terrace' ? '/images/patio_solar_canopy.jpg' : '/images/hero_solar_carport.jpg'} alt="Visualisierung der gewählten Systemrichtung" fill sizes="(max-width: 1024px) 100vw, 40vw" className="object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#071019] via-transparent to-transparent" />
-              <span className="absolute bottom-3 right-3 rounded-full bg-black/65 px-3 py-1 text-[9px] font-semibold uppercase tracking-widest text-white">Visualisierung</span>
-            </div>
-            <div className="p-5 sm:p-6">
-              <div className="flex items-center justify-between gap-4">
-                <span className="text-sm font-bold text-white">Planungsindikation</span>
-                <span className="rounded-full bg-sky-300/10 px-3 py-1 text-xs font-bold text-sky-200">keine Preiszusage</span>
+        <div className="mx-auto mt-8 max-w-4xl rounded-3xl border border-white/10 bg-slate-900/80 p-6 sm:p-10 shadow-2xl">
+          {/* STEP 1: STANDORT & ANWENDUNG */}
+          {step === 1 && (
+            <div className="space-y-8">
+              <div>
+                <h3 className="text-xl font-extrabold text-white sm:text-2xl font-['Syne']">Schritt 1: Anwendung & Standort-Postleitzahl</h3>
+                <p className="mt-1 text-sm text-slate-400">Geben Sie Ihre PLZ für die regionale Schneelast- und Einstrahlungsprüfung an.</p>
               </div>
-              <dl className="mt-5 grid grid-cols-2 gap-3 text-sm">
-                <div className="rounded-xl border border-white/10 bg-white/[0.03] p-3"><dt className="text-xs text-slate-500">PV-Leistung</dt><dd className="mt-1 font-extrabold text-white">ca. {pricing.kwp} kWp</dd></div>
-                <div className="rounded-xl border border-white/10 bg-white/[0.03] p-3"><dt className="text-xs text-slate-500">Investitionsrahmen</dt><dd className="mt-1 font-extrabold text-white">{rangeLow.toLocaleString('de-DE')}–{rangeHigh.toLocaleString('de-DE')} €</dd></div>
-              </dl>
-              <p className="mt-4 text-xs leading-5 text-slate-500">Annahmen: 450-W-Module, 900 kWh/kWp Jahresertrag, 0,30 €/kWh, Standard-MwSt. von 19 %. Steuerliche Sonderregeln, Statik, Tiefbau, Netzanschluss und Standortbedingungen können das Ergebnis ändern.</p>
+
+              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                {categories.map((cat) => {
+                  const Icon = cat.icon;
+                  const selected = config.category === cat.id;
+                  return (
+                    <button
+                      key={cat.id}
+                      type="button"
+                      onClick={() => update('category', cat.id)}
+                      className={`touch-target flex items-start justify-between rounded-2xl border p-4 text-left transition ${
+                        selected ? 'border-amber-400 bg-amber-400/10' : 'border-white/10 bg-slate-950/60 hover:border-slate-700'
+                      }`}
+                    >
+                      <div>
+                        <span className="font-extrabold text-white text-base font-['Syne'] block">{cat.name}</span>
+                        <span className="text-xs text-slate-400 block mt-1">{cat.detail}</span>
+                      </div>
+                      <Icon className={`h-5 w-5 ${selected ? 'text-amber-400' : 'text-slate-500'}`} />
+                    </button>
+                  );
+                })}
+              </div>
+
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div className="rounded-2xl border border-white/10 bg-slate-950 p-4">
+                  <label htmlFor="postcode" className="block text-xs font-semibold text-slate-300">
+                    Postleitzahl (Deutschland):
+                  </label>
+                  <div className="mt-2 flex items-center gap-2">
+                    <MapPin className="h-4 w-4 text-amber-400" />
+                    <input
+                      id="postcode"
+                      type="text"
+                      inputMode="numeric"
+                      maxLength={5}
+                      placeholder="z.B. 38722 (Seesen)"
+                      value={postcode}
+                      onChange={(e) => setPostcode(e.target.value.replace(/\D/g, ''))}
+                      className="w-full bg-transparent text-sm font-bold text-white outline-none placeholder:text-slate-600"
+                    />
+                  </div>
+                </div>
+
+                <div className="rounded-2xl border border-white/10 bg-slate-950 p-4">
+                  <label htmlFor="timeline" className="block text-xs font-semibold text-slate-300">
+                    Geplanter Realisierungszeitraum:
+                  </label>
+                  <select
+                    id="timeline"
+                    value={timeline}
+                    onChange={(e) => setTimeline(e.target.value)}
+                    className="mt-2 w-full bg-transparent text-sm font-bold text-white outline-none cursor-pointer"
+                  >
+                    <option value="Sofort" className="bg-slate-900">Sofort (Bestand prüfen)</option>
+                    <option value="1-3 Monate" className="bg-slate-900">1-3 Monate</option>
+                    <option value="3-6 Monate" className="bg-slate-900">3-6 Monate</option>
+                    <option value="Nur Vorplanung" className="bg-slate-900">Nur Vorplanung</option>
+                  </select>
+                </div>
+              </div>
             </div>
-          </aside>
+          )}
 
-          <div className="order-1 flex min-h-[560px] flex-col rounded-3xl border border-white/10 bg-[#0d1824] p-5 sm:p-8 lg:order-2">
-            <div className="flex-1">
-              {step === 1 && (
-                <div>
-                  <h3 className="text-2xl font-black text-white">Standort und Nutzung</h3>
-                  <p className="mt-2 text-sm leading-6 text-slate-400">Wählen Sie die Systemrichtung und nennen Sie die deutsche Postleitzahl des Projekts.</p>
-                  <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
-                    {categories.map((item) => {
-                      const Icon = item.icon;
-                      return <button key={item.id} onClick={() => { update('category', item.id); update('spots', item.id === 'commercial' ? 10 : item.id === 'double' ? 2 : 1); }} className={`touch-target rounded-2xl border p-4 text-left transition ${config.category === item.id ? 'border-amber-300 bg-amber-300/10' : 'border-white/10 bg-white/[0.025] hover:border-white/25'}`}><Icon className="h-5 w-5 text-amber-300" /><span className="mt-3 block font-extrabold text-white">{item.name}</span><span className="mt-1 block text-xs text-slate-400">{item.detail}</span></button>;
-                    })}
-                  </div>
-                  {config.category === 'commercial' && <label className="mt-5 block rounded-2xl border border-white/10 bg-white/[0.025] p-4"><span className="flex justify-between text-sm font-bold text-white"><span>Stellplätze</span><span>{config.spots}</span></span><input type="range" min="5" max="100" step="5" value={config.spots} onChange={(event) => update('spots', Number(event.target.value))} className="mt-4 w-full accent-amber-400" /></label>}
-                  <label className="mt-5 block"><span className="flex items-center gap-2 text-sm font-bold text-white"><MapPin className="h-4 w-4 text-amber-300" /> Projekt-PLZ</span><input inputMode="numeric" autoComplete="postal-code" maxLength={5} value={postcode} onChange={(event) => { const nextPostcode = event.target.value.replace(/\D/g, ''); setPostcode(nextPostcode); if (!/^\d{5}$/.test(nextPostcode)) { setStep(1); setFurthestStep(1); } }} placeholder="z. B. 38723" className="touch-target mt-2 w-full rounded-xl border border-white/10 bg-[#071019] px-4 text-white placeholder:text-slate-600 focus:border-amber-300" /><span className="mt-2 block text-xs text-slate-500">Die PLZ dient nur der regionalen Vorprüfung und wird nicht automatisch übertragen.</span></label>
-                </div>
-              )}
+          {/* STEP 2: TRAGWERK & MATERIAL */}
+          {step === 2 && (
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-xl font-extrabold text-white sm:text-2xl font-['Syne']">Schritt 2: Tragwerk & Schneelast-Zertifizierung</h3>
+                <p className="mt-1 text-sm text-slate-400">Alle Profile sind nach DIN EN 1991 für bis zu 2.5 kN/m² Schneelast geprüft.</p>
+              </div>
 
-              {step === 2 && (
-                <div>
-                  <h3 className="text-2xl font-black text-white">Tragwerk und Projektphase</h3>
-                  <p className="mt-2 text-sm leading-6 text-slate-400">Diese Auswahl ist ein Planungswunsch. Die technische Ausführung wird später geprüft.</p>
-                  <div className="mt-6 grid gap-3 sm:grid-cols-2">
-                    {[{ id: 'aluminum', title: 'Aluminium', text: 'Leicht, korrosionsbeständig, architektonisch präzise.' }, { id: 'steel', title: 'Stahl / Hybrid', text: 'Für größere Spannweiten und gewerbliche Strukturen.' }].map((item) => <button key={item.id} onClick={() => update('material', item.id as ConfiguratorState['material'])} className={`touch-target rounded-2xl border p-5 text-left ${config.material === item.id ? 'border-amber-300 bg-amber-300/10' : 'border-white/10 bg-white/[0.025]'}`}><Wrench className="h-5 w-5 text-amber-300" /><span className="mt-3 block font-extrabold text-white">{item.title}</span><span className="mt-1 block text-sm leading-6 text-slate-400">{item.text}</span></button>)}
-                  </div>
-                  <label className="mt-6 block text-sm font-bold text-white">Gewünschter Zeitraum<select value={timeline} onChange={(event) => setTimeline(event.target.value)} className="touch-target mt-2 w-full rounded-xl border border-white/10 bg-[#071019] px-4 text-white"><option>so bald wie möglich</option><option>1-3 Monate</option><option>3-6 Monate</option><option>6-12 Monate</option><option>frühe Planung</option></select></label>
-                </div>
-              )}
+              <div className="grid gap-4 sm:grid-cols-2">
+                <button
+                  type="button"
+                  onClick={() => update('material', 'aluminum')}
+                  className={`p-5 rounded-2xl border text-left cursor-pointer ${
+                    config.material === 'aluminum' ? 'border-amber-400 bg-amber-400/10' : 'border-white/10 bg-slate-950'
+                  }`}
+                >
+                  <div className="font-extrabold text-white text-base">Aluminium T6 (Eloxiert)</div>
+                  <div className="text-xs text-slate-400 mt-1">100% rostfrei, leicht, 30+ Jahre Standzeit</div>
+                </button>
 
-              {step === 3 && (
-                <div>
-                  <h3 className="text-2xl font-black text-white">Energie und Ausstattung</h3>
-                  <p className="mt-2 text-sm leading-6 text-slate-400">Optionen helfen bei der Vorprüfung. Kompatibilität, Lieferbarkeit und Kosten werden im Angebot bestätigt.</p>
-                  <div className="mt-6 space-y-3">
-                    <OptionRow icon={PlugZap} title="Wallbox vorbereiten" text="Ladepunkt in Planung und Leitungsführung berücksichtigen." checked={config.wallbox} onChange={(checked) => update('wallbox', checked)} />
-                    <OptionRow icon={Battery} title="Speicher berücksichtigen" text="Eigenverbrauch und Lastprofil später gemeinsam prüfen." checked={config.battery} onChange={(checked) => update('battery', checked)} />
-                    <OptionRow icon={Wrench} title="Montage anfragen" text="Projektbezogene Montage und Netzanschluss separat bewerten." checked={config.assemblyService} onChange={(checked) => update('assemblyService', checked)} />
-                  </div>
-                  <div className="mt-5 flex gap-3 rounded-2xl border border-sky-300/20 bg-sky-300/[0.06] p-4 text-sm leading-6 text-sky-100"><Info className="mt-0.5 h-5 w-5 shrink-0" />Diese Vorprüfung prüft noch keine Netzanschlusskapazität, Genehmigung, Statik oder steuerliche Eignung.</div>
-                </div>
-              )}
+                <button
+                  type="button"
+                  onClick={() => update('material', 'steel')}
+                  className={`p-5 rounded-2xl border text-left cursor-pointer ${
+                    config.material === 'steel' ? 'border-amber-400 bg-amber-400/10' : 'border-white/10 bg-slate-950'
+                  }`}
+                >
+                  <div className="font-extrabold text-white text-base">Feuerverzinkter Stahl</div>
+                  <div className="text-xs text-slate-400 mt-1">Große Spannweiten für Gewerbeparkplätze</div>
+                </button>
+              </div>
+            </div>
+          )}
 
-              {step === 4 && (
-                <div>
-                  <h3 className="text-2xl font-black text-white">Ihre Vorprüfung ist bereit</h3>
-                  <p className="mt-2 text-sm leading-6 text-slate-400">Prüfen Sie die Angaben. Im nächsten Schritt wird eine Anfrage vorbereitet — es wird noch nichts automatisch versendet.</p>
-                  <div className="mt-6 rounded-2xl border border-amber-300/25 bg-amber-300/[0.06] p-5">
-                    <div className="grid gap-4 sm:grid-cols-2">
-                      <Summary label="System" value={categories.find((item) => item.id === config.category)?.name ?? config.category} />
-                      <Summary label="Projektregion" value={postcode || 'nicht angegeben'} />
-                      <Summary label="Zeitraum" value={timeline} />
-                      <Summary label="Planungsrahmen" value={`${rangeLow.toLocaleString('de-DE')}–${rangeHigh.toLocaleString('de-DE')} €`} />
+          {/* STEP 3: OPTIONEN */}
+          {step === 3 && (
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-xl font-extrabold text-white sm:text-2xl font-['Syne']">Schritt 3: Wallbox, Speicher & Montage</h3>
+                <p className="mt-1 text-sm text-slate-400">Integrieren Sie EV-Ladepunkte und Batteriespeicher.</p>
+              </div>
+
+              <div className="space-y-3">
+                <div className="flex items-center justify-between p-4 rounded-2xl border border-white/10 bg-slate-950">
+                  <div className="flex items-center space-x-3">
+                    <PlugZap className="w-5 h-5 text-cyan-400" />
+                    <div>
+                      <div className="font-bold text-white text-sm">Wallbox-Vorbereitung (11kW / 22kW)</div>
+                      <div className="text-xs text-slate-400">Kabelführung im Trägerprofil integriert</div>
                     </div>
                   </div>
-                  <ul className="mt-6 space-y-3 text-sm text-slate-300"><li className="flex gap-3"><Check className="h-5 w-5 shrink-0 text-amber-300" />Annahmen bleiben sichtbar und überprüfbar.</li><li className="flex gap-3"><Check className="h-5 w-5 shrink-0 text-amber-300" />Keine automatische ERP-, CRM- oder KI-Übertragung.</li><li className="flex gap-3"><Check className="h-5 w-5 shrink-0 text-amber-300" />Verbindlichkeit erst nach persönlicher Prüfung.</li></ul>
-                  <button onClick={() => onOpenLeadModal(config, pricing, { postcode, timeline })} className="touch-target mt-7 flex w-full items-center justify-center gap-3 rounded-xl bg-amber-300 px-6 font-extrabold text-slate-950 hover:bg-amber-200">Anfrage vorbereiten <ArrowRight className="h-5 w-5" /></button>
+                  <input
+                    type="checkbox"
+                    checked={config.wallbox}
+                    onChange={(e) => update('wallbox', e.target.checked)}
+                    className="w-5 h-5 accent-amber-400 cursor-pointer"
+                  />
                 </div>
-              )}
-            </div>
 
-            <div className="mt-8 flex items-center justify-between border-t border-white/10 pt-5">
-              <button disabled={step === 1} onClick={() => setStep((current) => current - 1)} className="touch-target inline-flex items-center gap-2 rounded-full border border-white/10 px-4 text-sm font-bold text-slate-300 disabled:opacity-30"><ChevronLeft className="h-4 w-4" /> Zurück</button>
-              {step < 4 && <button disabled={!readyForNext} onClick={advanceStep} className="touch-target inline-flex items-center gap-2 rounded-full bg-amber-300 px-5 text-sm font-extrabold text-slate-950 disabled:cursor-not-allowed disabled:opacity-35">Weiter <ChevronRight className="h-4 w-4" /></button>}
+                <div className="flex items-center justify-between p-4 rounded-2xl border border-white/10 bg-slate-950">
+                  <div className="flex items-center space-x-3">
+                    <Wrench className="w-5 h-5 text-amber-400" />
+                    <div>
+                      <div className="font-bold text-white text-sm">Komplettmontage & Netzanschluss</div>
+                      <div className="text-xs text-slate-400">Fachmontage durch zertifizierte RIAL Partner</div>
+                    </div>
+                  </div>
+                  <input
+                    type="checkbox"
+                    checked={config.assemblyService}
+                    onChange={(e) => update('assemblyService', e.target.checked)}
+                    className="w-5 h-5 accent-amber-400 cursor-pointer"
+                  />
+                </div>
+              </div>
             </div>
+          )}
+
+          {/* STEP 4: ERGEBNIS */}
+          {step === 4 && (
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-xl font-extrabold text-white sm:text-2xl font-['Syne']">Schritt 4: Ihre Standort-Planungsindikation</h3>
+                <p className="mt-1 text-sm text-slate-400">Berechnung für PLZ {postcode || '38722'} mit 0% MwSt (§ 12 Abs. 3 UStG).</p>
+              </div>
+
+              <div className="p-6 rounded-2xl border border-amber-400/30 bg-slate-950 space-y-4">
+                <div className="flex items-baseline justify-between">
+                  <span className="text-sm font-semibold text-slate-300">Geschätzter Gesamtpreis:</span>
+                  <span className="text-3xl font-black text-amber-400 font-['Syne']">€{pricing.totalEur.toLocaleString()}</span>
+                </div>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-3 border-t border-slate-800 text-xs font-mono">
+                  <div><span className="text-slate-400 block">LEISTUNG</span><strong className="text-white">{pricing.kwp} kWp</strong></div>
+                  <div><span className="text-slate-400 block">JAHRESERTRAG</span><strong className="text-cyan-400">{pricing.annualKwhYield.toLocaleString()} kWh</strong></div>
+                  <div><span className="text-slate-400 block">ERSPARNIS</span><strong className="text-emerald-400">€{pricing.annualSavingsEur.toLocaleString()}/a</strong></div>
+                  <div><span className="text-slate-400 block">MWST</span><strong className="text-emerald-400">0% (§12 UStG)</strong></div>
+                </div>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => onOpenLeadModal(config, pricing, { postcode, timeline })}
+                className="w-full py-4 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-base shadow-gold-subtle transition flex items-center justify-center space-x-2 cursor-pointer"
+              >
+                <span>Kostenloses Engineering-Dossier anfordern</span>
+                <ArrowRight className="w-5 h-5" />
+              </button>
+            </div>
+          )}
+
+          {/* Navigation Buttons */}
+          <div className="flex items-center justify-between pt-6 border-t border-white/10 mt-8">
+            <button
+              disabled={step === 1}
+              onClick={() => setStep(prev => Math.max(prev - 1, 1))}
+              className="px-5 py-2.5 rounded-xl border border-white/10 bg-slate-950 text-xs font-bold text-slate-300 disabled:opacity-30 hover:bg-slate-800 flex items-center space-x-1"
+            >
+              <ChevronLeft className="w-4 h-4" />
+              <span>Zurück</span>
+            </button>
+
+            {step < 4 ? (
+              <button
+                disabled={!readyForNext}
+                onClick={advanceStep}
+                className="px-6 py-2.5 rounded-xl bg-amber-400 text-slate-950 text-xs font-black shadow-gold-subtle hover:bg-amber-300 disabled:opacity-40 flex items-center space-x-1.5"
+              >
+                <span>Weiter</span>
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            ) : (
+              <button
+                onClick={() => onOpenLeadModal(config, pricing, { postcode, timeline })}
+                className="px-6 py-2.5 rounded-xl bg-cyan-400 text-slate-950 text-xs font-black shadow-cyan-glow hover:bg-cyan-300 flex items-center space-x-1.5"
+              >
+                <span>Dossier Anfordern</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+            )}
           </div>
+
         </div>
+
       </div>
     </section>
   );
 };
-
-function OptionRow({ icon: Icon, title, text, checked, onChange }: { icon: typeof Battery; title: string; text: string; checked: boolean; onChange: (value: boolean) => void }) {
-  return <label className="flex min-h-[76px] cursor-pointer items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.025] p-4"><span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/5 text-amber-300"><Icon className="h-5 w-5" /></span><span className="min-w-0 flex-1"><span className="block font-extrabold text-white">{title}</span><span className="mt-1 block text-xs leading-5 text-slate-400">{text}</span></span><input type="checkbox" checked={checked} onChange={(event) => onChange(event.target.checked)} className="h-6 w-6 shrink-0 accent-amber-400" /></label>;
-}
-
-function Summary({ label, value }: { label: string; value: string }) {
-  return <div><dt className="text-xs font-bold uppercase tracking-widest text-slate-500">{label}</dt><dd className="mt-1 font-extrabold text-white">{value}</dd></div>;
-}

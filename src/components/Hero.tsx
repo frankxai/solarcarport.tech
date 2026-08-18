@@ -1,8 +1,8 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
-import { ArrowDown, ArrowRight, Building2, Car, MapPin, Ruler, ShieldCheck } from 'lucide-react';
+import { ArrowDown, ArrowRight, Building2, Car, MapPin, Ruler, ShieldCheck, CheckCircle2 } from 'lucide-react';
 import type { ConfiguratorState } from './configurator/Interactive2DRenderer';
 
 interface HeroProps {
@@ -21,84 +21,120 @@ export const Hero: React.FC<HeroProps> = ({ onStartConfigurator }) => {
           sizes="100vw"
           className="-z-20 object-cover object-[54%_42%] sm:object-[64%_38%]"
         />
-        <div className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(7,16,25,0.98)_0%,rgba(7,16,25,0.9)_46%,rgba(7,16,25,0.25)_100%)]" />
-        <div className="absolute inset-0 -z-10 bg-[linear-gradient(0deg,#071019_0%,transparent_42%)]" />
+        <div className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(4,7,17,0.98)_0%,rgba(4,7,17,0.9)_46%,rgba(4,7,17,0.3)_100%)]" />
+        <div className="absolute inset-0 -z-10 bg-[linear-gradient(0deg,#040711_0%,transparent_42%)]" />
 
         <div className="section-shell flex min-h-[calc(100svh-72px)] items-end pb-10 pt-16 sm:items-center sm:py-20">
           <div className="max-w-3xl">
             <div className="eyebrow mb-5">
               <MapPin className="h-4 w-4" aria-hidden="true" />
-              Planung & Materialkompetenz aus Seesen
+              Planung & Materialkompetenz aus Seesen (Harz)
             </div>
 
-            <h1 className="max-w-[12ch] text-[clamp(2.75rem,11vw,5.9rem)] font-black leading-[0.94] tracking-[-0.065em] text-white">
+            <h1 className="max-w-[12ch] text-[clamp(2.75rem,11vw,5.9rem)] font-black leading-[0.94] tracking-[-0.065em] text-white font-['Syne']">
               Aus Parkfläche wird Energiefläche.
             </h1>
 
             <p className="mt-6 max-w-xl text-base leading-7 text-slate-200 sm:text-lg sm:leading-8">
-              Solarcarports und PV-Überdachungen für private Grundstücke, Gewerbe und Fuhrparks — strukturiert geplant, nachvollziehbar angefragt und persönlich geprüft.
+              Solarcarports und PV-Überdachungen für private Grundstücke, Gewerbe und Fuhrparks — statisch berechnet nach DIN EN 1991, mit 0% MwSt (§ 12 Abs. 3 UStG) und geprüftem RIAL Energy Lagerbestand.
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
               <button
-                onClick={() => onStartConfigurator('double')}
-                className="touch-target inline-flex items-center justify-center gap-3 rounded-full bg-amber-400 px-7 text-base font-extrabold text-slate-950 shadow-[0_18px_45px_rgba(244,170,34,0.22)] transition hover:bg-amber-300"
+                type="button"
+                onClick={() => onStartConfigurator()}
+                className="touch-target inline-flex items-center justify-center gap-2 rounded-full bg-amber-400 px-7 text-base font-black text-slate-950 shadow-gold-subtle transition hover:bg-amber-300 active:scale-95"
               >
-                Standort prüfen
-                <ArrowRight className="h-5 w-5" aria-hidden="true" />
+                <span>Standort prüfen & konfigurieren</span>
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </button>
+
               <a
-                href="#systems"
-                className="touch-target inline-flex items-center justify-center gap-2 rounded-full border border-white/20 bg-black/20 px-6 text-sm font-bold text-white backdrop-blur-sm transition hover:bg-white/10"
+                href="#projects"
+                className="touch-target inline-flex items-center justify-center gap-2 rounded-full border border-white/15 bg-slate-900/80 px-6 text-sm font-bold text-white backdrop-blur transition hover:border-white/30"
               >
-                Systeme ansehen
+                <span>Realisierte Projekte ansehen</span>
                 <ArrowDown className="h-4 w-4" aria-hidden="true" />
               </a>
             </div>
 
-            <div className="mt-8 grid max-w-2xl grid-cols-1 gap-3 border-t border-white/15 pt-5 text-sm text-slate-300 sm:grid-cols-3">
-              <div className="flex items-center gap-2.5"><Ruler className="h-4 w-4 text-amber-300" /> Standortbezogene Vorprüfung</div>
-              <div className="flex items-center gap-2.5"><ShieldCheck className="h-4 w-4 text-amber-300" /> Nachweise im Angebot</div>
-              <div className="flex items-center gap-2.5"><MapPin className="h-4 w-4 text-amber-300" /> Persönliche Rückmeldung</div>
+            <div className="mt-10 grid max-w-xl grid-cols-2 gap-3 border-t border-white/10 pt-6 sm:grid-cols-3">
+              <div className="rounded-xl border border-white/5 bg-slate-950/60 p-3">
+                <span className="technical-label block text-amber-300">Schneelast</span>
+                <span className="mt-1 block text-sm font-extrabold text-white">2.5 kN/m² DIN EN 1991</span>
+              </div>
+              <div className="rounded-xl border border-white/5 bg-slate-950/60 p-3">
+                <span className="technical-label block text-amber-300">Steuer</span>
+                <span className="mt-1 block text-sm font-extrabold text-white">0% MwSt (§12 UStG)</span>
+              </div>
+              <div className="col-span-2 rounded-xl border border-white/5 bg-slate-950/60 p-3 sm:col-span-1">
+                <span className="technical-label block text-amber-300">Material</span>
+                <span className="mt-1 block text-sm font-extrabold text-white">Aluminium T6 / Stahl</span>
+              </div>
             </div>
           </div>
         </div>
-
-        <span className="absolute bottom-3 right-4 rounded-full bg-black/55 px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-slate-300 backdrop-blur-md">
-          Realisiertes System
-        </span>
       </section>
 
-      <section className="border-b border-white/10 bg-[#0b1621] py-8 sm:py-10" aria-labelledby="path-title">
+      {/* Quick Category Selector */}
+      <section className="border-b border-white/10 bg-[#071019] py-8 sm:py-10">
         <div className="section-shell">
-          <div className="grid gap-4 lg:grid-cols-[0.8fr_1fr_1fr] lg:items-stretch">
-            <div className="flex flex-col justify-center py-2">
-              <div className="eyebrow">Ihr Projekt</div>
-              <h2 id="path-title" className="mt-2 text-2xl font-black tracking-tight text-white sm:text-3xl">Welcher Standort passt?</h2>
-            </div>
+          <div className="mb-4 flex items-center justify-between">
+            <span className="technical-label text-slate-400">Schnelleinstieg nach Anwendungsbereich</span>
+            <span className="hidden text-xs text-slate-500 sm:inline font-mono">RIAL Energy GmbH</span>
+          </div>
 
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             <button
-              onClick={() => onStartConfigurator('double')}
-              className="group min-h-32 rounded-2xl border border-white/10 bg-white/[0.035] p-5 text-left transition hover:border-amber-300/50 hover:bg-white/[0.06]"
+              type="button"
+              onClick={() => onStartConfigurator('single')}
+              className="touch-target flex items-center justify-between rounded-2xl border border-white/10 bg-slate-900/60 p-4 text-left transition hover:border-amber-300/40 hover:bg-slate-900"
             >
-              <span className="flex items-center justify-between">
-                <Car className="h-6 w-6 text-amber-300" aria-hidden="true" />
-                <ArrowRight className="h-5 w-5 text-slate-500 transition group-hover:translate-x-1 group-hover:text-amber-300" />
-              </span>
-              <span className="mt-5 block text-lg font-extrabold text-white">Privat & Wohnen</span>
-              <span className="mt-1 block text-sm leading-6 text-slate-400">Einzel- oder Doppelcarport, Terrasse und architektonische Überdachung.</span>
+              <div>
+                <span className="technical-label block text-amber-300">Privat</span>
+                <span className="text-base font-extrabold text-white">Einzel-Carport</span>
+                <span className="block text-xs text-slate-400">1 Stellplatz · ~3.8 kWp</span>
+              </div>
+              <Car className="h-5 w-5 text-slate-400" aria-hidden="true" />
             </button>
 
             <button
-              onClick={() => onStartConfigurator('commercial')}
-              className="group min-h-32 rounded-2xl border border-white/10 bg-white/[0.035] p-5 text-left transition hover:border-sky-300/50 hover:bg-white/[0.06]"
+              type="button"
+              onClick={() => onStartConfigurator('double')}
+              className="touch-target flex items-center justify-between rounded-2xl border border-white/10 bg-slate-900/60 p-4 text-left transition hover:border-amber-300/40 hover:bg-slate-900"
             >
-              <span className="flex items-center justify-between">
-                <Building2 className="h-6 w-6 text-sky-300" aria-hidden="true" />
-                <ArrowRight className="h-5 w-5 text-slate-500 transition group-hover:translate-x-1 group-hover:text-sky-300" />
-              </span>
-              <span className="mt-5 block text-lg font-extrabold text-white">Gewerbe & Fuhrpark</span>
-              <span className="mt-1 block text-sm leading-6 text-slate-400">Mehrere Stellplätze, Ladeinfrastruktur und projektbezogene Machbarkeit.</span>
+              <div>
+                <span className="technical-label block text-amber-300">Meistgefragt</span>
+                <span className="text-base font-extrabold text-white">Doppel-Carport</span>
+                <span className="block text-xs text-slate-400">2 Stellplätze · ~7.6 kWp</span>
+              </div>
+              <Car className="h-5 w-5 text-slate-400" aria-hidden="true" />
+            </button>
+
+            <button
+              type="button"
+              onClick={() => onStartConfigurator('commercial')}
+              className="touch-target flex items-center justify-between rounded-2xl border border-white/10 bg-slate-900/60 p-4 text-left transition hover:border-amber-300/40 hover:bg-slate-900"
+            >
+              <div>
+                <span className="technical-label block text-amber-300">Solarpflicht</span>
+                <span className="text-base font-extrabold text-white">Gewerbeparkplatz</span>
+                <span className="block text-xs text-slate-400">Ab 5 Stellplätze modular</span>
+              </div>
+              <Building2 className="h-5 w-5 text-slate-400" aria-hidden="true" />
+            </button>
+
+            <button
+              type="button"
+              onClick={() => onStartConfigurator('terrace')}
+              className="touch-target flex items-center justify-between rounded-2xl border border-white/10 bg-slate-900/60 p-4 text-left transition hover:border-amber-300/40 hover:bg-slate-900"
+            >
+              <div>
+                <span className="technical-label block text-amber-300">Wohnraum</span>
+                <span className="text-base font-extrabold text-white">PV-Terrasse</span>
+                <span className="block text-xs text-slate-400">Transparentes PV-Glas</span>
+              </div>
+              <Ruler className="h-5 w-5 text-slate-400" aria-hidden="true" />
             </button>
           </div>
         </div>
