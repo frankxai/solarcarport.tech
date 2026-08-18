@@ -5,13 +5,13 @@ import { ArrowUp, ExternalLink, MapPin, Sun } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="border-t border-white/10 bg-[#050b11] py-12 text-sm text-slate-400 sm:py-16">
+    <footer className="border-t border-white/10 bg-[#050b11] py-12 text-sm text-slate-400 sm:py-16 font-['Poppins']">
       <div className="section-shell">
         <div className="grid gap-10 md:grid-cols-3">
           <div>
             <div className="flex items-center gap-3">
-              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-amber-400/10 text-amber-300"><Sun className="h-5 w-5" /></span>
-              <span className="text-lg font-extrabold text-white">solarcarport<span className="text-amber-300">.tech</span></span>
+              <span className="flex h-10 w-10 items-center justify-center rounded-xl border border-amber-400/20 bg-amber-400/10 text-amber-400"><Sun className="h-5 w-5" /></span>
+              <span className="text-lg font-bold text-white font-['Poppins']">solarcarport<span className="text-amber-400">.tech</span></span>
             </div>
             <p className="mt-4 max-w-sm leading-6">Spezialisierte Projekt- und Informationsseite der RIAL Energy GmbH für Solarcarports und PV-Überdachungen.</p>
           </div>

@@ -24,21 +24,21 @@ const projects = [
 
 export function ProjectProof() {
   return (
-    <section id="projects" className="border-b border-white/10 bg-[#071019] py-16 sm:py-24" aria-labelledby="projects-title">
+    <section id="projects" className="border-b border-white/10 bg-[#071019] py-16 sm:py-24 font-['Poppins']" aria-labelledby="projects-title">
       <div className="section-shell">
         <div className="grid gap-8 lg:grid-cols-[0.72fr_1.28fr] lg:items-end">
           <div className="max-w-xl">
-            <div className="eyebrow"><Camera className="h-4 w-4" aria-hidden="true" /> Realisierte Systeme</div>
-            <h2 id="projects-title" className="mt-4 text-3xl font-black tracking-[-0.04em] text-white sm:text-5xl">
-              Gebauter Bestand statt Zukunftsversprechen.
+            <div className="eyebrow"><Camera className="h-4 w-4 text-amber-400" aria-hidden="true" /> Realisierte Systeme</div>
+            <h2 id="projects-title" className="mt-4 text-3xl font-bold tracking-[-0.03em] text-white sm:text-5xl font-['Playfair_Display']">
+              Gebauter Bestand statt <span className="italic font-normal text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-amber-500">Zukunftsversprechen.</span>
             </h2>
           </div>
           <div className="max-w-xl lg:justify-self-end">
-            <p className="text-base leading-7 text-slate-300">
-              Diese Aufnahmen stammen aus dem bestehenden SolarCarport.tech Medienbestand. Sie zeigen mögliche Systemrichtungen — die Ausführung Ihres Projekts entsteht erst aus Standort, Nutzung und technischer Prüfung.
+            <p className="text-base leading-7 text-slate-300 font-light">
+              Diese Aufnahmen stammen aus dem bestehenden SolarCarport.tech Medienbestand. Sie zeigen realisierte Systemrichtungen der RIAL Energy GmbH in Deutschland.
             </p>
-            <a href="#configurator" className="touch-target mt-5 inline-flex items-center gap-2 text-sm font-extrabold text-amber-300 hover:text-amber-200">
-              Eigenen Standort prüfen <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            <a href="#configurator" className="touch-target mt-5 inline-flex items-center gap-2 text-sm font-bold text-amber-400 hover:text-amber-300 transition-colors">
+              <span>Eigenen Standort prüfen</span> <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </a>
           </div>
         </div>

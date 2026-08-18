@@ -149,29 +149,29 @@ export const PreeminenceEducationV2Props: React.FC<PreeminenceEducationV2Props> 
           <div className="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-slate-900 border border-slate-800 text-amber-400 text-xs font-medium tracking-wide">
             <span>{content.tag}</span>
           </div>
-          <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight font-['Syne']">
+          <h2 className="text-3xl sm:text-5xl font-bold text-white tracking-tight font-['Playfair_Display']">
             {content.headline}
           </h2>
-          <p className="text-slate-300 text-base sm:text-lg leading-relaxed">
+          <p className="text-slate-300 text-base sm:text-lg leading-relaxed font-['Poppins']">
             {content.subtext}
           </p>
         </div>
 
         {/* Executive Audio Briefing Card */}
-        <div className="glass-panel-obsidian p-6 sm:p-8 rounded-3xl border border-white/10 shadow-2xl flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="glass-panel-obsidian p-6 sm:p-8 rounded-3xl border border-white/10 shadow-2xl flex flex-col md:flex-row items-center justify-between gap-6 font-['Poppins']">
           <div className="flex items-center space-x-4">
             <div className="w-12 h-12 rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-center flex-shrink-0">
               <Volume2 className="w-6 h-6 text-amber-400" />
             </div>
             <div>
-              <h4 className="text-lg font-bold text-white font-['Syne']">{content.podcastTitle}</h4>
+              <h4 className="text-lg font-bold text-white font-['Poppins']">{content.podcastTitle}</h4>
               <p className="text-xs text-slate-300 mt-0.5">{content.podcastDesc}</p>
             </div>
           </div>
 
           <button
             onClick={() => setIsPlayingAudio(!isPlayingAudio)}
-            className="w-full md:w-auto px-6 py-3.5 rounded-full bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-xs flex items-center justify-center space-x-2 shadow-gold-subtle cursor-pointer"
+            className="w-full md:w-auto px-6 py-3.5 rounded-full bg-gradient-to-r from-amber-400 to-amber-500 hover:brightness-105 text-slate-950 font-bold text-xs flex items-center justify-center space-x-2 shadow-gold-subtle cursor-pointer transition-all"
           >
             <Play className="w-4 h-4 fill-slate-950" />
             <span>{isPlayingAudio ? 'Pause Audio Briefing' : 'Play 3-Min Executive Summary'}</span>
@@ -179,7 +179,7 @@ export const PreeminenceEducationV2Props: React.FC<PreeminenceEducationV2Props> 
         </div>
 
         {/* Tab Selection Grid */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 font-['Poppins']">
           {content.tabs.map((tab) => (
             <button
               key={tab.id}
@@ -195,7 +195,7 @@ export const PreeminenceEducationV2Props: React.FC<PreeminenceEducationV2Props> 
                 <div className="text-xs font-medium px-3 py-1 rounded-full bg-slate-900 text-amber-300 border border-slate-800 w-max">
                   {tab.badge}
                 </div>
-                <h4 className="font-bold text-white text-lg font-['Syne']">{tab.title}</h4>
+                <h4 className="font-bold text-white text-lg font-['Poppins']">{tab.title}</h4>
               </div>
 
               <div className="pt-6 flex items-center text-xs font-bold text-amber-400">
@@ -207,12 +207,12 @@ export const PreeminenceEducationV2Props: React.FC<PreeminenceEducationV2Props> 
         </div>
 
         {/* Selected Tab Workspace Showcase */}
-        <div className="glass-panel-obsidian p-8 sm:p-12 rounded-3xl border border-white/10 shadow-2xl grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+        <div className="glass-panel-obsidian p-8 sm:p-12 rounded-3xl border border-white/10 shadow-2xl grid grid-cols-1 lg:grid-cols-12 gap-10 items-center font-['Poppins']">
           
           <div className="lg:col-span-7 space-y-6">
             <div className="space-y-2">
-              <span className="text-xs font-medium text-amber-400 tracking-wide uppercase">{currentTab.badge}</span>
-              <h3 className="text-2xl sm:text-3xl font-extrabold text-white font-['Syne']">{currentTab.summary}</h3>
+              <span className="text-xs font-semibold text-amber-400 tracking-wide uppercase">{currentTab.badge}</span>
+              <h3 className="text-2xl sm:text-3xl font-bold text-white font-['Playfair_Display']">{currentTab.summary}</h3>
             </div>
 
             <p className="text-slate-300 text-sm sm:text-base leading-relaxed">

@@ -48,12 +48,14 @@ export const PreeminenceEducation: React.FC = () => {
   };
 
   return (
-    <section id="planning" className="border-y border-white/10 bg-slate-950/55 py-16 sm:py-24">
+    <section id="planning" className="border-y border-white/10 bg-slate-950/55 py-16 sm:py-24 font-['Poppins']">
       <div className="section-shell">
         <div className="max-w-3xl">
-          <div className="eyebrow"><FileCheck2 className="h-4 w-4" /> Planungswissen</div>
-          <h2 className="mt-4 text-3xl font-black tracking-[-0.035em] text-white sm:text-5xl">Was vor einem Solarcarport geklärt werden muss.</h2>
-          <p className="mt-4 max-w-2xl text-base leading-7 text-slate-400">Kein Marketing-Rechner ersetzt die Projektprüfung. Diese drei Fragen strukturieren den ersten belastbaren Schritt.</p>
+          <div className="eyebrow"><FileCheck2 className="h-4 w-4 text-amber-400" /> Planungswissen</div>
+          <h2 className="mt-4 text-3xl font-bold tracking-[-0.03em] text-white sm:text-5xl font-['Playfair_Display']">
+            Was vor einem Solarcarport <span className="italic font-normal text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-amber-500">geklärt werden muss.</span>
+          </h2>
+          <p className="mt-4 max-w-2xl text-base leading-7 text-slate-300 font-light">Kein Marketing-Rechner ersetzt die fundierte Projektprüfung. Diese drei Kernfragen strukturieren Ihren ersten belastbaren Schritt.</p>
         </div>
 
         <div className="mt-9 flex gap-2 overflow-x-auto pb-2" role="tablist" aria-label="Planungsthemen">

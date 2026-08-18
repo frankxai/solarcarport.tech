@@ -108,24 +108,24 @@ export const ProductShowcaseV2: React.FC<ProductShowcaseV2Props> = ({ lang }) =>
   }[lang];
 
   return (
-    <section id="v2-products" className="py-28 px-4 sm:px-8 lg:px-12 bg-[#030712] relative">
+    <section id="v2-products" className="py-28 px-4 sm:px-8 lg:px-12 bg-[#030712] relative font-['Poppins']">
       <div className="max-w-7xl mx-auto space-y-16">
         
         {/* Header */}
         <div className="text-center space-y-4 max-w-3xl mx-auto">
-          <div className="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-slate-900 border border-slate-800 text-cyan-400 text-xs font-medium tracking-wide">
+          <div className="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-slate-900 border border-slate-800 text-cyan-400 text-xs font-semibold tracking-wide">
             <span>{content.tag}</span>
           </div>
-          <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight font-['Syne']">
+          <h2 className="text-3xl sm:text-5xl font-bold text-white tracking-tight font-['Playfair_Display']">
             {content.headline}
           </h2>
-          <p className="text-slate-300 text-base sm:text-lg">
+          <p className="text-slate-300 text-base sm:text-lg font-light">
             {content.subtext}
           </p>
         </div>
 
         {/* Product Cards Bento Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 font-['Poppins']">
           {content.products.map((product) => (
             <div 
               key={product.id}
@@ -139,7 +139,7 @@ export const ProductShowcaseV2: React.FC<ProductShowcaseV2Props> = ({ lang }) =>
                   className="w-full h-full object-cover filter brightness-90 group-hover:scale-105 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent" />
-                <div className="absolute top-4 right-4 bg-slate-950/90 border border-slate-800 px-3.5 py-1.5 rounded-full text-xs font-medium text-amber-300">
+                <div className="absolute top-4 right-4 bg-slate-950/90 border border-slate-800 px-3.5 py-1.5 rounded-full text-xs font-semibold text-amber-300">
                   {product.capacity}
                 </div>
               </div>
@@ -147,7 +147,7 @@ export const ProductShowcaseV2: React.FC<ProductShowcaseV2Props> = ({ lang }) =>
               {/* Product Body */}
               <div className="p-8 space-y-6 flex-1 flex flex-col justify-between">
                 <div className="space-y-3">
-                  <h3 className="text-2xl font-bold text-white font-['Syne'] group-hover:text-amber-400 transition-colors">
+                  <h3 className="text-2xl font-bold text-white font-['Poppins'] group-hover:text-amber-400 transition-colors">
                     {product.name}
                   </h3>
                   <p className="text-sm text-slate-300 leading-relaxed">

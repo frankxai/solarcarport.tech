@@ -12,9 +12,10 @@
   --signal: #61b6df;
   --text: #f6f7f8;
   --muted: #a8b4c1;
-  --font-display: 'Syne', 'Outfit', var(--font-manrope, sans-serif);
-  --font-sans: 'Plus Jakarta Sans', var(--font-manrope, system-ui, sans-serif);
-  --font-mono: var(--font-ibm-plex-mono, monospace);
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-sans: 'Poppins', 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-heading: 'Poppins', sans-serif;
+  --font-mono: var(--font-ibm-plex-mono, 'IBM Plex Mono', monospace);
   --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -102,9 +103,9 @@ body {
   font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.16em;
   color: var(--solar-soft);
-  font-family: var(--font-mono);
+  font-family: var(--font-heading);
 }
 
 .section-shell {
@@ -134,7 +135,7 @@ body {
 }
 
 .technical-label {
-  font-family: var(--font-mono);
+  font-family: var(--font-heading);
   font-size: 0.6875rem;
   font-weight: 600;
   letter-spacing: 0.14em;

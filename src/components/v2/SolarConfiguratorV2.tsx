@@ -111,30 +111,30 @@ export const SolarConfiguratorV2: React.FC<SolarConfiguratorV2Props> = ({ onOpen
   }[lang];
 
   return (
-    <section id="v2-configurator" className="py-28 px-4 sm:px-8 lg:px-12 relative bg-[#030712]">
+    <section id="v2-configurator" className="py-28 px-4 sm:px-8 lg:px-12 bg-[#050811] relative border-t border-slate-900 font-['Poppins']">
       <div className="max-w-7xl mx-auto space-y-14">
         
         {/* Header */}
         <div className="text-center space-y-4 max-w-3xl mx-auto">
-          <div className="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-slate-900 border border-slate-800 text-amber-400 text-xs font-medium tracking-wide">
+          <div className="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-slate-900 border border-slate-800 text-amber-400 text-xs font-semibold tracking-wide">
             <span>{content.tag}</span>
           </div>
-          <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight font-['Syne']">
+          <h2 className="text-3xl sm:text-5xl font-bold text-white tracking-tight font-['Playfair_Display']">
             {content.headline}
           </h2>
-          <p className="text-slate-300 text-base sm:text-lg">
+          <p className="text-slate-300 text-base sm:text-lg font-light">
             {content.subtext}
           </p>
         </div>
 
         {/* Gemini Video Site Audit Option */}
-        <div className="glass-panel-obsidian p-6 sm:p-8 rounded-3xl border border-cyan-500/30 shadow-2xl flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="glass-panel-obsidian p-6 sm:p-8 rounded-3xl border border-cyan-500/30 shadow-2xl flex flex-col md:flex-row items-center justify-between gap-6 font-['Poppins']">
           <div className="flex items-center space-x-4">
             <div className="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center flex-shrink-0">
               <Camera className="w-6 h-6 text-cyan-400" />
             </div>
             <div>
-              <h4 className="text-lg font-bold text-white font-['Syne']">{content.geminiTitle}</h4>
+              <h4 className="text-lg font-bold text-white font-['Poppins']">{content.geminiTitle}</h4>
               <p className="text-xs text-slate-300 mt-0.5">{content.geminiDesc}</p>
             </div>
           </div>
@@ -188,7 +188,7 @@ export const SolarConfiguratorV2: React.FC<SolarConfiguratorV2Props> = ({ onOpen
               </div>
 
               <div className="flex items-baseline justify-between">
-                <span className="text-3xl sm:text-4xl font-extrabold text-white font-['Syne']">€{totalEur.toLocaleString()}</span>
+                <span className="text-3xl sm:text-4xl font-extrabold text-white font-['Poppins']">€{totalEur.toLocaleString()}</span>
                 <span className="text-xs text-slate-400">{content.kpiTotal}</span>
               </div>
 
@@ -220,7 +220,7 @@ export const SolarConfiguratorV2: React.FC<SolarConfiguratorV2Props> = ({ onOpen
             {step === 1 && (
               <div className="space-y-6">
                 <div>
-                  <h3 className="text-2xl sm:text-3xl font-bold text-white font-['Syne']">Step 1: Select Application & Capacity</h3>
+                  <h3 className="text-2xl sm:text-3xl font-bold text-white font-['Poppins']">Step 1: Select Application & Capacity</h3>
                   <p className="text-sm text-slate-300 mt-1">Choose the primary intended use for your solar overhang infrastructure.</p>
                 </div>
 
@@ -242,7 +242,7 @@ export const SolarConfiguratorV2: React.FC<SolarConfiguratorV2Props> = ({ onOpen
                       }`}
                     >
                       <item.icon className="w-6 h-6 text-amber-400 mb-3" />
-                      <div className="font-bold text-white text-base font-['Syne']">{item.name}</div>
+                      <div className="font-bold text-white text-base font-['Poppins']">{item.name}</div>
                       <div className="text-xs text-slate-300 mt-1">{item.desc}</div>
                     </button>
                   ))}
@@ -272,7 +272,7 @@ export const SolarConfiguratorV2: React.FC<SolarConfiguratorV2Props> = ({ onOpen
             {step === 2 && (
               <div className="space-y-6">
                 <div>
-                  <h3 className="text-2xl sm:text-3xl font-bold text-white font-['Syne']">Step 2: Structural Material & Post Architecture</h3>
+                  <h3 className="text-2xl sm:text-3xl font-bold text-white font-['Poppins']">Step 2: Structural Material & Post Architecture</h3>
                   <p className="text-sm text-slate-300 mt-1">Select structural extrusion profiles engineered for up to 2.5 kN/m² snow load.</p>
                 </div>
 
@@ -285,7 +285,7 @@ export const SolarConfiguratorV2: React.FC<SolarConfiguratorV2Props> = ({ onOpen
                         config.material === 'aluminum' ? 'glow-card-amber border-amber-500 text-white' : 'bg-slate-950 border-slate-800 text-slate-400'
                       }`}
                     >
-                      <div className="font-bold text-base font-['Syne']">Extruded Anodized Aluminum</div>
+                      <div className="font-bold text-base font-['Poppins']">Extruded Anodized Aluminum</div>
                       <div className="text-xs text-slate-300 mt-1">100% Rust-Proof, Lightweight T6 Alloy</div>
                     </button>
                     <button
@@ -294,7 +294,7 @@ export const SolarConfiguratorV2: React.FC<SolarConfiguratorV2Props> = ({ onOpen
                         config.material === 'steel' ? 'glow-card-amber border-amber-500 text-white' : 'bg-slate-950 border-slate-800 text-slate-400'
                       }`}
                     >
-                      <div className="font-bold text-base font-['Syne']">Galvanized Structural Steel</div>
+                      <div className="font-bold text-base font-['Poppins']">Galvanized Structural Steel</div>
                       <div className="text-xs text-slate-300 mt-1">Heavy Industrial Span Subframe</div>
                     </button>
                   </div>
@@ -327,7 +327,7 @@ export const SolarConfiguratorV2: React.FC<SolarConfiguratorV2Props> = ({ onOpen
             {step === 3 && (
               <div className="space-y-6">
                 <div>
-                  <h3 className="text-2xl sm:text-3xl font-bold text-white font-['Syne']">Step 3: Bifacial Glass-Glass Photovoltaics</h3>
+                  <h3 className="text-2xl sm:text-3xl font-bold text-white font-['Poppins']">Step 3: Bifacial Glass-Glass Photovoltaics</h3>
                   <p className="text-sm text-slate-300 mt-1">Choose between high-transparency patio glass or maximum-power bifacial TOPCon.</p>
                 </div>
 
@@ -339,7 +339,7 @@ export const SolarConfiguratorV2: React.FC<SolarConfiguratorV2Props> = ({ onOpen
                     }`}
                   >
                     <Sun className="w-6 h-6 text-amber-400 mb-3" />
-                    <div className="font-bold text-white text-base font-['Syne']">470W Bifacial TOPCon Dark</div>
+                    <div className="font-bold text-white text-base font-['Poppins']">470W Bifacial TOPCon Dark</div>
                     <div className="text-xs text-slate-300 mt-1">Maximum energy production (+25% albedo yield gain). Dual 2.0mm glass.</div>
                   </button>
 
@@ -350,7 +350,7 @@ export const SolarConfiguratorV2: React.FC<SolarConfiguratorV2Props> = ({ onOpen
                     }`}
                   >
                     <Sun className="w-6 h-6 text-cyan-400 mb-3" />
-                    <div className="font-bold text-white text-base font-['Syne']">450W Translucent 20% Light</div>
+                    <div className="font-bold text-white text-base font-['Poppins']">450W Translucent 20% Light</div>
                     <div className="text-xs text-slate-300 mt-1">Permits soft natural daylight underneath. Ideal for patio terraces & luxury carports.</div>
                   </button>
                 </div>
@@ -361,7 +361,7 @@ export const SolarConfiguratorV2: React.FC<SolarConfiguratorV2Props> = ({ onOpen
             {step === 4 && (
               <div className="space-y-6">
                 <div>
-                  <h3 className="text-2xl sm:text-3xl font-bold text-white font-['Syne']">Step 4: Live ERP Bill of Materials</h3>
+                  <h3 className="text-2xl sm:text-3xl font-bold text-white font-['Poppins']">Step 4: Live ERP Bill of Materials</h3>
                   <p className="text-sm text-slate-300 mt-1">Real-time inventory calculation directly from RIAL Energy's Seesen distribution hub.</p>
                 </div>
 
@@ -399,7 +399,7 @@ export const SolarConfiguratorV2: React.FC<SolarConfiguratorV2Props> = ({ onOpen
             {step === 5 && (
               <div className="space-y-6">
                 <div>
-                  <h3 className="text-2xl sm:text-3xl font-bold text-white font-['Syne']">Step 5: Smart Infrastructure Add-ons</h3>
+                  <h3 className="text-2xl sm:text-3xl font-bold text-white font-['Poppins']">Step 5: Smart Infrastructure Add-ons</h3>
                   <p className="text-sm text-slate-300 mt-1">Upgrade your carport with EV charging, battery storage, and turnkey installation.</p>
                 </div>
 
@@ -410,7 +410,7 @@ export const SolarConfiguratorV2: React.FC<SolarConfiguratorV2Props> = ({ onOpen
                       <div className="flex items-center space-x-3.5">
                         <Zap className="w-5 h-5 text-cyan-400" />
                         <div>
-                          <div className="font-bold text-white text-base font-['Syne']">EV Wallbox / Charging Station</div>
+                          <div className="font-bold text-white text-base font-['Poppins']">EV Wallbox / Charging Station</div>
                           <div className="text-xs text-slate-300">Charge electric vehicles directly from your carport canopy</div>
                         </div>
                       </div>
@@ -446,7 +446,7 @@ export const SolarConfiguratorV2: React.FC<SolarConfiguratorV2Props> = ({ onOpen
                       <div className="flex items-center space-x-3.5">
                         <Battery className="w-5 h-5 text-emerald-400" />
                         <div>
-                          <div className="font-bold text-white text-base font-['Syne']">High-Voltage Battery Storage</div>
+                          <div className="font-bold text-white text-base font-['Poppins']">High-Voltage Battery Storage</div>
                           <div className="text-xs text-slate-300">Store solar energy for night charging & emergency backup</div>
                         </div>
                       </div>
@@ -478,7 +478,7 @@ export const SolarConfiguratorV2: React.FC<SolarConfiguratorV2Props> = ({ onOpen
                     <div className="flex items-center space-x-3.5">
                       <Wrench className="w-5 h-5 text-amber-400" />
                       <div>
-                        <div className="font-bold text-white text-base font-['Syne']">Turnkey Certified Assembly Service</div>
+                        <div className="font-bold text-white text-base font-['Poppins']">Turnkey Certified Assembly Service</div>
                         <div className="text-xs text-slate-300">Professional ground anchoring, profile setup & electrical grid connection</div>
                       </div>
                     </div>
@@ -497,14 +497,14 @@ export const SolarConfiguratorV2: React.FC<SolarConfiguratorV2Props> = ({ onOpen
             {step === 6 && (
               <div className="space-y-6">
                 <div>
-                  <h3 className="text-2xl sm:text-3xl font-bold text-white font-['Syne']">Step 6: Configuration Ready</h3>
+                  <h3 className="text-2xl sm:text-3xl font-bold text-white font-['Poppins']">Step 6: Configuration Ready</h3>
                   <p className="text-sm text-slate-300 mt-1">Receive your official engineering PDF dossier & direct quotation from RIAL Energy.</p>
                 </div>
 
                 <div className="bg-slate-950 p-7 rounded-3xl border border-slate-800 space-y-5">
                   <div className="flex items-center justify-between">
                     <span className="text-slate-300 font-semibold text-sm">Total Configured Package:</span>
-                    <span className="text-2xl sm:text-3xl font-extrabold text-amber-400 font-['Syne']">€{totalEur.toLocaleString()}</span>
+                    <span className="text-2xl sm:text-3xl font-extrabold text-amber-400 font-['Poppins']">€{totalEur.toLocaleString()}</span>
                   </div>
 
                   <div className="grid grid-cols-2 gap-4 text-xs pt-3 border-t border-slate-800">
@@ -517,7 +517,7 @@ export const SolarConfiguratorV2: React.FC<SolarConfiguratorV2Props> = ({ onOpen
 
                 <button
                   onClick={() => onOpenLeadModal(config, pricing)}
-                  className="w-full py-4 rounded-2xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-extrabold text-base shadow-gold-subtle transition-all flex items-center justify-center space-x-3 active:scale-95 cursor-pointer font-['Syne']"
+                  className="w-full py-4 rounded-2xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-extrabold text-base shadow-gold-subtle transition-all flex items-center justify-center space-x-3 active:scale-95 cursor-pointer font-['Poppins']"
                 >
                   <Download className="w-5 h-5" />
                   <span>{content.dossierBtn}</span>
@@ -565,7 +565,7 @@ export const SolarConfiguratorV2: React.FC<SolarConfiguratorV2Props> = ({ onOpen
       <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-slate-950/95 border-t border-slate-800 p-4 backdrop-blur-xl flex items-center justify-between">
         <div>
           <div className="text-[11px] text-slate-400 uppercase">System Estimate</div>
-          <div className="text-xl font-extrabold text-amber-400 font-['Syne']">€{totalEur.toLocaleString()}</div>
+          <div className="text-xl font-extrabold text-amber-400 font-['Poppins']">€{totalEur.toLocaleString()}</div>
         </div>
 
         <button

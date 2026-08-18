@@ -107,7 +107,7 @@ export const SolarConfigurator: React.FC<SolarConfiguratorProps> = ({ selectedCa
       <div className="section-shell">
         <div className="mx-auto max-w-3xl text-center">
           <div className="eyebrow justify-center"><Sparkles className="h-4 w-4" /> Unverbindliche Standort-Vorprüfung</div>
-          <h2 className="mt-4 text-3xl font-black tracking-[-0.04em] text-white sm:text-5xl font-['Syne']">Passt ein Solarcarport zu Ihrem Standort?</h2>
+          <h2 className="mt-4 text-3xl font-bold tracking-[-0.03em] text-white sm:text-5xl font-['Playfair_Display']">Passt ein Solarcarport zu Ihrem Standort?</h2>
           <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-slate-400 sm:text-base">Vier kurze Schritte liefern eine Planungsindikation nach DIN EN 1991 mit 0% MwSt (§12 Abs. 3 UStG).</p>
         </div>
 
@@ -141,7 +141,7 @@ export const SolarConfigurator: React.FC<SolarConfiguratorProps> = ({ selectedCa
           {step === 1 && (
             <div className="space-y-8">
               <div>
-                <h3 className="text-xl font-extrabold text-white sm:text-2xl font-['Syne']">Schritt 1: Anwendung & Standort-Postleitzahl</h3>
+                <h3 className="text-xl font-extrabold text-white sm:text-2xl font-['Poppins']">Schritt 1: Anwendung & Standort-Postleitzahl</h3>
                 <p className="mt-1 text-sm text-slate-400">Geben Sie Ihre PLZ für die regionale Schneelast- und Einstrahlungsprüfung an.</p>
               </div>
 
@@ -159,7 +159,7 @@ export const SolarConfigurator: React.FC<SolarConfiguratorProps> = ({ selectedCa
                       }`}
                     >
                       <div>
-                        <span className="font-extrabold text-white text-base font-['Syne'] block">{cat.name}</span>
+                        <span className="font-extrabold text-white text-base font-['Poppins'] block">{cat.name}</span>
                         <span className="text-xs text-slate-400 block mt-1">{cat.detail}</span>
                       </div>
                       <Icon className={`h-5 w-5 ${selected ? 'text-amber-400' : 'text-slate-500'}`} />
@@ -212,7 +212,7 @@ export const SolarConfigurator: React.FC<SolarConfiguratorProps> = ({ selectedCa
           {step === 2 && (
             <div className="space-y-6">
               <div>
-                <h3 className="text-xl font-extrabold text-white sm:text-2xl font-['Syne']">Schritt 2: Tragwerk & Schneelast-Zertifizierung</h3>
+                <h3 className="text-xl font-extrabold text-white sm:text-2xl font-['Poppins']">Schritt 2: Tragwerk & Schneelast-Zertifizierung</h3>
                 <p className="mt-1 text-sm text-slate-400">Alle Profile sind nach DIN EN 1991 für bis zu 2.5 kN/m² Schneelast geprüft.</p>
               </div>
 
@@ -246,7 +246,7 @@ export const SolarConfigurator: React.FC<SolarConfiguratorProps> = ({ selectedCa
           {step === 3 && (
             <div className="space-y-6">
               <div>
-                <h3 className="text-xl font-extrabold text-white sm:text-2xl font-['Syne']">Schritt 3: Wallbox, Speicher & Montage</h3>
+                <h3 className="text-xl font-extrabold text-white sm:text-2xl font-['Poppins']">Schritt 3: Wallbox, Speicher & Montage</h3>
                 <p className="mt-1 text-sm text-slate-400">Integrieren Sie EV-Ladepunkte und Batteriespeicher.</p>
               </div>
 
@@ -290,14 +290,14 @@ export const SolarConfigurator: React.FC<SolarConfiguratorProps> = ({ selectedCa
           {step === 4 && (
             <div className="space-y-6">
               <div>
-                <h3 className="text-xl font-extrabold text-white sm:text-2xl font-['Syne']">Schritt 4: Ihre Standort-Planungsindikation</h3>
+                <h3 className="text-xl font-extrabold text-white sm:text-2xl font-['Poppins']">Schritt 4: Ihre Standort-Planungsindikation</h3>
                 <p className="mt-1 text-sm text-slate-400">Berechnung für PLZ {postcode || '38722'} mit 0% MwSt (§ 12 Abs. 3 UStG).</p>
               </div>
 
               <div className="p-6 rounded-2xl border border-amber-400/30 bg-slate-950 space-y-4">
                 <div className="flex items-baseline justify-between">
                   <span className="text-sm font-semibold text-slate-300">Geschätzter Gesamtpreis:</span>
-                  <span className="text-3xl font-black text-amber-400 font-['Syne']">€{pricing.totalEur.toLocaleString()}</span>
+                  <span className="text-3xl font-black text-amber-400 font-['Poppins']">€{pricing.totalEur.toLocaleString()}</span>
                 </div>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-3 border-t border-slate-800 text-xs font-mono">
                   <div><span className="text-slate-400 block">LEISTUNG</span><strong className="text-white">{pricing.kwp} kWp</strong></div>

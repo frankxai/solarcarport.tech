@@ -25,14 +25,16 @@ const products: Array<{
 
 export const ProductShowcase: React.FC<ProductShowcaseProps> = ({ onSelectCategory }) => {
   return (
-    <section id="systems" className="py-16 sm:py-24">
+    <section id="systems" className="py-16 sm:py-24 font-['Poppins']">
       <div className="section-shell">
         <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
           <div className="max-w-3xl">
-            <div className="eyebrow"><MoveRight className="h-4 w-4" /> Systeme</div>
-            <h2 className="mt-4 text-3xl font-black tracking-[-0.035em] text-white sm:text-5xl">Vom privaten Stellplatz bis zum Fuhrpark.</h2>
+            <div className="eyebrow"><MoveRight className="h-4 w-4 text-amber-400" /> Systeme</div>
+            <h2 className="mt-4 text-3xl font-bold tracking-[-0.03em] text-white sm:text-5xl font-['Playfair_Display']">
+              Vom privaten Stellplatz <span className="italic font-normal text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-amber-500">bis zum Fuhrpark.</span>
+            </h2>
           </div>
-          <p className="max-w-md text-sm leading-7 text-slate-400">Die Karten zeigen Systemrichtungen, keine fertigen Angebote. Abmessungen, Leistung und Preis entstehen erst aus der Standortprüfung.</p>
+          <p className="max-w-md text-sm leading-7 text-slate-300 font-light">Die Karten zeigen Systemrichtungen der RIAL Energy GmbH. Abmessungen, Leistung und Statik entstehen aus der individuellen Standortprüfung.</p>
         </div>
 
         <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
