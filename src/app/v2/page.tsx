@@ -6,6 +6,7 @@ import { HeroV2 } from '@/components/v2/HeroV2';
 import { PreeminenceEducationV2Props as PreeminenceEducationV2 } from '@/components/v2/PreeminenceEducationV2';
 import { ProductShowcaseV2 } from '@/components/v2/ProductShowcaseV2';
 import { ProjectProof } from '@/components/ProjectProof';
+import { SolarShop } from '@/components/shop/SolarShop';
 import { SolarConfiguratorV2 } from '@/components/v2/SolarConfiguratorV2';
 import { LiveERPDrawer } from '@/components/erp/LiveERPDrawer';
 import { LeadSummaryModal } from '@/components/lead/LeadSummaryModal';
@@ -48,14 +49,16 @@ export default function V2Page() {
     paybackYears: 5.1,
   });
 
-  const handleOpenLeadModal = (config: ConfiguratorState, pricing: PricingBreakdown) => {
+  const handleOpenLeadModal = (config: ConfiguratorState, pricing?: PricingBreakdown) => {
     setActiveConfig(config);
-    setActivePricing(pricing);
+    if (pricing) {
+      setActivePricing(pricing);
+    }
     setLeadModalOpen(true);
   };
 
   return (
-    <main className="min-h-screen bg-[#050811] text-slate-100 selection:bg-amber-500 selection:text-slate-950">
+    <main className="min-h-screen bg-[#040711] text-slate-100 selection:bg-amber-500 selection:text-slate-950 font-['Poppins']">
       
       {/* V2 Header */}
       <HeaderV2 
@@ -66,6 +69,17 @@ export default function V2Page() {
 
       {/* V2 Hero */}
       <HeroV2 lang={lang} />
+
+      {/* RIAL Energy Solar E-Shop & Hardware Warehouse */}
+      <div id="v2-shop">
+        <SolarShop 
+          onOpenERP={() => setErpOpen(true)} 
+          onOpenLeadModal={(cfg) => {
+            setActiveConfig(cfg);
+            document.getElementById('v2-configurator')?.scrollIntoView({ behavior: 'smooth' });
+          }}
+        />
+      </div>
 
       {/* V2 Preeminence Education */}
       <PreeminenceEducationV2 lang={lang} />

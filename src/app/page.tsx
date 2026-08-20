@@ -8,6 +8,8 @@ import { LeadSummaryModal } from '@/components/lead/LeadSummaryModal';
 import { PreeminenceEducation } from '@/components/PreeminenceEducation';
 import { ProductShowcase } from '@/components/ProductShowcase';
 import { ProjectProof } from '@/components/ProjectProof';
+import { SolarShop } from '@/components/shop/SolarShop';
+import { LiveERPDrawer } from '@/components/erp/LiveERPDrawer';
 import { PricingBreakdown, ProjectContext, SolarConfigurator } from '@/components/configurator/SolarConfigurator';
 import type { ConfiguratorState } from '@/components/configurator/Interactive2DRenderer';
 
@@ -45,6 +47,7 @@ export default function Home() {
   const [selectedCategory, setSelectedCategory] = useState<ConfiguratorState['category']>('double');
   const [configuratorKey, setConfiguratorKey] = useState(0);
   const [leadOpen, setLeadOpen] = useState(false);
+  const [erpOpen, setErpOpen] = useState(false);
   const [activeConfig, setActiveConfig] = useState<ConfiguratorState>(initialConfig);
   const [activePricing, setActivePricing] = useState<PricingBreakdown>(initialPricing);
   const [activeProject, setActiveProject] = useState<ProjectContext>({ postcode: '', timeline: '3-6 Monate' });
@@ -64,16 +67,41 @@ export default function Home() {
     setLeadOpen(true);
   };
 
+  const openShopKitRequest = (config: ConfiguratorState) => {
+    setActiveConfig(config);
+    startConfigurator(config.category);
+  };
+
   return (
-    <main className="min-h-screen bg-[#071019] text-slate-100">
-      <Header onOpenConfigurator={() => startConfigurator()} />
+    <main className="min-h-screen bg-[#040711] text-slate-100 selection:bg-amber-400 selection:text-slate-950">
+      <Header 
+        onOpenConfigurator={() => startConfigurator()} 
+        onOpenERP={() => setErpOpen(true)}
+      />
       <Hero onStartConfigurator={startConfigurator} />
+      <SolarShop 
+        onOpenERP={() => setErpOpen(true)} 
+        onOpenLeadModal={openShopKitRequest}
+      />
       <ProjectProof />
       <ProductShowcase onSelectCategory={startConfigurator} />
       <PreeminenceEducation />
       <SolarConfigurator key={configuratorKey} selectedCategory={selectedCategory} onOpenLeadModal={openRequest} />
       <Footer />
-      <LeadSummaryModal isOpen={leadOpen} onClose={() => setLeadOpen(false)} config={activeConfig} pricing={activePricing} project={activeProject} />
+      
+      <LeadSummaryModal 
+        isOpen={leadOpen} 
+        onClose={() => setLeadOpen(false)} 
+        config={activeConfig} 
+        pricing={activePricing} 
+        project={activeProject} 
+      />
+
+      <LiveERPDrawer
+        isOpen={erpOpen}
+        onClose={() => setErpOpen(false)}
+        config={activeConfig}
+      />
     </main>
   );
 }
