@@ -468,6 +468,45 @@ export default function DigitalProductsPage() {
 
         </div>
 
+        {/* Tier 2: White-Label Configurator Widget Callout */}
+        <div className="mt-16 bg-gradient-to-r from-emerald-950/40 via-slate-900/90 to-amber-950/30 border border-emerald-500/30 rounded-3xl p-8 sm:p-10 flex flex-col lg:flex-row items-center justify-between gap-8 shadow-2xl">
+          <div className="space-y-4 max-w-2xl">
+            <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-emerald-400/10 border border-emerald-400/30 text-emerald-400 text-xs font-semibold uppercase tracking-wider">
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>TIER 2: WHITE-LABEL CONFIGURATORS (€49 – €99/MO)</span>
+            </div>
+            <h3 className="text-2xl sm:text-3xl font-extrabold text-white">
+              SolarCarport Embed: Das White-Label Widget für Installateure
+            </h3>
+            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+              Integrieren Sie unseren interaktiven 3D/2D-Konfigurator mit 1 Zeile HTML-Code auf Ihrer Handwerker-Website. Erfassen Sie qualifizierte Leads inklusive automatischer RIAL Energy Seesen Werks-Stückliste (BOM).
+            </p>
+            <div className="flex flex-wrap gap-4 text-xs text-slate-300 pt-1">
+              <span className="flex items-center space-x-1.5 text-emerald-400 font-semibold">
+                <Check className="w-4 h-4" />
+                <span>1-Zeile HTML / React</span>
+              </span>
+              <span className="flex items-center space-x-1.5 text-emerald-400 font-semibold">
+                <Check className="w-4 h-4" />
+                <span>100% Ihr Logo & Brand</span>
+              </span>
+              <span className="flex items-center space-x-1.5 text-emerald-400 font-semibold">
+                <Check className="w-4 h-4" />
+                <span>Live ERP Stückliste (BOM)</span>
+              </span>
+            </div>
+          </div>
+
+          <div className="flex-shrink-0 w-full lg:w-auto">
+            <a
+              href="/partner-widget"
+              className="w-full lg:w-auto px-8 py-4 rounded-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-sm shadow-lg hover:shadow-emerald-500/20 active:scale-95 transition-all flex items-center justify-center space-x-2"
+            >
+              <span>Live Studio & Sandbox testen →</span>
+            </a>
+          </div>
+        </div>
+
       </section>
 
       {/* Agentic Skill & Codex/Antigravity Terminal Section */}
