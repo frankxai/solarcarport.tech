@@ -35,3 +35,6 @@ yarn-error.log*
 next-env.d.ts
 
 .vercel
+
+# Local browser profile used by campaign capture
+/.hermes/campaigns/solar-estate-20260719/chrome-mobile/
