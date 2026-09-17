@@ -1,10 +1,16 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
   title: 'SolarCarport.tech | Solarcarports & PV-Überdachungen',
   description: 'Standortbezogene Vorprüfung für Solarcarports, PV-Terrassen und gewerbliche Parkplatzüberdachungen der RIAL Energy GmbH in Seesen.',
   keywords: 'Solarcarport, PV Überdachung, Solar Terrasse, RIAL Energy, Solarcarport Seesen, PV Carport Planung',
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  themeColor: '#071019',
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
