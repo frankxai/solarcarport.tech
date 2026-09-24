@@ -14,6 +14,7 @@ const links = [
   { href: '#planning', label: 'Planung & Statik' },
   { href: '#projects', label: 'Referenzen' },
   { href: '#configurator', label: 'Konfigurator' },
+  { href: '/studio', label: 'Projektstudio' },
 ];
 
 export const Header: React.FC<HeaderProps> = ({ onOpenConfigurator, onOpenERP }) => {

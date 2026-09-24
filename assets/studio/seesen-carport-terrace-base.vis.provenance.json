@@ -1,0 +1,40 @@
+{
+  "$schema": "https://frankx.ai/schemas/vis-provenance-sidecar.schema.json",
+  "schema_version": "1.0.0",
+  "asset": {
+    "asset_id": "sha256:9b79717f976d2a3c",
+    "media_type": "image",
+    "sha256": "9b79717f976d2a3cd92d4ee90b2c1855d16def78562846ae00b8944ee7845de1",
+    "local_path": "C:\\Users\\frank\\starlight\\worktrees\\solarcarport-project-studio\\assets\\studio\\seesen-carport-terrace-base.png",
+    "relative_path": "worktrees\\solarcarport-project-studio\\assets\\studio\\seesen-carport-terrace-base.png"
+  },
+  "generation": {
+    "provider": "openai",
+    "model": "built-in image_gen (model not exposed)",
+    "prompt": "Use case: photorealistic architectural concept visualization for a German homeowner project studio. Primary request: one complete residential outdoor project combining a two-car solar carport and an adjacent solar-covered terrace at a modest contemporary house in the Harz region near Seesen, Germany. Scene: realistic flat suburban plot, overcast-bright northern German late-afternoon sky, mature deciduous trees and neighboring roofs, ordinary paved driveway leading to the carport, terrace directly accessible from the house. Subject: restrained dark-anthracite aluminum structures with believable posts, drainage, translucent glass-glass photovoltaic panels on the terrace and opaque photovoltaic roof on the carport, two everyday cars parked underneath. Composition: wide eye-level architectural photo from the street-side garden corner, show the complete carport, complete terrace, house connection, ground contact and roof surfaces in one coherent view; no cropped structure, no floating roofs; sufficient clear space near the upper left for webpage title overlay. Style: photorealistic, premium but buildable and grounded, natural textures, realistic reflections, consistent shadow geometry, no exaggerated luxury resort cues. Constraints: no text, no labels, no logos, no watermark, no people; show a visual concept only, not engineering drawings.",
+    "negative_prompt": null,
+    "seed": null,
+    "settings": {
+      "brand": "solarcarport.tech"
+    },
+    "output_paths": [
+      "C:\\Users\\frank\\starlight\\worktrees\\solarcarport-project-studio\\assets\\studio\\seesen-carport-terrace-base.png"
+    ],
+    "created_at": "2026-09-24T19:15:20.920Z"
+  },
+  "agent": {
+    "coding_agent": "codex",
+    "repo": "solarcarport-project-studio",
+    "session_ref": "01a01fb6-f61b-7f90-a584-3775d69a8374",
+    "summary": "Visual asset generated for brand [solarcarport.tech] via codex"
+  },
+  "evaluation": {
+    "brand": "solarcarport.tech",
+    "status": "generated",
+    "notes": "Source concept retained so the final edited image can be reproduced. Independent review pending."
+  },
+  "rights": {
+    "rights_status": "generated-owned",
+    "license": "Proprietary Estate / frankxai"
+  }
+}

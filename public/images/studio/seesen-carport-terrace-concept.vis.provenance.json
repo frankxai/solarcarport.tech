@@ -1,0 +1,43 @@
+{
+  "$schema": "https://frankx.ai/schemas/vis-provenance-sidecar.schema.json",
+  "schema_version": "1.0.0",
+  "asset": {
+    "asset_id": "sha256:5acb1702f1234f78",
+    "media_type": "image",
+    "sha256": "5acb1702f1234f78cf2116a290c42287dcf2480728117856e074243a789e37fe",
+    "local_path": "C:\\Users\\frank\\starlight\\worktrees\\solarcarport-project-studio\\public\\images\\studio\\seesen-carport-terrace-concept.png",
+    "relative_path": "worktrees\\solarcarport-project-studio\\public\\images\\studio\\seesen-carport-terrace-concept.png"
+  },
+  "generation": {
+    "provider": "openai",
+    "model": "built-in image_gen (model not exposed)",
+    "prompt": "Precise photographic edit of Image 1 only: replace the two parked cars with realistic contemporary unbranded family vehicles in similar muted colors and approximately the same positions, sizes, perspective, and lighting. Remove all vehicle badges, logos, brand-identifying grille designs, text, and license-plate text. Preserve the house, complete two-car solar carport, complete solar terrace, driveway, garden, sky, camera angle, roof geometry, post positions, shadows, and every other part of Image 1 unchanged. Maintain photorealistic northern German late-afternoon color and natural texture. No text, no watermark.",
+    "negative_prompt": null,
+    "seed": null,
+    "settings": {
+      "brand": "solarcarport.tech",
+      "source_asset": "assets/studio/seesen-carport-terrace-base.png",
+      "source_sha256": "9b79717f976d2a3cd92d4ee90b2c1855d16def78562846ae00b8944ee7845de1",
+      "source_role": "Image 1 edit target"
+    },
+    "output_paths": [
+      "C:\\Users\\frank\\starlight\\worktrees\\solarcarport-project-studio\\public\\images\\studio\\seesen-carport-terrace-concept.png"
+    ],
+    "created_at": "2026-09-24T19:02:22.761Z"
+  },
+  "agent": {
+    "coding_agent": "codex",
+    "repo": "solarcarport-project-studio",
+    "session_ref": "01a01fb6-f61b-7f90-a584-3775d69a8374",
+    "summary": "Visual asset generated for brand [solarcarport.tech] via codex"
+  },
+  "evaluation": {
+    "brand": "solarcarport.tech",
+    "status": "generated",
+    "notes": "Self-reviewed as illustrative architectural concept. Not a site-specific rendering or technical plan; independent review pending."
+  },
+  "rights": {
+    "rights_status": "generated-owned",
+    "license": "Proprietary Estate / frankxai"
+  }
+}
