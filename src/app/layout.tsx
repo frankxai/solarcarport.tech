@@ -2,9 +2,9 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'SolarCarport.tech | High-Performance Solar Overhangs & Commercial Infrastructure',
-  description: 'RIAL Energy GmbH - Modular aluminum solar carports, solar patio canopies, and solar fencing. Engineering excellence, snow-load certified, and integrated V2X & ERP mechanics in Seesen, Germany.',
-  keywords: 'Solarcarport, PV-Überdachung, Solar Terrasse, RIAL Energy, Solarpflicht, Bifacial Solar, V2X Charging, Aluminum Carport Bausatz',
+  title: 'SolarCarport.tech | PV-Überdachungen & Solarcarports aus Seesen',
+  description: 'RIAL Energy GmbH – Modulare Aluminium-Solarcarports, PV-Terrassen und Solar-Überdachungen. Statisch berechnet nach DIN EN 1991, 0% MwSt, bifaziale Module. Materialkompetenz aus Seesen, Deutschland.',
+  keywords: 'Solarcarport, PV-Überdachung, Solar Terrasse, RIAL Energy, Solarpflicht, Bifaziale Module, Aluminium Carport, Seesen, DIN EN 1991, 0% MwSt',
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
