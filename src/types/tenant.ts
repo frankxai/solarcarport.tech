@@ -1,7 +1,7 @@
 import { ConfiguratorState } from '@/components/configurator/Interactive2DRenderer';
 import { PricingBreakdown, ProjectContext } from '@/components/configurator/SolarConfigurator';
 
-export interface TenantBranding {
+interface TenantBranding {
   companyName: string;
   tagline?: string;
   logoUrl?: string;

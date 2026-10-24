@@ -3,7 +3,7 @@
  * Covers all 16 German Federal States (Landesbauordnungen & Klimaschutzgesetze)
  */
 
-export interface StateSolarRule {
+interface StateSolarRule {
   stateCode: string;
   stateName: string;
   lawName: string;

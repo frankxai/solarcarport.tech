@@ -13,7 +13,7 @@ interface SolarShopProps {
   onOpenLeadModal?: (config: ConfiguratorState) => void;
 }
 
-export interface ShopProduct {
+interface ShopProduct {
   id: string;
   category: 'carport' | 'terrace' | 'fence' | 'component';
   title: string;
@@ -33,7 +33,7 @@ export interface ShopProduct {
   configMapping: ConfiguratorState;
 }
 
-export const shopProducts: ShopProduct[] = [
+const shopProducts: ShopProduct[] = [
   {
     id: 'doppelcarport-pro',
     category: 'carport',
