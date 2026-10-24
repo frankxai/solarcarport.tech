@@ -110,8 +110,8 @@ export async function POST(req: NextRequest) {
     });
   } catch (error: unknown) {
     console.error('Agentic sizer tool error:', error);
-    const errorMessage = (error && typeof error === 'object' && 'message' in error && typeof (error as Record<string, unknown>).message === 'string' && (error as Record<string, unknown>).message)
-      ? (error as Record<string, unknown>).message
+    const errorMessage = (error && typeof error === 'object' && 'message' in error && (error as Record<string, unknown>).message)
+      ? String((error as Record<string, unknown>).message)
       : 'Error executing solar sizer tool';
     return NextResponse.json(
       { success: false, error: errorMessage },
