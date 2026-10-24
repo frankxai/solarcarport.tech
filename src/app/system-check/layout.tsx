@@ -10,6 +10,9 @@ export const metadata: Metadata = {
     title: 'Souveräne System- & Statik-Diagnose | SolarCarport.tech',
     description: 'Souveräne System- & Statik-Diagnose für Ihren Solarcarport.',
     url: 'https://solarcarport.tech/system-check',
+    siteName: 'SolarCarport.tech',
+    locale: 'de_DE',
+    type: 'website',
   },
 };
 

@@ -10,6 +10,9 @@ export const metadata: Metadata = {
     title: 'Deutsche Solar-Parkplatzpflicht 2026 rechtssicher meistern | SolarCarport.tech',
     description: 'Deutsche Solar-Parkplatzpflicht 2026 rechtssicher & rentabel meistern.',
     url: 'https://solarcarport.tech/commercial-audit',
+    siteName: 'SolarCarport.tech',
+    locale: 'de_DE',
+    type: 'website',
   },
 };
 
