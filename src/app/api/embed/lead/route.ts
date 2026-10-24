@@ -55,7 +55,7 @@ export async function POST(req: NextRequest) {
       },
     });
   } catch (error: unknown) {
-    console.error('Lead processing error in /api/embed/lead:', error instanceof Error ? error.message : error);
+    console.error('Lead processing error in /api/embed/lead:', error);
     return NextResponse.json(
       { success: false, error: 'Interner Verarbeitungsfehler. Bitte versuchen Sie es erneut.' },
       { status: 500 }
