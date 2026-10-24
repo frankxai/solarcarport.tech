@@ -1,0 +1,10 @@
+# SolarCarport.tech
+
+Website pages:
+- [Home](https://solarcarport.tech/)
+- [Commercial Audit](https://solarcarport.tech/commercial-audit)
+- [Digital](https://solarcarport.tech/digital)
+- [Partner Widget](https://solarcarport.tech/partner-widget)
+- [System Check](https://solarcarport.tech/system-check)
+- [V2](https://solarcarport.tech/v2)
+- [Vault](https://solarcarport.tech/vault)
