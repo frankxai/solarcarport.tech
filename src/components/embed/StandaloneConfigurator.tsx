@@ -8,7 +8,7 @@ import {
 } from 'lucide-react';
 import { Interactive2DRenderer, ConfiguratorState } from '../configurator/Interactive2DRenderer';
 import { PricingBreakdown, ProjectContext } from '../configurator/SolarConfigurator';
-import { TenantConfig, CustomerLeadInfo, BOMCalculationResult } from '@/types/tenant';
+import { TenantConfig, CustomerLeadInfo, BOMCalculationResult, LeadSubmissionResponse } from '@/types/tenant';
 import { calculateRialBOM } from '@/lib/bomCalculator';
 
 interface StandaloneConfiguratorProps {
@@ -63,7 +63,7 @@ export const StandaloneConfigurator: React.FC<StandaloneConfiguratorProps> = ({
   const [showERPModal, setShowERPModal] = useState<boolean>(false);
   const [leadSubmitted, setLeadSubmitted] = useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-  const [leadReceipt, setLeadReceipt] = useState<any>(null);
+  const [leadReceipt, setLeadReceipt] = useState<LeadSubmissionResponse | null>(null);
 
   // Customer form inputs
   const [customer, setCustomer] = useState<CustomerLeadInfo>({

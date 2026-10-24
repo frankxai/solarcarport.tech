@@ -67,7 +67,7 @@ export const SolarConfiguratorV2: React.FC<SolarConfiguratorV2Props> = ({ onOpen
     paybackYears,
   };
 
-  const updateConfig = (key: keyof ConfiguratorState, value: any) => {
+  const updateConfig = <K extends keyof ConfiguratorState>(key: K, value: ConfiguratorState[K]) => {
     setConfig(prev => ({ ...prev, [key]: value }));
   };
 
@@ -234,7 +234,7 @@ export const SolarConfiguratorV2: React.FC<SolarConfiguratorV2Props> = ({ onOpen
                   ].map((item) => (
                     <button
                       key={item.id}
-                      onClick={() => updateConfig('category', item.id)}
+                      onClick={() => updateConfig('category', item.id as ConfiguratorState['category'])}
                       className={`p-6 rounded-3xl border text-left transition-all cursor-pointer ${
                         config.category === item.id
                           ? 'glow-card-amber border-amber-500'
@@ -310,7 +310,7 @@ export const SolarConfiguratorV2: React.FC<SolarConfiguratorV2Props> = ({ onOpen
                     ].map((col) => (
                       <button
                         key={col.id}
-                        onClick={() => updateConfig('postColor', col.id)}
+                        onClick={() => updateConfig('postColor', col.id as ConfiguratorState['postColor'])}
                         className={`p-4 rounded-2xl border text-xs font-semibold cursor-pointer ${
                           config.postColor === col.id ? 'bg-amber-500/10 border-amber-400 text-amber-400' : 'bg-slate-950 border-slate-800 text-slate-400'
                         }`}
@@ -463,7 +463,7 @@ export const SolarConfiguratorV2: React.FC<SolarConfiguratorV2Props> = ({ onOpen
                         {['10', '15', '30'].map((sz) => (
                           <button
                             key={sz}
-                            onClick={() => updateConfig('batterySize', sz as any)}
+                            onClick={() => updateConfig('batterySize', sz as ConfiguratorState['batterySize'])}
                             className={`p-2.5 rounded-xl border cursor-pointer ${config.batterySize === sz ? 'bg-emerald-500/20 border-emerald-400 text-white' : 'bg-slate-900 border-slate-800 text-slate-400'}`}
                           >
                             {sz} kWh Battery

@@ -315,7 +315,7 @@ export const SolarShop: React.FC<SolarShopProps> = ({ onOpenERP, onOpenLeadModal
           ].map((tab) => (
             <button
               key={tab.id}
-              onClick={() => setSelectedFilter(tab.id as any)}
+              onClick={() => setSelectedFilter(tab.id as 'all' | 'carport' | 'terrace' | 'fence' | 'component')}
               className={`px-5 py-2.5 rounded-full text-xs font-semibold transition-all cursor-pointer ${
                 selectedFilter === tab.id
                   ? 'bg-amber-400 text-slate-950 font-bold shadow-gold-subtle'
