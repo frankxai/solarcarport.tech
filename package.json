@@ -9,15 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "lucide-react": "^0.468.0",
     "next": "^15.5.28",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "lucide-react": "^0.468.0",
-    "framer-motion": "^11.13.0",
-    "clsx": "^2.1.1",
-    "tailwind-merge": "^2.5.5",
-    "jspdf": "^2.5.2",
-    "sharp": "0.35.5"
+    "react-dom": "^19.0.0"
   },
   "devDependencies": {
     "@types/node": "^22.10.0",
