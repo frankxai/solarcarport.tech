@@ -108,10 +108,10 @@ export async function POST(req: NextRequest) {
         'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
       }
     });
-  } catch (error: any) {
-    console.error('Agentic sizer tool error:', error);
+  } catch (error: unknown) {
+    console.error('Agentic sizer tool error:', error instanceof Error ? error.message : error);
     return NextResponse.json(
-      { success: false, error: error.message || 'Error executing solar sizer tool' },
+      { success: false, error: error instanceof Error ? error.message : 'Error executing solar sizer tool' },
       { status: 500 }
     );
   }
