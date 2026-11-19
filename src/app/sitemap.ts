@@ -6,6 +6,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const routes = [
     '',
     '/commercial-audit',
+    '/planung',
     '/digital',
     '/partner-widget',
     '/system-check',
