@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { Footer } from '@/components/Footer';
 import { Header } from '@/components/Header';
 import { Hero } from '@/components/Hero';
@@ -86,6 +87,9 @@ export default function Home() {
       <ProjectProof />
       <ProductShowcase onSelectCategory={startConfigurator} />
       <PreeminenceEducation />
+      <div className="mx-auto max-w-6xl px-5 py-8 sm:px-8">
+        <Link href="/planung" className="font-semibold text-amber-300 underline underline-offset-4">Projekt vorbereiten und Angebote vergleichen</Link>
+      </div>
       <SolarConfigurator key={configuratorKey} selectedCategory={selectedCategory} onOpenLeadModal={openRequest} />
       <Footer />
       
