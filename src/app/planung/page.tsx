@@ -51,9 +51,8 @@ export default function PlanningPage() {
         </section>
 
         <section className="pt-10">
-          <h2 className="text-2xl font-semibold">Technik und Vorlagen</h2>
-          <p className="mb-4 mt-2 max-w-xl text-slate-300">Die Recherche bei FrankX erläutert das Modulraster, Solarstrom und Standzeiten. Angebote und Ausführung verantworten die jeweiligen Anbieter.</p>
-          <a className="font-semibold text-amber-300 underline underline-offset-4" href="https://www.frankx.ai/research#investigations">Zur FrankX-Recherche</a>
+          <h2 className="text-2xl font-semibold">Hinweis</h2>
+          <p className="mb-4 mt-2 max-w-xl text-slate-300">Angebote und Ausführung verantworten die jeweiligen Anbieter.</p>
         </section>
       </div>
     </main>
